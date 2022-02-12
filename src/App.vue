@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="tpl"></div>
+  <router-view></router-view>
 </template>
 
 <style></style>
