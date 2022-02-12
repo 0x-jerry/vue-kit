@@ -4,8 +4,8 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
-    KUploadImage: typeof import('./src/components/KUploadImage.vue')['default']
+    KUploadImage: typeof import('./components/KUploadImage.vue')['default']
   }
 }
 
-export { }
+export {}

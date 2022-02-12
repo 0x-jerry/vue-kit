@@ -24,7 +24,7 @@ export default defineConfig(() => ({
 
     // https://github.com/antfu/vite-plugin-components
     Components({
-      dts: true,
+      dts: 'src/components.d.ts',
     }),
 
     // https://github.com/hannoeru/vite-plugin-pages
@@ -34,6 +34,7 @@ export default defineConfig(() => ({
 
     // https://github.com/antfu/unplugin-auto-import
     AutoImport({
+      dts: 'src/auto-imports.d.ts',
       imports: ['vue', 'vue-router', '@vueuse/core'],
       resolvers: [globalResolver],
     }),
