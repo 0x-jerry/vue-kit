@@ -30,15 +30,13 @@
     "serve": "vite preview",
     "release": "x-release"
   },
-  "dependencies": {
+  "devDependencies": {
     "@0x-jerry/utils": "^0.4.1",
     "@iconify-json/carbon": "^1.0.15",
     "@iconify-json/mdi": "^1.0.17",
     "@vueuse/core": "^7.6.1",
     "vue": "^3.2.30",
-    "vue-router": "^4.0.12"
-  },
-  "devDependencies": {
+    "vue-router": "^4.0.12",
     "@0x-jerry/x-release": "^0.3.2",
     "@types/node": "^17.0.17",
     "@vitejs/plugin-vue": "^2.2.0",
@@ -63,5 +61,10 @@
         "vue-router"
       ]
     }
+  },
+  "dependencies": {
+    "doctypes": "^1.1.0",
+    "vscode-languageserver-types": "^3.17.0-next.7",
+    "vscode-typescript-languageservice": "^0.31.2"
   }
 }
