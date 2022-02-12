@@ -1,1 +1,1 @@
-export * as KUploadImage from './KUploadImage.vue'
+export { default as KUploadImage } from './KUploadImage.vue'
