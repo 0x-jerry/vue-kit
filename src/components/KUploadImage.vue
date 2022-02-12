@@ -137,7 +137,7 @@ async function deleteImage(idx: number) {
 </script>
 
 <template>
-  <div class="k-upload-image" flex="~ wrap" grid="gap-2" text="gray-300 hover:blue-500">
+  <div class="k-upload-image" flex="~ wrap" grid="gap-2">
     <template v-for="(ctx, idx) in images" :key="`${idx}:${ctx.url}`">
       <slot
         name="image"
@@ -147,11 +147,11 @@ async function deleteImage(idx: number) {
         :delete="() => deleteImage(idx)"
       >
         <span class="relative" :style="imageStyle" border="~ solid gray-200">
-          <img class="block" :src="ctx.url" :alt="ctx.url" />
+          <img class="block" :src="ctx.url" :alt="ctx.url" text="gray-300" />
           <div
             class="absolute top-0 left-0"
             z="10"
-            bg="gray-200 opacity-25"
+            bg="gray-700 opacity-50"
             opacity="0 hover:100"
             transition="~ colors"
             w="full"
@@ -162,12 +162,12 @@ async function deleteImage(idx: number) {
           >
             <div flex="~" grid="gap-x-2">
               <icon-edit
-                class="text-gray-300 hover:text-blue-500 cursor-pointer transition transition-colors"
+                class="text-light-900 hover:text-white cursor-pointer transition transition-colors"
                 @click="reUploadImage(idx)"
               />
               <icon-delete
                 @click="deleteImage(idx)"
-                class="text-gray-300 hover:text-blue-500 cursor-pointer transition transition-colors"
+                class="text-light-900 hover:text-white cursor-pointer transition transition-colors"
               />
             </div>
           </div>
@@ -183,7 +183,7 @@ async function deleteImage(idx: number) {
       flex="~"
       justify="center"
       align="items-center"
-      text="2xl"
+      text="gray-300 hover:blue-500 2xl"
     >
       <icon-plus />
     </button>
