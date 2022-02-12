@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
 import WindiCSS from 'vite-plugin-windicss'
 import AutoImport from 'unplugin-auto-import/vite'
+import Icons from 'unplugin-icons/vite'
 import { globalResolver } from './vite/globalVars'
 import path from 'path'
 
@@ -16,6 +17,9 @@ export default defineConfig(() => ({
   build: {
     lib: {
       entry: path.resolve('src/lib.ts'),
+      formats: ['umd'],
+      name: '[name].js',
+      fileName: 'vue-kit',
     },
     rollupOptions: {
       external: ['vue'],
@@ -23,6 +27,8 @@ export default defineConfig(() => ({
   },
   plugins: [
     Vue(),
+
+    Icons(),
 
     // https://github.com/windicss/windicss
     WindiCSS({

@@ -5,6 +5,7 @@ import path from 'path'
 import Pages from 'vite-plugin-pages'
 import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
+import Icons from 'unplugin-icons/vite'
 
 import OptimizationPersist from 'vite-plugin-optimize-persist'
 import PkgConfig from 'vite-plugin-package-config'
@@ -43,6 +44,8 @@ export default defineConfig(() => ({
         attributify: true,
       },
     }),
+
+    Icons(),
 
     // https://github.com/antfu/vite-plugin-optimize-persist
     PkgConfig(),
