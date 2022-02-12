@@ -71,7 +71,7 @@ function emitModelValue(urls: string[]) {
   if (isSingleMode.value) {
     emit('update:modelValue', urls[0] || '')
   } else {
-    emit('update:modelValue', [...(images.value.map((n) => n.url) as string[]), ...urls])
+    emit('update:modelValue', urls)
   }
 }
 
