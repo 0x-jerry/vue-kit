@@ -67,6 +67,14 @@ const emit = defineEmits<{
   (type: 'update:modelValue', val: string | string[]): void
 }>()
 
+function emitModelValue(urls: string[]) {
+  if (isSingleMode.value) {
+    emit('update:modelValue', urls[0] || '')
+  } else {
+    emit('update:modelValue', [...(images.value.map((n) => n.url) as string[]), ...urls])
+  }
+}
+
 async function uploadImage() {
   const files = await chooseFiles(props)
   if (!files.length) return
@@ -90,11 +98,7 @@ async function uploadImage() {
 
   const urls = (await Promise.all(p)).filter(Boolean) as string[]
 
-  if (isSingleMode.value) {
-    emit('update:modelValue', urls[0] || '')
-  } else {
-    emit('update:modelValue', [...(images.value.map((n) => n.url) as string[]), ...urls])
-  }
+  emitModelValue(urls)
 }
 
 async function uploadImageFile(file: File) {
@@ -118,21 +122,17 @@ async function reUploadImage(idx: number) {
 
   const ctx = await uploadImageFile(file)
 
-  if (isSingleMode.value) {
-    emit('update:modelValue', ctx.url)
-  } else {
-    const raw = images.value.map((n) => n.url)
-    raw.splice(idx, 1, ctx.url)
+  const urls = images.value.map((n) => n.url)
+  urls.splice(idx, 1, ctx.url)
 
-    emit('update:modelValue', raw)
-  }
+  emitModelValue(urls)
 }
 
 async function deleteImage(idx: number) {
-  const raw = images.value.map((n) => n.url)
-  raw.splice(idx, 1)
+  const urls = images.value.map((n) => n.url)
+  urls.splice(idx, 1)
 
-  emit('update:modelValue', raw)
+  emitModelValue(urls)
 }
 </script>
 
