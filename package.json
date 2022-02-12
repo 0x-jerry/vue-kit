@@ -25,6 +25,7 @@
   "scripts": {
     "dev": "vite",
     "build": "npm run build:component && npm run build:dts",
+    "build:docs": "vite build",
     "build:component": "vite build -c vite.config.build.ts",
     "build:dts": "vue-tsc -d --emitDeclarationOnly --outDir dist/types -p tsconfig.build.json",
     "serve": "vite preview",
