@@ -7,8 +7,7 @@ const data = reactive({
 })
 
 const upload = async (arg: KUploadImageContext) => {
-  console.log(arg.file)
-  return arg.file.name
+  return URL.createObjectURL(arg.file)
 }
 </script>
 
