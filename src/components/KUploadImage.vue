@@ -147,7 +147,15 @@ async function deleteImage(idx: number) {
         :delete="() => deleteImage(idx)"
       >
         <span class="relative" :style="imageStyle" border="~ solid gray-200">
-          <img class="block" :src="ctx.url" :title="ctx.url" text="gray-300" />
+          <img
+            class="block"
+            w="full"
+            h="full"
+            object="contain"
+            :src="ctx.url"
+            :title="ctx.url"
+            text="gray-300"
+          />
           <div
             class="absolute top-0 left-0"
             z="10"
