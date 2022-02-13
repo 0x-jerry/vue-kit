@@ -98,7 +98,7 @@ async function uploadImage() {
 
   const urls = (await Promise.all(p)).filter(Boolean) as string[]
 
-  emitModelValue(urls)
+  emitModelValue([...images.value.map((n) => n.url), ...urls])
 }
 
 async function uploadImageFile(file: File) {
