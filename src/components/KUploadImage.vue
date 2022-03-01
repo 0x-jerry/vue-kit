@@ -16,7 +16,6 @@ const props = withDefaults(
     upload: (ctx: KUploadImageContext) => Promise<string>
   }>(),
   {
-    singleMode: false,
     multiple: false,
     accept: '.jpg,.jpeg,.png',
     size: '100px',
