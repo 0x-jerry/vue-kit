@@ -1,14 +1,15 @@
 <script lang="ts" setup>
 import { KUploadImageContext } from './types'
-import { toArray } from '@0x-jerry/utils'
+import { Arrayable, toArray } from '@0x-jerry/utils'
 import IconPlus from '~icons/carbon/add'
 import IconDelete from '~icons/carbon/delete'
 import IconEdit from '~icons/carbon/edit'
-import { chooseFiles } from '../utils'
+import { chooseFiles } from './utils'
+import { createUploadImageContext, UploadImageContextKey } from './context'
 
 const props = withDefaults(
   defineProps<{
-    modelValue: string | string[]
+    modelValue: Arrayable<string>
     accept?: string
     multiple?: boolean
     size?: string | { width: string; height: string }
@@ -21,6 +22,10 @@ const props = withDefaults(
     size: '100px',
   },
 )
+
+const ctx = createUploadImageContext()
+
+provide(UploadImageContextKey, ctx)
 
 interface ImageRenderData {
   url: string
@@ -77,6 +82,8 @@ function emitModelValue(urls: string[]) {
 async function uploadImage() {
   const files = await chooseFiles(props)
   if (!files.length) return
+
+  await ctx.hooks.afterSelectImage.applyHooks(files)
 
   const restCount = Array.isArray(props.modelValue)
     ? props.limit
@@ -194,5 +201,6 @@ async function deleteImage(idx: number) {
     >
       <icon-plus />
     </button>
+    <slot name="hook"></slot>
   </div>
 </template>

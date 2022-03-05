@@ -9,7 +9,6 @@ import Icons from 'unplugin-icons/vite'
 
 import OptimizationPersist from 'vite-plugin-optimize-persist'
 import PkgConfig from 'vite-plugin-package-config'
-import { globalResolver } from './vite/globalVars'
 
 export const sharedConfig = {
   resolve: {
@@ -33,7 +32,6 @@ export const sharedConfig = {
     AutoImport({
       dts: 'src/auto-imports.d.ts',
       imports: ['vue', 'vue-router', '@vueuse/core'],
-      resolvers: [globalResolver],
     }),
   ],
 }
