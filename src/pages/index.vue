@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { KUploadImageContext } from '@/components/KUploadImage.types'
+import { KUploadImageContext, KUploadImage } from '@/components'
 
 const data = reactive({
   image: '',

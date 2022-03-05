@@ -24,7 +24,7 @@ export default defineConfig(() => ({
 
     // https://github.com/antfu/vite-plugin-components
     Components({
-      dts: 'src/components.d.ts',
+      dts: 'src/auto-components.d.ts',
     }),
 
     // https://github.com/hannoeru/vite-plugin-pages

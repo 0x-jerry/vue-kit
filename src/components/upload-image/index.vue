@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { KUploadImageContext } from './KUploadImage.types'
+import { KUploadImageContext } from './types'
 import { toArray } from '@0x-jerry/utils'
 import IconPlus from '~icons/carbon/add'
 import IconDelete from '~icons/carbon/delete'
 import IconEdit from '~icons/carbon/edit'
-import { chooseFiles } from './utils'
+import { chooseFiles } from '../utils'
 
 const props = withDefaults(
   defineProps<{

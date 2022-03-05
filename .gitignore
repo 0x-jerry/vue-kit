@@ -110,3 +110,6 @@ node_modules
 dist
 dist-ssr
 *.local
+
+auto-components.d.ts
+auto-imports.d.ts
