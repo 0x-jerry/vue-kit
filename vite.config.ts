@@ -11,9 +11,7 @@ import OptimizationPersist from 'vite-plugin-optimize-persist'
 import PkgConfig from 'vite-plugin-package-config'
 import { globalResolver } from './vite/globalVars'
 
-// https://vitejs.dev/config/
-export default defineConfig(() => ({
-  base: './',
+export const sharedConfig = {
   resolve: {
     alias: {
       '@/': `${path.resolve(__dirname, 'src')}/`,
@@ -22,6 +20,30 @@ export default defineConfig(() => ({
   plugins: [
     Vue(),
 
+    Icons(),
+
+    // https://github.com/windicss/windicss
+    WindiCSS({
+      config: {
+        attributify: true,
+      },
+    }),
+
+    // https://github.com/antfu/unplugin-auto-import
+    AutoImport({
+      dts: 'src/auto-imports.d.ts',
+      imports: ['vue', 'vue-router', '@vueuse/core'],
+      resolvers: [globalResolver],
+    }),
+  ],
+}
+
+// https://vitejs.dev/config/
+export default defineConfig(() => ({
+  base: './',
+  resolve: sharedConfig.resolve,
+  plugins: [
+    ...sharedConfig.plugins,
     // https://github.com/antfu/vite-plugin-components
     Components({
       dts: 'src/auto-components.d.ts',
@@ -31,22 +53,6 @@ export default defineConfig(() => ({
     Pages({
       exclude: ['**/components/*.vue', '**/*.ts'],
     }),
-
-    // https://github.com/antfu/unplugin-auto-import
-    AutoImport({
-      dts: 'src/auto-imports.d.ts',
-      imports: ['vue', 'vue-router', '@vueuse/core'],
-      resolvers: [globalResolver],
-    }),
-
-    // https://github.com/windicss/windicss
-    WindiCSS({
-      config: {
-        attributify: true,
-      },
-    }),
-
-    Icons(),
 
     // https://github.com/antfu/vite-plugin-optimize-persist
     PkgConfig(),
