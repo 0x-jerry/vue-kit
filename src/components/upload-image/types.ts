@@ -1,3 +1,3 @@
-export interface KUploadImageContext {
+export interface KUploadImageUploadContext {
   file: File
 }

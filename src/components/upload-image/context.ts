@@ -4,12 +4,12 @@ import type { InjectionKey } from 'vue'
 
 export type AfterSelectImageHook = (files: File[]) => Awaitable<any>
 
-export interface UploadImageHook {
+export interface KUploadImageHook {
   afterSelectImage: HookManager<AfterSelectImageHook>
 }
 
 export const createUploadImageContext = () => {
-  const hooks: UploadImageHook = {
+  const hooks: KUploadImageHook = {
     afterSelectImage: new HookManager(),
   }
 
@@ -18,6 +18,6 @@ export const createUploadImageContext = () => {
   }
 }
 
-export type UploadImageContext = ReturnType<typeof createUploadImageContext>
+export type KUploadImageContext = ReturnType<typeof createUploadImageContext>
 
-export const UploadImageContextKey = Symbol() as InjectionKey<UploadImageContext>
+export const KUploadImageContextKey = Symbol() as InjectionKey<KUploadImageContext>

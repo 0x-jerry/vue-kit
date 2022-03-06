@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { KUploadImageContext, KUploadImage } from '@/components'
+import { KUploadImageUploadContext, KUploadImage } from '@/components'
 import TestUploadImageHook from './components/TestUploadImageHook.vue'
 
 const data = reactive({
@@ -7,7 +7,7 @@ const data = reactive({
   images: [],
 })
 
-const upload = async (arg: KUploadImageContext) => {
+const upload = async (arg: KUploadImageUploadContext) => {
   return URL.createObjectURL(arg.file)
 }
 </script>

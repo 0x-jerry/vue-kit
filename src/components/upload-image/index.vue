@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import { KUploadImageContext } from './types'
+import { KUploadImageUploadContext } from './types'
 import { Arrayable, toArray } from '@0x-jerry/utils'
 import IconPlus from '~icons/carbon/add'
 import IconDelete from '~icons/carbon/delete'
 import IconEdit from '~icons/carbon/edit'
 import { chooseFiles } from './utils'
-import { createUploadImageContext, UploadImageContextKey } from './context'
+import { createUploadImageContext, KUploadImageContextKey } from './context'
 
 const props = withDefaults(
   defineProps<{
@@ -14,7 +14,7 @@ const props = withDefaults(
     multiple?: boolean
     size?: string | { width: string; height: string }
     limit?: number
-    upload: (ctx: KUploadImageContext) => Promise<string>
+    upload: (ctx: KUploadImageUploadContext) => Promise<string>
   }>(),
   {
     multiple: false,
@@ -25,7 +25,7 @@ const props = withDefaults(
 
 const ctx = createUploadImageContext()
 
-provide(UploadImageContextKey, ctx)
+provide(KUploadImageContextKey, ctx)
 
 interface ImageRenderData {
   url: string
@@ -108,7 +108,7 @@ async function uploadImage() {
 }
 
 async function uploadImageFile(file: File) {
-  const ctx: KUploadImageContext = {
+  const ctx: KUploadImageUploadContext = {
     file,
   }
 

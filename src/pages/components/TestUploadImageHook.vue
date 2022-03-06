@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { UploadImageContextKey } from '@/components/upload-image/context'
+import { KUploadImageContextKey } from '@/components/upload-image/context'
 
-const uploadImageCtx = inject(UploadImageContextKey)
+const uploadImageCtx = inject(KUploadImageContextKey)
 
 const names = ref<string[]>([])
 function hook(files: File[]) {
