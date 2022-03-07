@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { KUploadImageUploadContext, KUploadImage } from '@/components'
+import { KUploadImageUploadContext, KUploadImage, KImageCropper } from '@/components'
 import TestUploadImageHook from './components/TestUploadImageHook.vue'
 
 const data = reactive({
@@ -21,5 +21,7 @@ const upload = async (arg: KUploadImageUploadContext) => {
     </k-upload-image>
 
     <k-upload-image v-model="data.images" :upload="upload" multiple :limit="2" />
+
+    <k-image-cropper url="/avatar.jpg" />
   </div>
 </template>

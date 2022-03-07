@@ -60,6 +60,7 @@
     "optimizeDeps": {
       "include": [
         "@0x-jerry/utils",
+        "cropperjs",
         "vue",
         "vue-router"
       ]
