@@ -22,6 +22,6 @@ const upload = async (arg: KUploadImageUploadContext) => {
 
     <k-upload-image v-model="data.images" :upload="upload" multiple :limit="2" />
 
-    <k-image-cropper url="/avatar.jpg" />
+    <k-image-cropper url="avatar.jpg" />
   </div>
 </template>
