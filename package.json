@@ -28,7 +28,8 @@
     "access": "public"
   },
   "files": [
-    "dist"
+    "dist",
+    "*.d.ts"
   ],
   "scripts": {
     "dev": "vite",
