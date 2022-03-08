@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { Fn } from '@0x-jerry/utils'
-
 const props = defineProps<{
   disabled?: boolean
   loading?: boolean
@@ -53,12 +51,12 @@ async function handleClick(e: MouseEvent) {
   @apply border border-gray-200;
   @apply bg-gray-50;
 
-  &.is-loading {
-    // @apply
-  }
-
   &:disabled {
     @apply cursor-not-allowed;
+  }
+
+  &.is-loading {
+    @apply cursor-wait;
   }
 }
 </style>
