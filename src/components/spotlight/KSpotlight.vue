@@ -2,7 +2,7 @@
 import { computed, onMounted, reactive, ref, watch, watchEffect } from 'vue'
 import { useGlobalKeydown } from '@/hooks'
 import { ISpotlightGroup, ISpotlightOption } from './spotlight'
-import { createNavigator, KeyboardNavigator, sleep } from '@0x-jerry/utils'
+import { createDomNavigator, KeyboardNavigator, sleep } from '@0x-jerry/utils'
 
 interface SpotlightProps {
   visible: boolean
@@ -18,7 +18,7 @@ let keyboardNav: KeyboardNavigator | null = null
 
 onMounted(() => {
   if (spotlightBox.value) {
-    keyboardNav = createNavigator(spotlightBox.value, {
+    keyboardNav = createDomNavigator(spotlightBox.value, {
       onfocus(e) {
         const pre = document.activeElement as HTMLElement | null
 
