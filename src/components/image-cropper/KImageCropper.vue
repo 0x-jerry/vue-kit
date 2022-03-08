@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { createPromiseInstance } from '@0x-jerry/utils'
 import CropperJS from 'cropperjs'
-import { KUploadImageContextKey } from '../upload-image/context'
+import { KImageUploaderContextKey } from '../image-uploader'
 
 const props = defineProps<{
   url?: string
@@ -10,7 +10,7 @@ const emit = defineEmits<{
   (type: 'cropped', url: string): void
 }>()
 
-const ctx = inject(KUploadImageContextKey)
+const ctx = inject(KImageUploaderContextKey)
 if (ctx) {
   ctx.hooks.afterSelectImage.add(cropImage)
 }

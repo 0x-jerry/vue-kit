@@ -1,4 +1,4 @@
 export * from './button'
-export * from './upload-image'
+export * from './image-uploader'
 export * from './image-cropper'
 export * from './modal'
