@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed, onMounted, reactive, ref, watch, watchEffect } from 'vue'
-import { useKeydown } from '@/hooks'
+import { useGlobalKeydown } from '@/hooks'
 import { ISpotlightGroup, ISpotlightOption } from './spotlight'
 import { createNavigator, KeyboardNavigator, sleep } from '@0x-jerry/utils'
 
@@ -108,7 +108,7 @@ function enterItem(o: ISpotlightOption) {
   alert(o.title)
 }
 
-useKeydown('esc', () => {
+useGlobalKeydown('esc', () => {
   // if (input.value === document.activeElement) {
   //   input.value.blur()
   //   return
@@ -117,7 +117,7 @@ useKeydown('esc', () => {
   emit('update:visible', false)
 })
 
-useKeydown('meta,k', () => {
+useGlobalKeydown('meta,k', () => {
   emit('update:visible', true)
   input.value?.focus()
 })
