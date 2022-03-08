@@ -2,11 +2,19 @@
   "name": "@0x-jerry/vue-kit",
   "description": "Vue component kit.",
   "version": "1.0.7",
-  "main": "dist/vue-kit.umd.js",
-  "types": "dist/types/lib.d.ts",
+  "main": "./dist/vue-kit.umd.js",
+  "types": "./dist/types/lib.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/0x-jerry/vue-kit.git"
+  },
+  "exports": {
+    ".": {
+      "default": "./dist/vue-kit.umd.js"
+    },
+    "./resolver": {
+      "default": "./dist/resolver.js"
+    }
   },
   "keywords": [],
   "author": "",
