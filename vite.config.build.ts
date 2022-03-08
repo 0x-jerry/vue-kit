@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite'
 import path from 'path'
-import { sharedConfig } from 'vite.config'
+import { sharedConfig } from './vite.config'
 
 // https://vitejs.dev/config/
 export default defineConfig(() => ({
