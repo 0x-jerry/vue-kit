@@ -1,3 +1,3 @@
 import 'cropperjs/dist/cropper.css'
 
-export { default as KImageCropper } from './index.vue'
+export { default as KImageCropper } from './KImageCropper.vue'
