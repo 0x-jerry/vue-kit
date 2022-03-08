@@ -15,7 +15,7 @@ const upload = async (arg: KImageUploaderUploadContext) => {
 
 <template>
   <test-box title="Image Uploader">
-    <k-image-uploader v-model="data.image" :upload="upload">
+    <k-image-uploader v-model="data.image" :upload="upload" class="mb-3">
       <template #hook>
         <test-upload-image-hook></test-upload-image-hook>
       </template>
