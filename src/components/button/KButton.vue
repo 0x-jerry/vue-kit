@@ -1,11 +1,48 @@
 <script lang="ts" setup>
-defineProps<{
-  disabled: Boolean
+import { Fn } from '@0x-jerry/utils'
+
+const props = defineProps<{
+  disabled?: boolean
+  loading?: boolean
+  click?: (e: MouseEvent) => any
 }>()
+
+const emit = defineEmits<{
+  (type: 'click', e: MouseEvent): void
+}>()
+
+const data = reactive({
+  isExecuteFunction: false,
+})
+
+const _loading = computed(() => props.loading || data.isExecuteFunction)
+
+const _disabled = computed(() => props.loading || props.disabled || data.isExecuteFunction)
+
+async function handleClick(e: MouseEvent) {
+  emit('click', e)
+
+  if (props.click) {
+    data.isExecuteFunction = true
+
+    try {
+      await props.click(e)
+    } finally {
+      data.isExecuteFunction = false
+    }
+  }
+}
 </script>
 
 <template>
-  <button class="k-button">
+  <button
+    class="k-button"
+    :class="{
+      'is-loading': _loading,
+    }"
+    :disabled="_disabled"
+    @click="handleClick"
+  >
     <slot></slot>
   </button>
 </template>
@@ -14,5 +51,14 @@ defineProps<{
 .k-button {
   @apply px-2 py-1;
   @apply border border-gray-200;
+  @apply bg-gray-50;
+
+  &.is-loading {
+    // @apply
+  }
+
+  &:disabled {
+    @apply cursor-not-allowed;
+  }
 }
 </style>
