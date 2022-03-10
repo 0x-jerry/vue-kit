@@ -48,11 +48,32 @@ async function handleClick(e: MouseEvent) {
 <style lang="less">
 .k-button {
   @apply px-2 py-1;
+  @apply text-gray-800;
   @apply border border-gray-200;
   @apply bg-gray-50;
 
+  @apply transition transition-colors;
+
+  &:hover {
+    @apply text-blue-500 border-current;
+  }
+
+  &:active {
+    @apply text-blue-700 border-current;
+  }
+
+  &:focus {
+    @apply border-blue-500 outline-none;
+  }
+
   &:disabled {
     @apply cursor-not-allowed;
+    @apply text-gray-400;
+
+    &:hover {
+      @apply text-gray-400;
+      @apply border-gray-200;
+    }
   }
 
   &.is-loading {

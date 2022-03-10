@@ -190,8 +190,9 @@ async function deleteImage(idx: number) {
     </template>
     <button
       :style="imageStyle"
-      border="~ solid current rounded-sm"
+      border="~ solid current rounded-sm focus:blue-500"
       transition="~ colors"
+      outline="none"
       @click="uploadImage"
       v-if="showUploadButton"
       flex="~"
