@@ -1,11 +1,46 @@
 <script lang="ts" setup>
 defineProps<{
-  disabled: Boolean
+  modelValue: string
+  disabled?: Boolean
 }>()
+
+const emit = defineEmits<{
+  (type: 'update:modelValue', v: string): void
+}>()
+
+function handleInput(e: Event) {
+  const ev = e as InputEvent
+
+  emit('update:modelValue', ev.data || '')
+}
 </script>
 
 <template>
-  <div class="k-input"></div>
+  <span class="k-input--box">
+    <input class="k-input" @input="handleInput" />
+  </span>
 </template>
 
-<style></style>
+<style lang="less">
+.k-input--box {
+  display: inline-block;
+  width: 160px;
+}
+
+.k-input {
+  @apply border border-gray-200;
+  @apply transition transition-colors;
+  @apply px-1;
+  @apply w-full;
+
+  &:focus {
+    @apply outline-none;
+  }
+
+  &:focus,
+  &:active,
+  &:hover {
+    @apply border-blue-500;
+  }
+}
+</style>

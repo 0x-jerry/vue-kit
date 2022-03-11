@@ -6,11 +6,13 @@ import { KImageUploaderContextKey } from '../image-uploader'
 const props = defineProps<{
   url?: string
 }>()
+
 const emit = defineEmits<{
   (type: 'cropped', url: string): void
 }>()
 
 const ctx = inject(KImageUploaderContextKey)
+
 if (ctx) {
   ctx.hooks.afterSelectImage.add(cropImage)
 }
@@ -38,6 +40,7 @@ function cropImage(files: File[]) {
 
 const imageEl = ref<HTMLImageElement>()
 const previewImageEl = ref<HTMLDivElement>()
+
 watch(
   () => [props.url, data.url, imageEl.value],
   () => {
