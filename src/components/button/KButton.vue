@@ -1,45 +1,27 @@
 <script lang="ts" setup>
-const props = defineProps<{
-  disabled?: boolean
-  loading?: boolean
-  click?: (e: MouseEvent) => any
-}>()
+import { useClick, useClickProps } from '@/hooks/useClick'
 
-const emit = defineEmits<{
-  (type: 'click', e: MouseEvent): void
-}>()
+const $click = useClick()
 
-const data = reactive({
-  isExecuteFunction: false,
+const props = defineProps({
+  ...useClickProps,
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
 })
 
-const _loading = computed(() => props.loading || data.isExecuteFunction)
-
-const _disabled = computed(() => props.loading || props.disabled || data.isExecuteFunction)
-
-async function handleClick(e: MouseEvent) {
-  emit('click', e)
-
-  if (props.click) {
-    data.isExecuteFunction = true
-
-    try {
-      await props.click(e)
-    } finally {
-      data.isExecuteFunction = false
-    }
-  }
-}
+const _disabled = computed(() => props.disabled || $click.processing)
 </script>
 
 <template>
   <button
     class="k-button"
     :class="{
-      'is-loading': _loading,
+      'is-loading': $click.processing,
     }"
     :disabled="_disabled"
-    @click="handleClick"
+    @click="$click.handler"
   >
     <slot></slot>
   </button>
