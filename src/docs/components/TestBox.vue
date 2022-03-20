@@ -11,9 +11,9 @@ defineProps<{
         {{ title }}
       </slot>
     </div>
-    <div class="test-content" p="x-2">
+    <k-flex p="x-2">
       <slot></slot>
-    </div>
+    </k-flex>
   </div>
 </template>
 

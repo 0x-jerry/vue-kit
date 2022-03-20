@@ -37,9 +37,40 @@ const menus: KMenuItem[] = [
 <template>
   <test-box title="Context Menu">
     <k-context-menu :menus="menus">
-      <div w="400px" h="100px" border="~ gray-300" flex="~ " align="items-center" justify="center">
-        <span text="gray-300"> Use Right Click To Open Context Menu </span>
-      </div>
+      <template #reference>
+        <div
+          w="400px"
+          h="100px"
+          border="~ gray-300"
+          flex="~ "
+          align="items-center"
+          justify="center"
+        >
+          <span text="gray-300"> Use Right Click To Open Context Menu </span>
+        </div>
+      </template>
+    </k-context-menu>
+
+    <!--  -->
+
+    <k-context-menu :min-width="200">
+      <template #reference>
+        <div
+          w="400px"
+          h="100px"
+          border="~ gray-300"
+          flex="~ "
+          align="items-center"
+          justify="center"
+        >
+          <span text="gray-300"> Use Right Click To Open Context Menu </span>
+        </div>
+      </template>
+
+      <k-context-menu-item :icon="EditIcon" suffix="⌘ X"> Edit </k-context-menu-item>
+      <k-context-menu-divide></k-context-menu-divide>
+      <k-context-menu-item :icon="UndoIcon" disabled suffix="⌘ Z"> Undo </k-context-menu-item>
+      <k-context-menu-item :icon="RedoIcon" suffix="⌘ R"> Redo </k-context-menu-item>
     </k-context-menu>
   </test-box>
 </template>
