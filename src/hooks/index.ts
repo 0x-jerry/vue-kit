@@ -1,2 +1,2 @@
 export * from './useKeydown'
-export * from './useClick'
+export * from './useOnClick'

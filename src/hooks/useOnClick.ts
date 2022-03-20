@@ -1,6 +1,6 @@
 import { buildProps, GetPropsType } from '@/utils'
 import type { Awaitable } from '@0x-jerry/utils'
-import { ComponentInternalInstance, ObjectDirective, PropType } from 'vue'
+import { PropType } from 'vue'
 import { useProps } from './useProps'
 
 export const useClickProps = buildProps({
@@ -16,7 +16,7 @@ export const useClickProps = buildProps({
 
 export type UseClickPropsType = GetPropsType<typeof useClickProps>
 
-export function useClick() {
+export function useOnClick() {
   const loading = ref(false)
 
   const props = useProps<UseClickPropsType>()

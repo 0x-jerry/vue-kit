@@ -5,13 +5,8 @@ export const onGlobalKeydown = createKeyboardHandler((listener) => {
 })
 
 export function useGlobalKeydown(key: string, listener: (e: KeyboardEvent) => any) {
-  let cancel: null | (() => void)
-
   onMounted(() => {
-    cancel = onGlobalKeydown(key, listener)
-  })
-
-  onUnmounted(() => {
-    cancel?.()
+    const cancel = onGlobalKeydown(key, listener)
+    return () => cancel()
   })
 }

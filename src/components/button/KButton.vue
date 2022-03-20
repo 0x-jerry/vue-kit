@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { useClick, useClickProps } from '@/hooks/useClick'
+import { useOnClick, useClickProps } from '@/hooks/useOnClick'
 
-const $click = useClick()
+const $click = useOnClick()
 
 const props = defineProps({
   ...useClickProps,
