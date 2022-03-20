@@ -40,8 +40,7 @@ const isVisible = computed(() => {
 watch(
   () => isVisible.value,
   () => {
-    pos.x = mouse.x.value
-    pos.y = mouse.y.value
+    updateMenuPosition()
   },
 )
 
@@ -62,6 +61,8 @@ function setVisible(val: boolean) {
 
 function showMenu(e: MouseEvent) {
   if (props.customOpenMenu) return
+
+  updateMenuPosition()
 
   e.preventDefault()
   setVisible(true)
@@ -87,6 +88,11 @@ function isDivide(item: KMenuItem): item is KMenuDivide {
 
 function isButton(item: KMenuItem): item is KMenuButton {
   return item !== 'divide'
+}
+
+function updateMenuPosition() {
+  pos.x = mouse.x.value
+  pos.y = mouse.y.value
 }
 </script>
 

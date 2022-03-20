@@ -35,13 +35,13 @@ const menus: KMenuItem[] = [
 </script>
 
 <template>
-  <test-box title="Context Menu">
+  <test-box title="Context Menu" class="select-none">
     <k-context-menu :menus="menus">
       <template #reference>
         <div
           w="400px"
           h="100px"
-          border="~ gray-300"
+          border="~ gray-300 hover:blue-400"
           flex="~ "
           align="items-center"
           justify="center"
@@ -58,7 +58,7 @@ const menus: KMenuItem[] = [
         <div
           w="400px"
           h="100px"
-          border="~ gray-300"
+          border="~ gray-300 hover:blue-400"
           flex="~ "
           align="items-center"
           justify="center"
