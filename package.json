@@ -50,7 +50,7 @@
     "dts": true
   },
   "dependencies": {
-    "@0x-jerry/utils": "^1.1.2",
+    "@0x-jerry/utils": "^1.1.4",
     "@vueuse/core": "^7.7.1",
     "cropperjs": "^1.5.12",
     "vue": "^3.2.31"
