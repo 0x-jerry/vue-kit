@@ -40,8 +40,10 @@ const isVisible = computed(() => {
 
 watch(
   () => isVisible.value,
-  () => {
-    updateMenuPosition()
+  (val) => {
+    if (val) {
+      updateMenuPosition()
+    }
   },
 )
 
@@ -49,7 +51,9 @@ useGlobalClickEvent(() => hideMenu())
 
 const contextMenuStyle = computed(() => {
   return {
-    transform: `translate(${pos.x}px, ${pos.y}px)`,
+    // transform: `translate(${pos.x}px, ${pos.y}px)`,
+    top: pos.y + 'px',
+    left: pos.x + 'px',
     zIndex: props.z,
     minWidth: typeof props.minWidth === 'string' ? props.minWidth : `${props.minWidth}px`,
   }
@@ -101,15 +105,17 @@ function updateMenuPosition() {
   <div class="k-context-menu--container" @contextmenu="showMenu" @click="hideMenu">
     <slot name="reference"></slot>
 
-    <div class="k-context-menu" :style="contextMenuStyle" v-show="isVisible" @click.stop>
-      <slot>
-        <template v-for="o in menus">
-          <k-context-menu-item v-if="isButton(o)" @click="o.onclick!" v-bind="o">
-          </k-context-menu-item>
-          <k-context-menu-divide v-if="isDivide(o)"></k-context-menu-divide>
-        </template>
-      </slot>
-    </div>
+    <transition name="k-context-menu">
+      <div class="k-context-menu" :style="contextMenuStyle" v-show="isVisible" @click.stop>
+        <slot>
+          <template v-for="o in menus">
+            <k-context-menu-item v-if="isButton(o)" @click="o.onclick!" v-bind="o">
+            </k-context-menu-item>
+            <k-context-menu-divide v-if="isDivide(o)"></k-context-menu-divide>
+          </template>
+        </slot>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -124,5 +130,17 @@ function updateMenuPosition() {
   @apply py-2 rounded;
   box-shadow: 0 0 10px #e6e6e6;
   @apply bg-white;
+
+  &-enter-active,
+  &-leave-active {
+    @apply transition ease-in-out;
+    transition-property: transform opacity;
+  }
+
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+    transform: translateY(20px);
+  }
 }
 </style>
