@@ -17,6 +17,7 @@ const props = withDefaults(
     minWidth: 150,
     showIcon: true,
     customOpenMenu: false,
+    menus: () => [],
   },
 )
 
@@ -101,17 +102,13 @@ function updateMenuPosition() {
     <slot name="reference"></slot>
 
     <div class="k-context-menu" :style="contextMenuStyle" v-show="isVisible" @click.stop>
-      <template v-if="menus?.length">
+      <slot>
         <template v-for="o in menus">
           <k-context-menu-item v-if="isButton(o)" @click="o.onclick!" v-bind="o">
           </k-context-menu-item>
           <k-context-menu-divide v-if="isDivide(o)"></k-context-menu-divide>
         </template>
-      </template>
-
-      <template v-else>
-        <slot></slot>
-      </template>
+      </slot>
     </div>
   </div>
 </template>
