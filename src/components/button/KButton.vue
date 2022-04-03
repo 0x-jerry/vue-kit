@@ -11,14 +11,14 @@ const props = defineProps({
   },
 })
 
-const _disabled = computed(() => props.disabled || $click.processing)
+const _disabled = computed(() => props.disabled || $click.isProcessing)
 </script>
 
 <template>
   <button
     class="k-button"
     :class="{
-      'is-loading': $click.processing,
+      'is-loading': $click.isProcessing,
     }"
     :disabled="_disabled"
     @click="$click.handler"
