@@ -14,15 +14,15 @@ const gapSize = computed(() => parseStyleProperty(props.gap))
 </script>
 
 <template>
-  <div class="k-flex">
+  <div class="k-row">
     <slot></slot>
   </div>
 </template>
 
 <style>
-.k-flex {
+.k-row {
   @apply flex flex-wrap;
 
-  gap: v-bind('gapSize');
+  column-gap: v-bind('gapSize');
 }
 </style>
