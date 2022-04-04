@@ -83,6 +83,10 @@ async function uploadImage() {
   const files = await chooseFiles(props)
   if (!files.length) return
 
+  await resolveUploadImages(files)
+}
+
+async function resolveUploadImages(files: File[]) {
   await ctx.hooks.afterSelectImage.applyHooks(files)
 
   const restCount = Array.isArray(props.modelValue)
@@ -139,6 +143,16 @@ async function deleteImage(idx: number) {
   urls.splice(idx, 1)
 
   emitModelValue(urls)
+}
+
+async function onDrop(evt: DragEvent) {
+  evt.preventDefault()
+  evt.stopPropagation()
+  const files = evt.dataTransfer?.files
+
+  if (files) {
+    await resolveUploadImages([...files])
+  }
 }
 </script>
 
@@ -199,6 +213,7 @@ async function deleteImage(idx: number) {
       justify="center"
       align="items-center"
       text="gray-300 hover:blue-500 2xl"
+      @drop="onDrop"
     >
       <icon-plus />
     </button>

@@ -3,7 +3,7 @@ import { parseStyleProperty } from '@/utils'
 
 const props = withDefaults(
   defineProps<{
-    gap: number | string
+    gap?: number | string
   }>(),
   {
     gap: '0.25rem',
