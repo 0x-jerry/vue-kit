@@ -50,6 +50,7 @@ function handleClick(e: MouseEvent) {
     @apply text-gray-400;
     @apply text-base;
     @apply flex items-center gap-2;
+    @apply cursor-pointer;
 
     &:hover {
       @apply bg-gray-100;

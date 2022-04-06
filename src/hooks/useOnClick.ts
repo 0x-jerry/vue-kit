@@ -9,7 +9,7 @@ export const useClickProps = buildProps({
     default: false,
   },
   click: {
-    type: Function as PropType<() => Awaitable<any>>,
+    type: Function as PropType<(payload: MouseEvent) => Awaitable<any>>,
     required: false,
   },
 })
@@ -17,24 +17,25 @@ export const useClickProps = buildProps({
 export type UseClickPropsType = GetPropsType<typeof useClickProps>
 
 export function useOnClick() {
-  const loading = ref(false)
+  const _isProcessing = ref(false)
 
   const props = useProps<UseClickPropsType>()
 
-  const wrapper = async () => {
-    loading.value = true
+  const wrapper = async (payload: MouseEvent) => {
+    _isProcessing.value = true
+
     try {
-      await props?.click?.()
+      await props?.click?.(payload)
     } catch (error) {
       throw error
     } finally {
-      loading.value = false
+      _isProcessing.value = false
     }
   }
 
   return {
-    get processing() {
-      return unref(loading) || props?.loading
+    get isProcessing() {
+      return unref(_isProcessing) || props?.loading
     },
     handler: wrapper,
   }
