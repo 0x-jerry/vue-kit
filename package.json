@@ -14,7 +14,8 @@
     },
     "./resolver": {
       "default": "./dist/resolver.js"
-    }
+    },
+    "./*": "./*"
   },
   "keywords": [],
   "author": "",
