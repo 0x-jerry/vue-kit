@@ -38,6 +38,7 @@
     "build:component": "vite build -c vite.config.build.ts",
     "build:resolver": "tsup",
     "build:dts": "vue-tsc -d --emitDeclarationOnly --outDir dist/types -p tsconfig.build.json",
+    "test": "vue-tsc --noEmit -p tsconfig.build.json",
     "serve": "vite preview",
     "release": "x-release"
   },

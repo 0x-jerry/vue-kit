@@ -2,7 +2,7 @@
 import { computed, reactive, watch, watchEffect } from 'vue'
 import { useDrag } from './utils'
 
-interface LoadedRange {
+export interface LoadedRange {
   /**
    * 0 - 1
    */
@@ -51,7 +51,7 @@ watch(
     }
 
     data.current = props.value
-  }
+  },
 )
 
 const startDrag = useDrag({

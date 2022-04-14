@@ -4,7 +4,7 @@ import { useGlobalKeydown } from '@/hooks'
 import { ISpotlightGroup, ISpotlightOption } from './spotlight'
 import { createDomNavigator, KeyboardNavigator, sleep } from '@0x-jerry/utils'
 
-interface SpotlightProps {
+export interface SpotlightProps {
   visible: boolean
   items: ISpotlightOption[]
   groups: ISpotlightGroup[]
