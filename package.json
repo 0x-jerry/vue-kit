@@ -2,7 +2,7 @@
   "name": "@0x-jerry/vue-kit",
   "description": "Vue component kit.",
   "version": "1.1.4",
-  "main": "./dist/vue-kit.umd.js",
+  "main": "./dist/vue-kit.es.js",
   "types": "./dist/types/lib.d.ts",
   "repository": {
     "type": "git",
@@ -10,7 +10,7 @@
   },
   "exports": {
     ".": {
-      "default": "./dist/vue-kit.umd.js"
+      "default": "./dist/vue-kit.es.js"
     },
     "./resolver": {
       "default": "./dist/resolver.js"

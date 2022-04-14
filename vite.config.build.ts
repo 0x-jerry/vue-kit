@@ -8,8 +8,8 @@ export default defineConfig(() => ({
   build: {
     lib: {
       entry: path.resolve('src/lib.ts'),
-      formats: ['umd'],
-      name: '[name].js',
+      formats: ['es'],
+      name: '[name].[format].js',
       fileName: 'vue-kit',
     },
     rollupOptions: {

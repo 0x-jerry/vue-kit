@@ -14,7 +14,7 @@ export function VueKitResolver(opt: VueKitResolverOption = {}): ComponentResolve
     if (!name.match(/^K[A-Z]/)) return
 
     return {
-      importName: name,
+      name,
       from: '@0x-jerry/vue-kit',
     }
   }
