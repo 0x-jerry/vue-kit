@@ -15,7 +15,7 @@ export function VueKitResolver(opt: VueKitResolverOption = {}): ComponentResolve
 
     return {
       importName: name,
-      path: '@0x-jerry/vue-kit',
+      from: '@0x-jerry/vue-kit',
     }
   }
 }
