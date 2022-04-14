@@ -1,1 +1,1 @@
-export * from './KButton.vue'
+export { default as KButton } from './KButton.vue'

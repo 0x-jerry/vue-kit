@@ -1,1 +1,1 @@
-export * from './KInput.vue'
+export { default as KInput } from './KInput.vue'

@@ -1,1 +1,1 @@
-export * from './KModal.vue'
+export { default as KModal } from './KModal.vue'

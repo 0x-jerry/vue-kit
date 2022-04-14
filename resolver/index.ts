@@ -13,10 +13,8 @@ export function VueKitResolver(opt: VueKitResolverOption = {}): ComponentResolve
     // ex. KButton
     if (!name.match(/^K[A-Z]/)) return
 
-    const componentName = name.slice(1)
-
     return {
-      importName: componentName,
+      importName: name,
       path: '@0x-jerry/vue-kit',
     }
   }
