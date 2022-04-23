@@ -4,9 +4,11 @@ import { parseStyleProperty } from '@/utils'
 const props = withDefaults(
   defineProps<{
     gap: number | string
+    tag?: string
   }>(),
   {
     gap: '0.25rem',
+    tag: 'div',
   },
 )
 
@@ -14,9 +16,9 @@ const gapSize = computed(() => parseStyleProperty(props.gap))
 </script>
 
 <template>
-  <div class="k-row">
+  <component :is="tag" class="k-row">
     <slot></slot>
-  </div>
+  </component>
 </template>
 
 <style>

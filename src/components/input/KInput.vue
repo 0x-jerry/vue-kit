@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 defineProps<{
   modelValue: string
-  disabled?: Boolean
+  disabled?: boolean
 }>()
 
 const emit = defineEmits<{
