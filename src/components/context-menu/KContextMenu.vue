@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { useGlobalClickEvent } from '@/hooks/useMouseEvent'
+import { isWindow } from '@vueuse/core'
 import { KContextMenuContextKey } from './context'
 import { KMenuButton, KMenuDivide, KMenuItem } from './types'
 
@@ -96,8 +97,8 @@ function isButton(item: KMenuItem): item is KMenuButton {
 }
 
 function updateMenuPosition() {
-  pos.x = mouse.x.value
-  pos.y = mouse.y.value
+  pos.x = mouse.x.value - window.scrollX
+  pos.y = mouse.y.value - window.scrollY
 }
 </script>
 
