@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { RadioGroupContextKey } from './hooks'
+import { RadioGroupContextKey } from './context'
 
 const props = defineProps<{
   modelValue?: unknown

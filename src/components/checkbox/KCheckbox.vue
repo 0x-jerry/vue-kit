@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { CheckboxGroupContextKey } from './hooks'
+import { CheckboxGroupContextKey } from './context'
 
 const props = defineProps<{
   modelValue?: boolean
