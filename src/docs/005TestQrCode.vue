@@ -7,6 +7,8 @@ const data = reactive({})
 
 <template>
   <test-box title="QR Code">
-    <k-qr-code content="1234"></k-qr-code>
+    <k-row>
+      <k-qr-code content="1234"></k-qr-code>
+    </k-row>
   </test-box>
 </template>

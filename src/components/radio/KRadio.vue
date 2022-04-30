@@ -1,33 +1,74 @@
 <script lang="ts" setup>
+import { RadioGroupContextKey } from './hooks'
+
 const props = defineProps<{
-  modelValue: unknown
+  modelValue?: unknown
   value: unknown
+  disabled?: boolean
 }>()
 
-const checked = computed(() => props.value === props.modelValue)
+const emit = defineEmits({
+  'update:modelValue': (val: unknown) => true,
+})
+const ctx = inject(RadioGroupContextKey, null)
+
+const checked = computed(() => props.value === (ctx ? ctx.value : props.modelValue))
+
+const isDisabled = computed(() => props.disabled || ctx?.disabled)
 
 const slots = useSlots()
+
+function handleChange() {
+  emit('update:modelValue', props.value)
+
+  ctx?.change(props.value)
+}
 </script>
 
 <template>
   <template v-if="slots.default">
-    <label class="k-radio--label">
-      <input class="k-radio" type="radio" :checked="checked" />
+    <label class="k-radio--label" :class="{ 'is-disabled': isDisabled }">
+      <input
+        class="k-radio"
+        type="radio"
+        :checked="checked"
+        :value="value"
+        @change="handleChange"
+        :disabled="isDisabled"
+      />
       <slot></slot>
     </label>
   </template>
   <template v-else>
-    <input class="k-radio" type="radio" :checked="checked" />
+    <input
+      class="k-radio"
+      type="radio"
+      :checked="checked"
+      :value="value"
+      @change="handleChange"
+      :disabled="isDisabled"
+    />
   </template>
 </template>
 
 <style lang="less">
 .k-radio--label {
+  cursor: pointer;
+
+  &.is-disabled {
+    cursor: not-allowed;
+  }
+
   .k-radio {
     @apply mr-2;
   }
 }
 
 .k-radio {
+  cursor: pointer;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 }
 </style>
