@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { CheckboxGroupContextKey } from './context'
+import { CheckboxGroupContext, CheckboxGroupContextKey } from './context'
 
 const props = defineProps<{
   modelValue: unknown[]
@@ -10,7 +10,7 @@ const emit = defineEmits({
   'update:modelValue': (val: unknown[]) => true,
 })
 
-provide(CheckboxGroupContextKey, {
+const ctx: CheckboxGroupContext = {
   get value() {
     return props.modelValue
   },
@@ -31,7 +31,9 @@ provide(CheckboxGroupContextKey, {
 
     emit('update:modelValue', [...new Set(v)])
   },
-})
+}
+
+provide(CheckboxGroupContextKey, ctx)
 </script>
 
 <template>

@@ -1,8 +1,8 @@
 import { InjectionKey } from 'vue'
 
-export const RadioGroupContextKey = Symbol() as InjectionKey<RadioGroupContext>
+export const SelectContextKey = Symbol() as InjectionKey<SelectContext>
 
-export interface RadioGroupContext {
+export interface SelectContext {
   readonly disabled: boolean
   readonly value: unknown
   change(value: unknown): void

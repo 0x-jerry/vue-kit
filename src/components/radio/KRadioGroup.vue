@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { RadioGroupContextKey } from './context'
+import { RadioGroupContext, RadioGroupContextKey } from './context'
 
 const props = defineProps<{
   modelValue: unknown
@@ -10,7 +10,7 @@ const emit = defineEmits({
   'update:modelValue': (val: any) => true,
 })
 
-provide(RadioGroupContextKey, {
+const ctx: RadioGroupContext = {
   get value() {
     return props.modelValue
   },
@@ -22,7 +22,9 @@ provide(RadioGroupContextKey, {
 
     emit('update:modelValue', val)
   },
-})
+}
+
+provide(RadioGroupContextKey, ctx)
 </script>
 
 <template>
