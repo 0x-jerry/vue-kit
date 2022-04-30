@@ -157,7 +157,7 @@ async function onDrop(evt: DragEvent) {
 </script>
 
 <template>
-  <div class="k-upload-image" flex="~ wrap" grid="gap-2">
+  <div class="k-upload-image">
     <template v-for="(ctx, idx) in images" :key="`${idx}:${ctx.url}`">
       <slot
         name="image"
@@ -166,37 +166,12 @@ async function onDrop(evt: DragEvent) {
         :re-upload="() => reUploadImage(idx)"
         :delete="() => deleteImage(idx)"
       >
-        <span class="relative" :style="imageStyle" border="~ solid gray-200">
-          <img
-            class="block"
-            w="full"
-            h="full"
-            object="contain"
-            :src="ctx.url"
-            :title="ctx.url"
-            text="gray-300"
-          />
-          <div
-            class="absolute top-0 left-0"
-            z="10"
-            bg="gray-700 opacity-50"
-            opacity="0 hover:100"
-            transition="~ colors"
-            w="full"
-            h="full"
-            flex="~"
-            justify="center"
-            align="items-center"
-          >
+        <span class="k-upload-image--image__box" :style="imageStyle">
+          <img class="k-upload-image--image block" :src="ctx.url" :title="ctx.url" />
+          <div class="k-upload-image--actions">
             <div flex="~" grid="gap-x-2">
-              <icon-edit
-                class="text-light-900 hover:text-white cursor-pointer transition transition-colors"
-                @click="reUploadImage(idx)"
-              />
-              <icon-delete
-                @click="deleteImage(idx)"
-                class="text-light-900 hover:text-white cursor-pointer transition transition-colors"
-              />
+              <icon-edit class="k-upload-image--actions__icon" @click="reUploadImage(idx)" />
+              <icon-delete class="k-upload-image--actions__icon" @click="deleteImage(idx)" />
             </div>
           </div>
         </span>
@@ -204,15 +179,9 @@ async function onDrop(evt: DragEvent) {
     </template>
     <button
       :style="imageStyle"
-      border="~ solid current rounded-sm focus:blue-500"
-      transition="~ colors"
-      outline="none"
+      class="k-upload-image--button"
       @click="uploadImage"
       v-if="showUploadButton"
-      flex="~"
-      justify="center"
-      align="items-center"
-      text="gray-300 hover:blue-500 2xl"
       @drop="onDrop"
     >
       <icon-plus />
@@ -220,3 +189,39 @@ async function onDrop(evt: DragEvent) {
     <slot name="hook"></slot>
   </div>
 </template>
+
+<style lang="less">
+.k-upload-image {
+  @apply flex flex-wrap gap-2;
+
+  &--image__box {
+    @apply relative border border-solid border-gray-200;
+  }
+
+  &--image {
+    @apply block w-full h-full object-contain text-gray-300;
+  }
+
+  &--actions {
+    @apply absolute top-0 left-0;
+    @apply z-1;
+    @apply bg-gray-700 bg-opacity-50;
+    @apply opacity-0 hover:opacity-100;
+    @apply transition transition-colors;
+    @apply w-full h-full;
+    @apply flex justify-center items-center;
+
+    &__icon {
+      @apply text-light-900 hover:text-white cursor-pointer transition transition-colors;
+    }
+  }
+
+  &--button {
+    @apply border border-solid border-current rounded-sm hover:border-blue-500;
+    @apply transition transition-colors;
+    @apply outline-none;
+    @apply flex justify-center items-center;
+    @apply text-gray-300 hover:text-blue-500 text-2xl;
+  }
+}
+</style>

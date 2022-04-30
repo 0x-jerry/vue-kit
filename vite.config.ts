@@ -1,11 +1,13 @@
 import { defineConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
-import WindiCSS from 'vite-plugin-windicss'
 import path from 'path'
 import Pages from 'vite-plugin-pages'
 import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Icons from 'unplugin-icons/vite'
+import Unocss from 'unocss/vite'
+import { presetAttributify, presetWind } from 'unocss'
+import transformerDirective from '@unocss/transformer-directives'
 
 export const sharedConfig = {
   resolve: {
@@ -18,11 +20,10 @@ export const sharedConfig = {
 
     Icons(),
 
-    // https://github.com/windicss/windicss
-    WindiCSS({
-      config: {
-        attributify: true,
-      },
+    // https://github.com/unocss/unocss
+    Unocss({
+      presets: [presetAttributify(), presetWind()],
+      transformers: [transformerDirective()],
     }),
 
     // https://github.com/antfu/unplugin-auto-import

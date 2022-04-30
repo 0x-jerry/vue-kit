@@ -43,7 +43,7 @@ const menus: KMenuItem[] = [
           h="100px"
           border="~ gray-300 hover:blue-400"
           flex="~ "
-          align="items-center"
+          class="items-center"
           justify="center"
         >
           <span text="gray-300"> Use Right Click To Open Context Menu </span>
@@ -60,7 +60,7 @@ const menus: KMenuItem[] = [
           h="100px"
           border="~ gray-300 hover:blue-400"
           flex="~ "
-          align="items-center"
+          class="items-center"
           justify="center"
         >
           <span text="gray-300"> Use Right Click To Open Context Menu </span>
