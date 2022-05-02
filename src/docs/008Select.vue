@@ -18,10 +18,10 @@ const data = reactive({
       </k-select>
 
       <k-select v-model="data.v2">
-        <k-option :value="4"></k-option>
-        <k-option :value="true"></k-option>
-        <k-option :value="false" disabled></k-option>
-        <k-option value="ff"></k-option>
+        <k-option :value="4">04</k-option>
+        <k-option :value="true">TRUE</k-option>
+        <k-option :value="false" disabled> FALSE</k-option>
+        <k-option value="ff"> FF</k-option>
       </k-select>
     </k-row>
   </test-box>
