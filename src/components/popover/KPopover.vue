@@ -205,7 +205,7 @@ function handleClick() {
     padding: 6px;
     border-radius: 4px;
 
-    box-shadow: 0 0 10px #e6e6e6;
+    box-shadow: 0 5px 10px #cecece, 0 0 10px #cecece;
     @apply bg-white;
   }
 
@@ -215,7 +215,6 @@ function handleClick() {
     height: 8px;
     transform: rotate(45deg);
 
-    box-shadow: 0 0 10px #e6e6e6;
     @apply bg-white;
   }
 }
