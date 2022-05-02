@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { is } from '@0x-jerry/utils'
+import { CSSProperties } from 'vue'
 import {
   computePosition,
   Placement,
@@ -11,7 +12,7 @@ import {
   autoPlacement,
   Middleware,
 } from '@floating-ui/dom'
-import { CSSProperties } from 'vue'
+import { KFade } from '../transition'
 
 const props = withDefaults(
   defineProps<{

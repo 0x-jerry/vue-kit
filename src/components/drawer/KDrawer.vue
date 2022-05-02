@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { KFade } from '../transition'
+
 const props = withDefaults(
   defineProps<{
     modelValue?: boolean
