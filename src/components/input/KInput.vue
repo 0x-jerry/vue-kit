@@ -17,7 +17,7 @@ function handleInput(e: Event) {
 
 <template>
   <span class="k-input--box">
-    <input class="k-input" @input="handleInput" />
+    <input class="k-input" :value="modelValue" @input="handleInput" />
   </span>
 </template>
 

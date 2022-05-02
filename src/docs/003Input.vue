@@ -2,12 +2,15 @@
 import TestBox from './components/TestBox.vue'
 
 const data = reactive({
-  v1: '',
+  v: 'input value',
 })
 </script>
 
 <template>
   <test-box title="Input">
-    <k-input v-model="data.v1" />
+    <k-row>
+      <k-input v-model="data.v" />
+      <k-input v-model="data.v" />
+    </k-row>
   </test-box>
 </template>
