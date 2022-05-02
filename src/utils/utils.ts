@@ -1,6 +1,8 @@
+import { is } from '@0x-jerry/utils'
+
 /**
  *
- * @param str
+ * @param val
  * @example
  *
  * ```ts
@@ -10,5 +12,4 @@
  *
  *
  */
-export const parseStyleProperty = (str: string | number) =>
-  typeof str === 'string' ? str : str + 'px'
+export const parseStyleProperty = (val: string | number) => (is.string(val) ? val : val + 'px')
