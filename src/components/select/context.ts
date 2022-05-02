@@ -2,10 +2,14 @@ import { InjectionKey, Ref } from 'vue'
 
 export const SelectContextKey = Symbol() as InjectionKey<SelectContext>
 
-export interface SelectContext {
+export interface SelectContext<V = unknown> {
   readonly disabled: boolean
-  readonly value: unknown
-  addOption(value: unknown, label: string): void
-  removeOption(value: unknown): void
-  change(value: unknown): void
+  readonly value: V
+  readonly selected: {
+    value: V
+    label: string
+  }
+  addOption(value: V, label: string): void
+  removeOption(value: V): void
+  change(value: V): void
 }

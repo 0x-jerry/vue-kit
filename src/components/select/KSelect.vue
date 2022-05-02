@@ -15,12 +15,24 @@ const data = reactive({
   options: new Map(),
 })
 
+const selectedOption = computed(() => {
+  const label = data.options.get(props.modelValue)
+
+  return {
+    value: props.modelValue,
+    label,
+  }
+})
+
 const ctx: SelectContext = {
   get disabled() {
     return !!props.disabled
   },
   get value() {
     return props.modelValue
+  },
+  get selected() {
+    return selectedOption.value
   },
   addOption(val, label) {
     if (data.options.has(val)) {
@@ -41,19 +53,10 @@ const ctx: SelectContext = {
   },
 }
 
-const selectedOption = computed(() => {
-  const label = data.options.get(props.modelValue)
-
-  return {
-    value: props.modelValue,
-    label,
-  }
-})
-
 provide(SelectContextKey, ctx)
 
-function showOptions() {
-  data.showOptions = true
+function toggleOptions() {
+  data.showOptions = !data.showOptions
 }
 
 function hideOptions() {
@@ -65,7 +68,7 @@ function hideOptions() {
   <div class="k-select">
     <k-popover v-model="data.showOptions" placement="bottom">
       <template #reference>
-        <div class="k-select--content" @click="showOptions">
+        <div class="k-select--content" @click="toggleOptions">
           <slot name="content" v-bind="selectedOption">
             {{ selectedOption.label }}
           </slot>
@@ -84,15 +87,23 @@ function hideOptions() {
     min-width: 100px;
     min-height: 1em;
     border: 1px solid;
+    cursor: pointer;
     @apply border-gray-300;
     @apply rounded-sm;
     @apply px-1;
+
+    &:hover {
+      @apply border-blue-500;
+    }
   }
 
   &--options {
     min-width: 100px;
     max-height: 200px;
     @apply py-1;
+    display: flex;
+    flex-direction: column;
+    @apply gap-y-1;
   }
 }
 </style>

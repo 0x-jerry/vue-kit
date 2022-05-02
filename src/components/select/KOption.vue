@@ -9,6 +9,8 @@ const props = defineProps<{
 
 const ctx = inject(SelectContextKey, null)
 
+const isSelected = computed(() => ctx?.selected.value === props.value)
+
 onMounted(() => {
   ctx?.addOption(props.value, props.label ?? String(props.value))
 
@@ -16,12 +18,18 @@ onMounted(() => {
 })
 
 function handleChange() {
+  if (props.disabled) return
+
   ctx?.change(props.value)
 }
 </script>
 
 <template>
-  <div class="k-option" :class="{ 'is-disabled': disabled }" @click="handleChange">
+  <div
+    class="k-option"
+    :class="{ 'is-disabled': disabled, 'is-selected': isSelected }"
+    @click="handleChange"
+  >
     <slot>
       {{ label ?? String(value) }}
     </slot>
@@ -32,8 +40,20 @@ function handleChange() {
 .k-option {
   cursor: pointer;
   @apply px-2;
+  @apply rounded-sm;
+
   &:hover {
-    @apply bg-light-200;
+    @apply bg-light-400;
+  }
+
+  &.is-selected {
+    @apply bg-light-600;
+  }
+
+  &.is-disabled {
+    @apply bg-light-300 text-gray-400;
+
+    cursor: not-allowed;
   }
 }
 </style>
