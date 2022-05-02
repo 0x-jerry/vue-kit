@@ -1,6 +1,7 @@
 export * from './button'
 export * from './checkbox'
 export * from './context-menu'
+export * from './drawer'
 // export * from './image-cropper'
 export * from './image-uploader'
 export * from './input'
