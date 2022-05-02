@@ -3,7 +3,7 @@ import TestBox from './components/TestBox.vue'
 
 const data = reactive({
   left: false,
-  right: true,
+  right: false,
 })
 </script>
 

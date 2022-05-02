@@ -9,9 +9,9 @@ const emit = defineEmits<{
 }>()
 
 function handleInput(e: Event) {
-  const ev = e as InputEvent
+  const target = e.target as HTMLInputElement
 
-  emit('update:modelValue', ev.data || '')
+  emit('update:modelValue', target.value || '')
 }
 </script>
 
