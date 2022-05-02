@@ -34,6 +34,10 @@ const props = withDefaults(
   },
 )
 
+const emit = defineEmits({
+  'update:modelValue': (val: boolean) => true,
+})
+
 const el = {
   ref: ref<HTMLElement>(),
   content: ref<HTMLElement>(),
@@ -71,8 +75,16 @@ watch(
   },
 )
 
-onMounted(() => {
+onUnmounted(() => {
   clearTimeout(delayHandler)
+})
+
+onMounted(() => {
+  const hidePopover = () => emit('update:modelValue', false)
+
+  window.addEventListener('click', hidePopover)
+
+  return () => window.removeEventListener('click', hidePopover)
 })
 
 async function update() {
@@ -151,7 +163,7 @@ function handleClick() {
 </script>
 
 <template>
-  <div class="k-popover" :class="{ 'by-hover': trigger === 'hover' }">
+  <div class="k-popover" @click.stop :class="{ 'by-hover': trigger === 'hover' }">
     <div
       class="k-popover--reference inline-block"
       :ref="el.ref"
