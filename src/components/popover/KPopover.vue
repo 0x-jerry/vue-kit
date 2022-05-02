@@ -15,6 +15,7 @@ import { CSSProperties } from 'vue'
 
 const props = withDefaults(
   defineProps<{
+    modelValue?: boolean
     placement?: Placement
     content?: string
     trigger?: 'hover' | 'click'
@@ -27,6 +28,7 @@ const props = withDefaults(
     hideArrow?: boolean
   }>(),
   {
+    modelValue: undefined,
     trigger: 'hover',
     delay: 500,
   },
@@ -47,8 +49,12 @@ const styles = {
   arrow: reactive({} as CSSProperties),
 }
 
-const isTriggerByHover = computed(() => props.trigger === 'hover')
-const isTriggerByClick = computed(() => props.trigger === 'click')
+const isCustomTrigger = computed(() => !is.nullish(props.modelValue))
+
+const isTriggerByHover = computed(() => !unref(isCustomTrigger) && props.trigger === 'hover')
+const isTriggerByClick = computed(() => !unref(isCustomTrigger) && props.trigger === 'click')
+
+const isVisible = computed(() => props.modelValue ?? data.visible)
 
 let delayHandler: any
 
@@ -58,12 +64,19 @@ useScroll(document, {
   },
 })
 
+watch(
+  () => isVisible.value,
+  () => {
+    update()
+  },
+)
+
 onMounted(() => {
   clearTimeout(delayHandler)
 })
 
 async function update() {
-  if (!data.visible) return
+  if (!isVisible.value) return
 
   if (!el.ref.value || !el.content.value) return
 
@@ -119,7 +132,6 @@ async function mouseenter() {
   clearTimeout(delayHandler)
 
   data.visible = true
-  update()
 }
 
 function mouseleave() {
@@ -135,7 +147,6 @@ function handleClick() {
   if (!unref(isTriggerByClick)) return
 
   data.visible = !data.visible
-  update()
 }
 </script>
 
@@ -155,7 +166,7 @@ function handleClick() {
         class="k-popover--content"
         :ref="el.content"
         :style="styles.content"
-        v-show="data.visible"
+        v-show="isVisible"
         @mouseenter="mouseenter"
         @mouseleave="mouseleave"
       >
