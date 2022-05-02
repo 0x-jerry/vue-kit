@@ -22,7 +22,7 @@ const props = withDefaults(
     /**
      * Delay to hide, only take effect when trigger by hover.
      *
-     * @default 500 ms
+     * @default 200 ms
      */
     delay?: number
     hideArrow?: boolean
@@ -30,7 +30,7 @@ const props = withDefaults(
   {
     modelValue: undefined,
     trigger: 'hover',
-    delay: 500,
+    delay: 200,
   },
 )
 
