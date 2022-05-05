@@ -11,6 +11,7 @@ export interface ToastOption {
 
 interface ToastContextOption extends ToastOption {
   id: string
+  type: ToastType
 }
 
 const toastTypes = ['success', 'error', 'info', 'warning'] as const
@@ -58,6 +59,7 @@ function createToastInstance(opt: Partial<ToastOption> | string, type: ToastType
   const ctxOpt: ToastContextOption = {
     ...option,
     id: uuid(),
+    type,
   }
 
   toastCtx.instances.push(ctxOpt)

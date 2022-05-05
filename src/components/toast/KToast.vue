@@ -8,26 +8,31 @@ const conf = useToastConfig()
 </script>
 
 <template>
-  <div class="k-toast--group" :class="[`is-${conf.position}`]">
-    <transition-group move-class="k-toast">
-      <div class="k-toast" v-for="item in toastCtx.instances" :key="item.id">
+  <k-col class="k-toast--group" :class="[`is-${conf.position}`]">
+    <transition-group name="k-toast">
+      <div
+        class="k-toast"
+        v-for="item in toastCtx.instances"
+        :key="item.id"
+        :class="[`is-${item.type}`]"
+      >
         {{ item.message }}
       </div>
     </transition-group>
-  </div>
+  </k-col>
 </template>
 
 <style lang="less">
 .k-toast,
 .k-toast-enter-active,
 .k-toast-leave-active {
-  transition: all 0.5s ease;
+  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
 }
 
 .k-toast-enter-from,
 .k-toast-leave-to {
   opacity: 0;
-  transform: translateX(30px);
+  transform: translateX(10px);
 }
 
 .k-toast-leave-active {
@@ -43,16 +48,33 @@ const conf = useToastConfig()
   @apply border-gray-300;
   @apply px-4 py-2;
 
+  &.is-warning {
+    @apply border-yellow-500;
+  }
+
+  &.is-error {
+    @apply border-red-500;
+  }
+
+  &.is-info {
+    @apply border-gray-500;
+  }
+
+  &.is-success {
+    @apply border-green-500;
+  }
+
   &--group {
+    @offset: 5px;
     position: fixed;
-    top: 0;
+    top: @offset;
 
     &.is-left {
-      left: 0;
+      left: @offset;
     }
 
     &.is-right {
-      right: 0;
+      right: @offset;
     }
   }
 }

@@ -12,7 +12,10 @@ function createToast(type: ToastType) {
 <template>
   <test-box title="Toast">
     <k-row>
+      <k-button @click="createToast('warning')">warning</k-button>
+      <k-button @click="createToast('success')">success</k-button>
       <k-button @click="createToast('info')">info</k-button>
+      <k-button @click="createToast('error')">error</k-button>
     </k-row>
   </test-box>
 </template>
