@@ -24,11 +24,9 @@ specifiers:
   unplugin-vue-components: ^0.19.3
   vite: ^2.9.6
   vite-plugin-pages: ^0.23.0
-  vite-plugin-windicss: ^1.8.4
   vue: ^3.2.33
   vue-router: ^4.0.14
   vue-tsc: ^0.34.11
-  windicss: ^3.5.1
 
 dependencies:
   '@0x-jerry/utils': registry.npmmirror.com/@0x-jerry/utils/1.7.1
@@ -57,10 +55,8 @@ devDependencies:
   unplugin-vue-components: registry.npmmirror.com/unplugin-vue-components/0.19.3_vite@2.9.6+vue@3.2.33
   vite: registry.npmmirror.com/vite/2.9.6_less@4.1.2
   vite-plugin-pages: registry.npmmirror.com/vite-plugin-pages/0.23.0_vite@2.9.6
-  vite-plugin-windicss: registry.npmmirror.com/vite-plugin-windicss/1.8.4_vite@2.9.6
   vue-router: registry.npmmirror.com/vue-router/4.0.14_vue@3.2.33
   vue-tsc: registry.npmmirror.com/vue-tsc/0.34.11_typescript@4.6.4
-  windicss: registry.npmmirror.com/windicss/3.5.1
 
 packages:
 
@@ -612,34 +608,6 @@ packages:
       vue: registry.npmmirror.com/vue/3.2.33
       vue-demi: registry.npmmirror.com/vue-demi/0.12.5_vue@3.2.33
     dev: false
-
-  registry.npmmirror.com/@windicss/config/1.8.4:
-    resolution: {integrity: sha512-i4fFGFfZoRess6WMkauykHC3PFd9xKYVx7lSuLfMK7sgo6x3+l4dY42GbsWMHyLqH1sTMfyt1LgfXSIKYJozSA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@windicss/config/-/config-1.8.4.tgz}
-    name: '@windicss/config'
-    version: 1.8.4
-    dependencies:
-      debug: registry.npmmirror.com/debug/4.3.4
-      jiti: registry.npmmirror.com/jiti/1.13.0
-      windicss: registry.npmmirror.com/windicss/3.5.1
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
-
-  registry.npmmirror.com/@windicss/plugin-utils/1.8.4:
-    resolution: {integrity: sha512-DqJVwAfzlgd8nYSNlmhXOey32pI8UwH7QiOWdFS/AR2O/q9oLDGHDn97Its/kZdfoyhi8ylwZNP2Pk0H7cihhQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@windicss/plugin-utils/-/plugin-utils-1.8.4.tgz}
-    name: '@windicss/plugin-utils'
-    version: 1.8.4
-    dependencies:
-      '@antfu/utils': registry.npmmirror.com/@antfu/utils/0.5.1
-      '@windicss/config': registry.npmmirror.com/@windicss/config/1.8.4
-      debug: registry.npmmirror.com/debug/4.3.4
-      fast-glob: registry.npmmirror.com/fast-glob/3.2.11
-      magic-string: registry.npmmirror.com/magic-string/0.26.1
-      micromatch: registry.npmmirror.com/micromatch/4.0.5
-      windicss: registry.npmmirror.com/windicss/3.5.1
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
 
   registry.npmmirror.com/ansi-regex/5.0.1:
     resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/ansi-regex/-/ansi-regex-5.0.1.tgz}
@@ -2987,23 +2955,6 @@ packages:
       - supports-color
     dev: true
 
-  registry.npmmirror.com/vite-plugin-windicss/1.8.4_vite@2.9.6:
-    resolution: {integrity: sha512-LSZAO8BZn3x406GRbYX5t5ONXXJVdqiQtN1qrznLA/Dy5/NzZVhfcrL6N1qEYYO7HsCDT4pLAjTzObvDnM9Y8A==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/vite-plugin-windicss/-/vite-plugin-windicss-1.8.4.tgz}
-    id: registry.npmmirror.com/vite-plugin-windicss/1.8.4
-    name: vite-plugin-windicss
-    version: 1.8.4
-    peerDependencies:
-      vite: ^2.0.1
-    dependencies:
-      '@windicss/plugin-utils': registry.npmmirror.com/@windicss/plugin-utils/1.8.4
-      debug: registry.npmmirror.com/debug/4.3.4
-      kolorist: registry.npmmirror.com/kolorist/1.5.1
-      vite: registry.npmmirror.com/vite/2.9.6_less@4.1.2
-      windicss: registry.npmmirror.com/windicss/3.5.1
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
-
   registry.npmmirror.com/vite/2.9.6_less@4.1.2:
     resolution: {integrity: sha512-3IffdrByHW95Yjv0a13TQOQfJs7L5dVlSPuTt432XLbRMriWbThqJN2k/IS6kXn5WY4xBLhK9XoaWay1B8VzUw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/vite/-/vite-2.9.6.tgz}
     id: registry.npmmirror.com/vite/2.9.6
@@ -3158,14 +3109,6 @@ packages:
     hasBin: true
     dependencies:
       isexe: registry.npmmirror.com/isexe/2.0.0
-    dev: true
-
-  registry.npmmirror.com/windicss/3.5.1:
-    resolution: {integrity: sha512-E1hYZATcZFci/XhGS0sJAMRxULjnK+glNukE78Ku7xeb3jxgMY55fFOdIrav+GjQCsgR+IZxPq9/DwmO6eyc4Q==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/windicss/-/windicss-3.5.1.tgz}
-    name: windicss
-    version: 3.5.1
-    engines: {node: '>= 12'}
-    hasBin: true
     dev: true
 
   registry.npmmirror.com/wrap-ansi/6.2.0:
