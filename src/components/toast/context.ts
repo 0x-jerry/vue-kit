@@ -1,4 +1,4 @@
-import { is, uuid, remove } from '@0x-jerry/utils'
+import { is, remove } from '@0x-jerry/utils'
 import { installToastApp } from './install'
 
 export interface ToastOption {
@@ -49,12 +49,14 @@ function createToastInstance(opt: Partial<ToastOption> | string, type: ToastType
 
 export type ToastInstance = ReturnType<typeof _createToastInstance>
 
+let seed = 0
+
 function _createToastInstance(opt: ToastOption, type: ToastType) {
   let closeHandler: any
 
   const ins = {
     ...opt,
-    id: uuid(),
+    id: `toast-${seed++}`,
     type,
     close() {
       remove(toastCtx.instances, ins)
