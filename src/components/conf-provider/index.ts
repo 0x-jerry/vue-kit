@@ -1,3 +1,1 @@
-export const KConfProvider = defineComponent(() => {
-  //
-})
+export { default as KConfProvider } from './KConfProvider.vue'

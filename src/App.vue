@@ -1,5 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <router-view></router-view>
+  <k-conf-provider>
+    <router-view></router-view>
+  </k-conf-provider>
 </template>
