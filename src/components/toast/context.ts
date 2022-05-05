@@ -1,4 +1,4 @@
-import { is, uuid } from '@0x-jerry/utils'
+import { is, uuid, remove } from '@0x-jerry/utils'
 import { installToastApp } from './install'
 
 export interface ToastOption {
@@ -9,21 +9,12 @@ export interface ToastOption {
   duration: number
 }
 
-interface ToastContextOption extends ToastOption {
-  id: string
-  type: ToastType
-}
-
 const toastTypes = ['success', 'error', 'info', 'warning'] as const
 
 export type ToastType = typeof toastTypes[number]
 
-interface ToastInstanceActions {
-  close(): void
-}
-
 export type ToastExposeAPI = {
-  [key in ToastType]: (opt: ToastOption | string) => ToastInstanceActions
+  [key in ToastType]: (opt: ToastOption | string) => ToastInstance
 }
 
 export const toast: ToastExposeAPI = {
@@ -36,19 +27,12 @@ toastTypes.forEach((type) => {
 
 export const toastCtx = reactive({
   installed: false as false | 'component' | 'app',
-  instances: [] as ToastContextOption[],
+  instances: [] as ToastInstance[],
 })
 
-const toastAction = {
-  close(id: string) {
-    const idx = toastCtx.instances.findIndex((item) => item.id === id)
-    if (idx >= 0) toastCtx.instances.splice(idx, 1)
-  },
-}
-
-function createToastInstance(message: string, type: ToastType): ToastInstanceActions
-function createToastInstance(opt: Partial<ToastOption>, type: ToastType): ToastInstanceActions
-function createToastInstance(opt: Partial<ToastOption> | string, type: ToastType) {
+function createToastInstance(message: string, type: ToastType): ToastInstance
+function createToastInstance(opt: Partial<ToastOption>, type: ToastType): ToastInstance
+function createToastInstance(opt: Partial<ToastOption> | string, type: ToastType): ToastInstance {
   if (!toastCtx.installed) {
     installToastApp()
     toastCtx.installed = 'app'
@@ -56,25 +40,38 @@ function createToastInstance(opt: Partial<ToastOption> | string, type: ToastType
 
   const option = createToastOption(is.string(opt) ? { message: opt } : opt)
 
-  const ctxOpt: ToastContextOption = {
-    ...option,
+  const ins = _createToastInstance(option, type)
+
+  ins.show()
+
+  return ins
+}
+
+export type ToastInstance = ReturnType<typeof _createToastInstance>
+
+function _createToastInstance(opt: ToastOption, type: ToastType) {
+  let closeHandler: any
+
+  const ins = {
+    ...opt,
     id: uuid(),
     type,
-  }
-
-  toastCtx.instances.push(ctxOpt)
-
-  const actions: ToastInstanceActions = {
     close() {
-      toastAction.close(ctxOpt.id)
+      remove(toastCtx.instances, ins)
+    },
+    show() {
+      toastCtx.instances.push(ins)
+      this.continueAutoClose()
+    },
+    stopAutoClose() {
+      clearTimeout(closeHandler)
+    },
+    continueAutoClose() {
+      closeHandler = setTimeout(() => ins.close(), ins.duration)
     },
   }
 
-  if (ctxOpt.duration) {
-    setTimeout(() => actions.close(), ctxOpt.duration)
-  }
-
-  return actions
+  return ins
 }
 
 function createToastOption(opt: Partial<ToastOption>): ToastOption {

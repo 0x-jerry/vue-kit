@@ -1,15 +1,21 @@
 import { useConfProvider } from '../conf-provider/context'
+import { ToastPropType } from './props'
 
-export interface ToastConfig {
-  position?: 'left' | 'right'
-  duration?: number
-}
+export interface ToastConfig extends ToastPropType {}
 
-export function useToastConfig(): Required<ToastConfig> {
+export function useToastConfig(config?: Partial<ToastConfig>): Readonly<Required<ToastConfig>> {
   const conf = useConfProvider()?.toast
 
   return {
-    position: conf?.position ?? 'right',
-    duration: conf?.duration ?? 2000,
+    get position() {
+      return getOption('position', 'right')
+    },
+    get duration() {
+      return getOption('duration', 2000)
+    },
+  }
+
+  function getOption<K extends keyof ToastConfig>(key: K, defaultValue: ToastConfig[K]) {
+    return config?.[key] ?? conf?.[key] ?? defaultValue
   }
 }

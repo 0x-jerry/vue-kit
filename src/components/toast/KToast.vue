@@ -1,10 +1,21 @@
 <script lang="ts" setup>
 import { useToastConfig } from './config'
-import { toastCtx } from './context'
+import { toastCtx, ToastInstance } from './context'
+import { toastProps } from './props'
 
 toastCtx.installed = 'component'
 
-const conf = useToastConfig()
+const props = defineProps(toastProps)
+
+const conf = useToastConfig(props)
+
+function stopTimeout(ins: ToastInstance) {
+  ins.stopAutoClose()
+}
+
+function continueTimeout(ins: ToastInstance) {
+  ins.continueAutoClose()
+}
 </script>
 
 <template>
@@ -15,6 +26,8 @@ const conf = useToastConfig()
         v-for="item in toastCtx.instances"
         :key="item.id"
         :class="[`is-${item.type}`]"
+        @mouseenter="stopTimeout(item)"
+        @mouseleave="continueTimeout(item)"
       >
         {{ item.message }}
       </div>
