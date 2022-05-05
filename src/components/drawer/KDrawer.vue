@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { parseStyleProperty } from '@/utils'
 import { KFade } from '../transition'
 
 const props = withDefaults(
@@ -7,15 +8,23 @@ const props = withDefaults(
     placement?: 'left' | 'right'
     noLock?: boolean
     title?: string
+    width?: string | number
   }>(),
   {
     placement: 'right',
+    width: 300,
   },
 )
 
 const slots = useSlots()
 
 const lockScroll = useScrollLock(document.documentElement)
+
+const contentStyle = computed(() => {
+  return {
+    width: parseStyleProperty(props.width),
+  }
+})
 
 watch(
   () => props.modelValue,
@@ -45,7 +54,7 @@ function hide() {
     <k-fade :offset="0" @after-leave="lockScroll = false">
       <div class="k-drawer" :class="[`is-${placement}`]" v-show="props.modelValue">
         <div class="k-drawer--bg" @click="hide"></div>
-        <div class="k-drawer--content">
+        <div class="k-drawer--content" :style="contentStyle">
           <div class="k-drawer--head" v-if="slots.head || title">
             <slot name="head">
               {{ title }}
@@ -83,7 +92,6 @@ function hide() {
     position: absolute;
     top: 0;
     z-index: 1;
-    min-width: 200px;
     height: 100%;
     display: flex;
     flex-direction: column;

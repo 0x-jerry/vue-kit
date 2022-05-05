@@ -12,4 +12,5 @@ import { is } from '@0x-jerry/utils'
  *
  *
  */
-export const parseStyleProperty = (val: string | number) => (is.string(val) ? val : val + 'px')
+export const parseStyleProperty = (val: string | number, unit = 'px') =>
+  is.string(val) ? val : val + unit
