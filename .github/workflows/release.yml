@@ -18,7 +18,7 @@ jobs:
           registry-url: https://registry.npm.taobao.org
 
       - name: Generate Release Note
-        run: npx changelogen@latest RELEASE-NOTE.md
+        run: npx changelogen@latest > RELEASE-NOTE.md
 
       - name: Release
         uses: softprops/action-gh-release@v1
