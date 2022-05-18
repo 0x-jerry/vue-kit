@@ -38,6 +38,8 @@ const _disabled = computed(() => props.disabled || $click.isProcessing)
 <style lang="less">
 .k-button {
   font-size: inherit;
+  display: flex;
+  align-items: center;
 
   @apply text-gray-800;
 
@@ -49,6 +51,7 @@ const _disabled = computed(() => props.disabled || $click.isProcessing)
   &.is-text {
     background: transparent;
     border: none;
+    padding: 0;
 
     &:hover,
     &:active {

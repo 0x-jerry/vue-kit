@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { parseStyleProperty } from '@/utils'
 import { KFade } from '../transition'
+import CloseIcon from '~icons/carbon/close'
+import { KButton } from '../button'
 
 const props = withDefaults(
   defineProps<{
@@ -9,10 +11,11 @@ const props = withDefaults(
     noLock?: boolean
     title?: string
     width?: string | number
+    hideCloseButton?: boolean
   }>(),
   {
     placement: 'right',
-    width: 300,
+    width: 500,
   },
 )
 
@@ -51,14 +54,23 @@ function hide() {
 
 <template>
   <teleport to="body">
-    <k-fade :offset="0" @after-leave="lockScroll = false">
-      <div class="k-drawer" :class="[`is-${placement}`]" v-show="props.modelValue">
-        <div class="k-drawer--bg" @click="hide"></div>
-        <div class="k-drawer--content" :style="contentStyle">
+    <div class="k-drawer" :class="[`is-${placement}`]">
+      <k-fade offset="0">
+        <div class="k-drawer--bg" @click="hide" v-show="props.modelValue"></div>
+      </k-fade>
+
+      <transition :name="`k-drawer--animation`" @after-leave="lockScroll = false">
+        <div class="k-drawer--content" :style="contentStyle" v-show="props.modelValue">
           <div class="k-drawer--head" v-if="slots.head || title">
             <slot name="head">
               {{ title }}
             </slot>
+
+            <div class="k-drawer--head-close">
+              <k-button variety="text" v-if="!hideCloseButton">
+                <CloseIcon @click="hide" />
+              </k-button>
+            </div>
           </div>
 
           <div class="k-drawer--content__inner">
@@ -69,8 +81,8 @@ function hide() {
             <slot name="footer"></slot>
           </div>
         </div>
-      </div>
-    </k-fade>
+      </transition>
+    </div>
   </teleport>
 </template>
 
@@ -79,20 +91,18 @@ function hide() {
   position: fixed;
   top: 0;
   left: 0;
-  height: 100%;
-  width: 100%;
 
   &--bg {
     background: rgba(0, 0, 0, 10%);
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
   }
 
   &--content {
     position: absolute;
     top: 0;
     z-index: 1;
-    height: 100%;
+    height: 100vh;
     display: flex;
     flex-direction: column;
 
@@ -113,11 +123,25 @@ function hide() {
   &--head {
     border-bottom: 1px solid;
     @apply border-gray-100;
+    @apply text-2xl;
+    @apply py-3;
+
+    display: flex;
+    align-items: center;
+
+    &-close {
+      flex: 1;
+      display: flex;
+      justify-content: end;
+    }
   }
 
   &--footer {
     border-top: 1px solid;
     @apply border-gray-100;
+    @apply py-3;
+
+    display: flex;
   }
 
   &.is-left {
@@ -129,6 +153,38 @@ function hide() {
   &.is-right {
     .k-drawer--content {
       right: 0;
+    }
+  }
+}
+.k-drawer {
+  .k-drawer--animation {
+    &-enter-active,
+    &-leave-active {
+      @apply transition ease-in-out;
+      transition-property: transform opacity;
+    }
+
+    &-enter-from,
+    &-leave-to {
+      opacity: 0;
+    }
+  }
+
+  &.is-left {
+    .k-drawer--animation {
+      &-enter-from,
+      &-leave-to {
+        transform: translateX(-100%);
+      }
+    }
+  }
+
+  &.is-right {
+    .k-drawer--animation {
+      &-enter-from,
+      &-leave-to {
+        transform: translateX(100%);
+      }
     }
   }
 }

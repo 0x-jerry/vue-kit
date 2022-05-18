@@ -1,0 +1,19 @@
+body,
+div {
+  @size: 6px;
+
+  &::-webkit-scrollbar {
+    width: @size;
+    @apply bg-light-700;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    width: @size;
+    @apply bg-gray-300;
+    border-radius: @size * 2;
+
+    &:hover {
+      @apply bg-gray-400;
+    }
+  }
+}

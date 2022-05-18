@@ -1,5 +1,6 @@
 // bundle entry
 
+import './components/styles/index.less'
 import 'uno.css'
 
 export * from './components'

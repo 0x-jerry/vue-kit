@@ -11,5 +11,7 @@ html,
 body {
   font-size: 14px;
   @apply font-sans;
+
+  @apply text-gray-700;
 }
 </style>
