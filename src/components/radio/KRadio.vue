@@ -36,7 +36,9 @@ function handleChange() {
         @change="handleChange"
         :disabled="isDisabled"
       />
-      <slot></slot>
+      <span class="k-radio--content" v-if="$slots.default">
+        <slot></slot>
+      </span>
     </label>
   </template>
   <template v-else>
@@ -54,13 +56,12 @@ function handleChange() {
 <style lang="less">
 .k-radio--label {
   cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 
   &.is-disabled {
     cursor: not-allowed;
-  }
-
-  .k-radio {
-    @apply mr-2;
   }
 }
 
@@ -69,6 +70,10 @@ function handleChange() {
 
   &:disabled {
     cursor: not-allowed;
+  }
+
+  &--content {
+    @apply ml-1;
   }
 }
 </style>

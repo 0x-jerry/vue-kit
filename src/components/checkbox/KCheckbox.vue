@@ -29,14 +29,16 @@ function handleChange() {
   <template v-if="slots.default">
     <label class="k-checkbox--label" :class="{ 'is-disabled': isDisabled }">
       <input
-        class="k-radio"
+        class="k-checkbox"
         type="checkbox"
         :checked="checked"
         :value="value"
         @change="handleChange"
         :disabled="isDisabled"
       />
-      <slot></slot>
+      <span class="k-checkbox--content" v-if="$slots.default">
+        <slot></slot>
+      </span>
     </label>
   </template>
   <template v-else>
@@ -54,13 +56,12 @@ function handleChange() {
 <style lang="less">
 .k-checkbox--label {
   cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 
   &.is-disabled {
     cursor: not-allowed;
-  }
-
-  .k-checkbox {
-    @apply mr-2;
   }
 }
 
@@ -69,6 +70,10 @@ function handleChange() {
 
   &:disabled {
     cursor: not-allowed;
+  }
+
+  &--content {
+    @apply ml-1;
   }
 }
 </style>

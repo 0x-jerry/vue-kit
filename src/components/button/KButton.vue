@@ -37,12 +37,19 @@ const _disabled = computed(() => props.disabled || $click.isProcessing)
 
 <style lang="less">
 .k-button {
+  font-size: inherit;
+
   @apply text-gray-800;
 
   @apply transition transition-colors;
   @apply focus:outline-none;
 
+  cursor: pointer;
+
   &.is-text {
+    background: transparent;
+    border: none;
+
     &:hover,
     &:active {
       @apply text-blue-500;

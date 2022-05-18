@@ -23,15 +23,16 @@ function handleInput(e: Event) {
 
 <style lang="less">
 .k-input--box {
-  display: inline-block;
+  display: inline-flex;
   width: 160px;
 }
 
 .k-input {
   @apply border border-gray-200;
   @apply transition transition-colors;
-  @apply px-1;
+  @apply px-2 py-1;
   @apply w-full;
+  font-size: inherit;
 
   &:focus {
     @apply outline-none;

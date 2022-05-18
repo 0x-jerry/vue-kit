@@ -222,6 +222,9 @@ async function onDrop(evt: DragEvent) {
     @apply outline-none;
     @apply flex justify-center items-center;
     @apply text-gray-300 hover:text-blue-500 text-2xl;
+
+    cursor: pointer;
+    background: white;
   }
 }
 </style>

@@ -1,6 +1,5 @@
 // bundle entry
 
-import '@unocss/reset/tailwind.css'
 import 'uno.css'
 
 export * from './components'
