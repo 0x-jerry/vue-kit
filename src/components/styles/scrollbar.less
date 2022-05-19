@@ -9,8 +9,10 @@ div {
 
   &::-webkit-scrollbar-thumb {
     width: @size;
-    @apply bg-gray-300;
     border-radius: @size * 2;
+
+    @apply bg-gray-300;
+    @apply transition transition-colors;
 
     &:hover {
       @apply bg-gray-400;
