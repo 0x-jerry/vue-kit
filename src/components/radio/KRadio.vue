@@ -56,6 +56,7 @@ function handleChange() {
 <style lang="less">
 .k-radio--label {
   cursor: pointer;
+  width: fit-content;
   display: inline-flex;
   justify-content: center;
   align-items: center;
