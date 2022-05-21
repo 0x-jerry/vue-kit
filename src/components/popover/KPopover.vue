@@ -39,7 +39,7 @@ const emit = defineEmits({
   'update:modelValue': (val: boolean) => true,
 })
 
-const el = {
+const ele = {
   ref: ref<HTMLElement>(),
   content: ref<HTMLElement>(),
   arrow: ref<HTMLElement>(),
@@ -81,7 +81,11 @@ onUnmounted(() => {
 })
 
 onMounted(() => {
-  const hidePopover = () => emit('update:modelValue', false)
+  const hidePopover = () => {
+    if (!unref(isVisible)) return
+
+    emit('update:modelValue', false)
+  }
 
   window.addEventListener('click', hidePopover)
 
@@ -91,7 +95,7 @@ onMounted(() => {
 async function update() {
   if (!isVisible.value) return
 
-  if (!el.ref.value || !el.content.value) return
+  if (!ele.ref.value || !ele.content.value) return
 
   const middleware: Middleware[] = [
     props.placement ? flip() : autoPlacement(),
@@ -99,11 +103,11 @@ async function update() {
     shift({ padding: 5 }),
   ]
 
-  if (!props.hideArrow && el.arrow.value) {
-    middleware.push(arrow({ element: el.arrow.value }))
+  if (!props.hideArrow && ele.arrow.value) {
+    middleware.push(arrow({ element: ele.arrow.value }))
   }
 
-  const pos = await computePosition(el.ref.value, el.content.value, {
+  const pos = await computePosition(ele.ref.value, ele.content.value, {
     strategy: 'fixed',
     placement: props.placement,
     middleware,
@@ -164,37 +168,41 @@ function handleClick() {
 </script>
 
 <template>
-  <div class="k-popover" @click.stop :class="{ 'by-hover': trigger === 'hover' }">
-    <div
-      class="k-popover--reference inline-block"
-      :ref="el.ref"
-      @mouseenter="mouseenter"
-      @mouseleave="mouseleave"
-      @click="handleClick"
-    >
-      <slot name="reference"></slot>
-    </div>
-    <k-fade>
-      <div
-        class="k-popover--content"
-        :ref="el.content"
-        :style="styles.content"
-        v-show="isVisible"
-        @mouseenter="mouseenter"
-        @mouseleave="mouseleave"
-      >
-        <slot>
-          {{ content }}
-        </slot>
-        <div
-          class="k-popover--arrow"
-          v-if="!props.hideArrow"
-          :ref="el.arrow"
-          :style="styles.arrow"
-        ></div>
-      </div>
-    </k-fade>
+  <div
+    class="k-popover--reference inline-block"
+    :ref="ele.ref"
+    @mouseenter="mouseenter"
+    @mouseleave="mouseleave"
+    @click.stop="handleClick"
+    v-bind="$attrs"
+  >
+    <slot name="reference"></slot>
   </div>
+
+  <teleport to="body">
+    <div class="k-popover" :class="{ 'by-hover': trigger === 'hover' }">
+      <k-fade>
+        <div
+          class="k-popover--content"
+          :ref="ele.content"
+          :style="styles.content"
+          v-show="isVisible"
+          @mouseenter="mouseenter"
+          @mouseleave="mouseleave"
+        >
+          <slot>
+            {{ content }}
+          </slot>
+          <div
+            class="k-popover--arrow"
+            v-if="!props.hideArrow"
+            :ref="ele.arrow"
+            :style="styles.arrow"
+          ></div>
+        </div>
+      </k-fade>
+    </div>
+  </teleport>
 </template>
 
 <style lang="less">
@@ -203,7 +211,7 @@ function handleClick() {
 
   &--content {
     position: fixed;
-    padding: 6px;
+    padding: 5px;
     border-radius: 4px;
 
     box-shadow: 0 5px 10px #cecece, 0 0 10px #cecece;
