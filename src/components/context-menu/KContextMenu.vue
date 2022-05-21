@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { useGlobalClickEvent } from '@/hooks/useMouseEvent'
-import { isWindow } from '@vueuse/core'
 import { KContextMenuContextKey } from './context'
 import { KMenuButton, KMenuDivide, KMenuItem } from './types'
 

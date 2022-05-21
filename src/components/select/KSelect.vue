@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { KPopover } from '../popover'
 import { SelectContext, SelectContextKey } from './context'
 
 const props = defineProps<{
