@@ -83,6 +83,7 @@ provide(KContextMenuContextKey, {
 
 function hideMenu() {
   if (props.customOpenMenu) return
+  if (!unref(visible)) return
 
   setVisible(false)
 }
