@@ -56,6 +56,8 @@ const ctx: SelectContext = {
 provide(SelectContextKey, ctx)
 
 function toggleOptions() {
+  if (props.disabled) return
+
   data.showOptions = !data.showOptions
 }
 
@@ -65,7 +67,7 @@ function hideOptions() {
 </script>
 
 <template>
-  <div class="k-select">
+  <div class="k-select" :class="{ 'is-disabled': props.disabled }">
     <k-popover v-model="data.showOptions" placement="bottom">
       <template #reference>
         <div class="k-select--content" @click="toggleOptions">
@@ -104,6 +106,18 @@ function hideOptions() {
     display: flex;
     flex-direction: column;
     @apply gap-y-1;
+  }
+
+  &.is-disabled {
+    .k-select--content {
+      @apply border-gray-200;
+      @apply color-gray-500;
+      cursor: not-allowed;
+
+      &:hover {
+        @apply border-gray-200;
+      }
+    }
   }
 }
 </style>
