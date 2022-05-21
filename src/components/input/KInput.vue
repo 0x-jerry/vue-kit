@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-defineProps<{
+const props = defineProps<{
   modelValue: string
   disabled?: boolean
 }>()
@@ -16,8 +16,8 @@ function handleInput(e: Event) {
 </script>
 
 <template>
-  <span class="k-input--box">
-    <input class="k-input" :value="modelValue" @input="handleInput" />
+  <span class="k-input--box" :class="{ 'is-disabled': props.disabled }">
+    <input class="k-input" :disabled="props.disabled" :value="modelValue" @input="handleInput" />
   </span>
 </template>
 
@@ -25,10 +25,17 @@ function handleInput(e: Event) {
 .k-input--box {
   display: inline-flex;
   width: 160px;
+
+  &.is-disabled {
+    .k-input {
+      @apply border-gray-200 text-gray-400;
+      cursor: not-allowed;
+    }
+  }
 }
 
 .k-input {
-  @apply border border-gray-200;
+  @apply border border-gray-300;
   @apply transition transition-colors;
   @apply px-2 py-1;
   @apply w-full;

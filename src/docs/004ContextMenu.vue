@@ -36,7 +36,7 @@ const menus: KMenuItem[] = [
 
 <template>
   <test-box title="Context Menu" class="select-none">
-    <k-row>
+    <k-row class="gap-y-2">
       <k-context-menu :menus="menus">
         <template #reference>
           <div

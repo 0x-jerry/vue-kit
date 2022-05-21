@@ -11,6 +11,7 @@ const data = reactive({
     <k-row>
       <k-input v-model="data.v" />
       <k-input v-model="data.v" />
+      <k-input v-model="data.v" disabled />
     </k-row>
   </test-box>
 </template>
