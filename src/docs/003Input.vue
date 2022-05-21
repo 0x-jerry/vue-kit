@@ -12,7 +12,7 @@ const data = reactive({
       <k-input v-model="data.v" />
       <k-input v-model="data.v" />
       <k-input v-model="data.v" disabled />
-      <k-input placeholder="this is a placeholder" />
+      <k-input modelValue="" placeholder="this is a placeholder" />
     </k-row>
   </test-box>
 </template>

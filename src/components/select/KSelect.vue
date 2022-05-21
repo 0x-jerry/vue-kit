@@ -1,10 +1,12 @@
 <script lang="ts" setup>
+import { CSSProperties } from 'vue'
 import { KPopover } from '../popover'
 import { SelectContext, SelectContextKey } from './context'
 
 const props = defineProps<{
   modelValue: unknown
   disabled?: boolean
+  block?: boolean
 }>()
 
 const emit = defineEmits({
@@ -24,6 +26,14 @@ const selectedOption = computed(() => {
     label,
   }
 })
+
+const ele = {
+  content: ref<HTMLElement>(),
+}
+
+const styles = {
+  options: reactive({} as CSSProperties),
+}
 
 const ctx: SelectContext = {
   get disabled() {
@@ -49,35 +59,45 @@ const ctx: SelectContext = {
   change(val: unknown) {
     if (props.disabled) return
 
-    emit('update:modelValue', val)
     hideOptions()
+    emit('update:modelValue', val)
   },
 }
 
 provide(SelectContextKey, ctx)
 
+function syncWidth() {
+  const content = unref(ele.content)
+
+  if (!content) return
+
+  styles.options.width = content.clientWidth - 10 + 'px'
+}
+
 function toggleOptions() {
   if (props.disabled) return
+  syncWidth()
 
   data.showOptions = !data.showOptions
 }
 
 function hideOptions() {
+  syncWidth()
   data.showOptions = false
 }
 </script>
 
 <template>
-  <div class="k-select" :class="{ 'is-disabled': props.disabled }">
-    <k-popover v-model="data.showOptions" placement="bottom">
+  <div class="k-select" :class="{ 'is-disabled': props.disabled, 'is-block': props.block }">
+    <k-popover v-model="data.showOptions" placement="bottom" :class="{ 'is-block': props.block }">
       <template #reference>
-        <div class="k-select--content" @click="toggleOptions">
+        <div class="k-select--content" @click="toggleOptions" :ref="ele.content">
           <slot name="content" v-bind="selectedOption">
             {{ selectedOption.label }}
           </slot>
         </div>
       </template>
-      <div class="k-select--options">
+      <div class="k-select--options" :style="styles.options">
         <slot></slot>
       </div>
     </k-popover>
@@ -118,6 +138,14 @@ function hideOptions() {
       &:hover {
         @apply border-gray-200;
       }
+    }
+  }
+
+  &.is-block {
+    display: block;
+
+    .is-block {
+      display: block;
     }
   }
 }
