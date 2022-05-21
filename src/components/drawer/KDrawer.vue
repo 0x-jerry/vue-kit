@@ -3,6 +3,7 @@ import { parseStyleProperty } from '@/utils'
 import { KFade } from '../transition'
 import CloseIcon from '~icons/carbon/close'
 import { KButton } from '../button'
+import { useScrollLock } from '@/hooks'
 
 const props = withDefaults(
   defineProps<{
@@ -21,7 +22,9 @@ const props = withDefaults(
 
 const slots = useSlots()
 
-const lockScroll = useScrollLock(document.documentElement)
+const lockScroll = useScrollLock(document.documentElement, {
+  offset: '6px',
+})
 
 const contentStyle = computed(() => {
   return {
