@@ -1,4 +1,4 @@
-import { InjectionKey, Ref } from 'vue'
+import { InjectionKey } from 'vue'
 
 export const SelectContextKey = Symbol() as InjectionKey<SelectContext>
 
