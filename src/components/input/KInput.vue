@@ -2,6 +2,7 @@
 const props = defineProps<{
   modelValue: string
   disabled?: boolean
+  placeholder?: string
 }>()
 
 const emit = defineEmits<{
@@ -17,7 +18,13 @@ function handleInput(e: Event) {
 
 <template>
   <span class="k-input--box" :class="{ 'is-disabled': props.disabled }">
-    <input class="k-input" :disabled="props.disabled" :value="modelValue" @input="handleInput" />
+    <input
+      class="k-input"
+      :disabled="props.disabled"
+      :value="modelValue"
+      @input="handleInput"
+      :placeholder="placeholder"
+    />
   </span>
 </template>
 
