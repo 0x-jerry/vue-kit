@@ -2,6 +2,7 @@
 import { CSSProperties } from 'vue'
 import { KPopover } from '../popover'
 import { SelectContext, SelectContextKey } from './context'
+import CaretDownIcon from '~icons/carbon/caret-down'
 
 const props = defineProps<{
   modelValue: unknown
@@ -14,7 +15,7 @@ const emit = defineEmits({
 })
 
 const data = reactive({
-  showOptions: false,
+  expand: false,
   options: new Map(),
 })
 
@@ -78,22 +79,27 @@ function toggleOptions() {
   if (props.disabled) return
   syncWidth()
 
-  data.showOptions = !data.showOptions
+  data.expand = !data.expand
 }
 
 function hideOptions() {
   syncWidth()
-  data.showOptions = false
+  data.expand = false
 }
 </script>
 
 <template>
   <div class="k-select" :class="{ 'is-disabled': props.disabled, 'is-block': props.block }">
-    <k-popover v-model="data.showOptions" placement="bottom" :class="{ 'is-block': props.block }">
+    <k-popover v-model="data.expand" placement="bottom" :class="{ 'is-block': props.block }">
       <template #reference>
         <div class="k-select--content" @click="toggleOptions" :ref="ele.content">
-          <slot name="content" v-bind="selectedOption">
-            {{ selectedOption.label }}
+          <slot name="content" v-bind="selectedOption" :expand="data.expand">
+            <div class="flex-1">
+              {{ selectedOption.label }}
+            </div>
+            <div class="k-select--icon" :class="{ 'is-expand': data.expand }">
+              <CaretDownIcon />
+            </div>
           </slot>
         </div>
       </template>
@@ -114,9 +120,19 @@ function hideOptions() {
     @apply border-gray-300;
     @apply rounded-sm;
     @apply px-1;
+    display: flex;
 
     &:hover {
       @apply border-blue-500;
+    }
+  }
+
+  &--icon {
+    transform: rotate(0);
+    @apply transition transition-transform;
+
+    &.is-expand {
+      transform: rotate(180deg);
     }
   }
 
