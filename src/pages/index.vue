@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Component } from 'vue'
+import type { Component } from 'vue'
 
 const modules = import.meta.glob<{ default: Component }>('../docs/*.vue', { eager: true })
 

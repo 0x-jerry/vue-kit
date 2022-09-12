@@ -4,6 +4,7 @@
   "version": "1.6.4",
   "main": "./dist/vue-kit.es.js",
   "types": "./dist/types/lib.d.ts",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/0x-jerry/vue-kit.git"
