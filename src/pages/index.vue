@@ -1,5 +1,7 @@
 <script lang="ts" setup>
-const modules = import.meta.globEager('../docs/*.vue')
+import { Component } from 'vue'
+
+const modules = import.meta.glob<{ default: Component }>('../docs/*.vue', { eager: true })
 
 const components = Object.entries(modules).filter(([key, o]) => !key.includes('_'))
 </script>

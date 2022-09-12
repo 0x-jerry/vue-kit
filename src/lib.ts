@@ -1,4 +1,5 @@
 // bundle entry
+import '@unocss/reset/normalize.css'
 
 import './components/styles/index.less'
 import 'uno.css'
