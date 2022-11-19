@@ -1,8 +1,8 @@
-import { Awaitable } from '@0x-jerry/utils'
+import { Promisable } from '@0x-jerry/utils'
 import { HookManager } from '@/utils'
 import type { InjectionKey } from 'vue'
 
-export type AfterSelectImageHook = (files: File[]) => Awaitable<any>
+export type AfterSelectImageHook = (files: File[]) => Promisable<any>
 
 export interface KImageUploaderHook {
   afterSelectImage: HookManager<AfterSelectImageHook>

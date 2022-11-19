@@ -1,5 +1,5 @@
 import { buildProps, GetPropsType } from '@/utils'
-import type { Awaitable } from '@0x-jerry/utils'
+import type { Promisable } from '@0x-jerry/utils'
 import { PropType } from 'vue'
 import { useProps } from './useProps'
 
@@ -9,7 +9,7 @@ export const useClickProps = buildProps({
     default: false,
   },
   click: {
-    type: Function as PropType<(payload: MouseEvent) => Awaitable<any>>,
+    type: Function as PropType<(payload: MouseEvent) => Promisable<any>>,
     required: false,
   },
 })
