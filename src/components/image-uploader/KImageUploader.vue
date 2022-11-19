@@ -4,7 +4,7 @@ import { Arrayable, toArray } from '@0x-jerry/utils'
 import IconPlus from '~icons/carbon/add'
 import IconDelete from '~icons/carbon/delete'
 import IconEdit from '~icons/carbon/edit'
-import { chooseFiles } from './utils'
+import { chooseFiles } from '@/functions'
 import { createUploadImageContext, KImageUploaderContextKey } from './context'
 
 const props = withDefaults(

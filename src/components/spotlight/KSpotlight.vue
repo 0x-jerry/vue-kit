@@ -2,7 +2,8 @@
 import { computed, onMounted, reactive, ref, watch, watchEffect } from 'vue'
 import { useGlobalKeydown } from '@/hooks'
 import { ISpotlightGroup, ISpotlightOption } from './spotlight'
-import { createDomNavigator, KeyboardNavigator, sleep } from '@0x-jerry/utils'
+import { createDomNavigator, KeyboardNavigator } from '@/functions'
+import { sleep } from '@0x-jerry/utils'
 
 export interface SpotlightProps {
   visible: boolean
