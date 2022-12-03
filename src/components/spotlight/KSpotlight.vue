@@ -1,127 +1,89 @@
 <script lang="ts" setup>
-import { computed, onMounted, reactive, ref, watch, watchEffect } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { useGlobalKeydown } from '@/hooks'
-import { ISpotlightGroup, ISpotlightOption } from './spotlight'
-import { createDomNavigator, KeyboardNavigator } from '@/functions'
-import { sleep } from '@0x-jerry/utils'
+import { ISpotlightOption } from './spotlight'
 
 export interface SpotlightProps {
   visible: boolean
   items: ISpotlightOption[]
-  groups: ISpotlightGroup[]
 }
+
+const props = defineProps<SpotlightProps>()
+
+const emit = defineEmits<{
+  (type: 'update:visible', value: boolean): void
+  (type: 'click', value: ISpotlightOption): void
+}>()
 
 const input = ref<HTMLInputElement>()
 
-const spotlightBox = ref<HTMLDivElement>()
+const data = reactive({
+  input: '',
+  placeholder: 'Try type something...',
+  selectedIndex: 0,
+})
 
-let keyboardNav: KeyboardNavigator | null = null
+const filteredSpotOptions = computed(() => {
+  if (!data.input) return props.items.slice(0, 10)
 
-onMounted(() => {
-  if (spotlightBox.value) {
-    keyboardNav = createDomNavigator(spotlightBox.value, {
-      onfocus(e) {
-        const pre = document.activeElement as HTMLElement | null
-
-        e.classList.add('focus')
-
-        e.focus()
-
-        if (pre?.getAttribute('tabindex') !== '-1') {
-          pre?.focus()
-        }
-      },
-      onblur(e) {
-        e.classList.remove('focus')
-      },
-      onenter(e) {
-        e.click()
-      },
-    })
-  }
+  return props.items.filter((f) => f.title.includes(data.input))
 })
 
 function preventMoveCursor(e: Event) {
   const ev = e as KeyboardEvent
 
-  if (['ArrowUp', 'ArrowDown'].includes(ev.key)) {
+  if (ev.key === 'ArrowUp') {
+    select(data.selectedIndex - 1)
     ev.preventDefault()
   }
 
-  if (ev.key === 'Tab' || ev.key === 'Enter') {
+  if (ev.key === 'ArrowDown' || ev.key === 'Tab') {
+    select(data.selectedIndex + 1)
     ev.preventDefault()
-    ev.stopImmediatePropagation()
-    const id = keyboardNav?.activeElement?.id.replace('spotlight-item-', '')
-    const activeItem = props.items.find((i) => i.id === id)
+  }
 
-    if (activeItem) {
-      data.input = activeItem.title
-    }
+  if (ev.key === 'Enter') {
+    enterItem()
+    ev.preventDefault()
   }
 }
-
-function focusCurrent(e: Event) {
-  if (!keyboardNav) return
-
-  keyboardNav.activeElement = e.target as HTMLElement
-}
-
-const emit = defineEmits(['update:visible'])
-
-const props = defineProps<SpotlightProps>()
-
-const data = reactive({
-  input: '',
-  placeholder: 'Try type something...',
-})
-
-watch(
-  () => data.input,
-  async () => {
-    if (keyboardNav?.activeElement) {
-      return
-    }
-
-    keyboardNav?.blur()
-    await sleep(0)
-    keyboardNav?.focus()
-  },
-)
-
-const result = computed(() => {
-  if (!data.input) return []
-
-  return props.items.filter((f) => f.title.includes(data.input))
-})
-
-watchEffect(() => {
-  if (props.visible) {
-    data.input = ''
-  }
-})
 
 function whenShow() {
   data.input = ''
   input.value?.focus()
 }
 
-function enterItem(o: ISpotlightOption) {
-  alert(o.title)
+function enterItem(o?: ISpotlightOption) {
+  o ||= filteredSpotOptions.value[data.selectedIndex]
+
+  if (!o) return
+
+  emit('click', o)
+  close()
+}
+
+function select(index = 0) {
+  const itemsLength = filteredSpotOptions.value.length
+
+  while (index < 0) {
+    index += itemsLength
+  }
+
+  data.selectedIndex = index % itemsLength
 }
 
 useGlobalKeydown('esc', () => {
-  // if (input.value === document.activeElement) {
-  //   input.value.blur()
-  //   return
-  // }
-
-  emit('update:visible', false)
+  close()
 })
 
-useGlobalKeydown('meta,k', () => {
+useGlobalKeydown('meta + k', () => {
   emit('update:visible', true)
   input.value?.focus()
 })
+
+function close() {
+  emit('update:visible', false)
+}
 </script>
 
 <template>
@@ -133,8 +95,7 @@ useGlobalKeydown('meta,k', () => {
       v-show="visible"
     >
       <div
-        class="absolute top-1/4 left-1/2 items-center"
-        transform="~ -translate-x-1/2"
+        class="fixed top-1/4 left-1/2 items-center transform -translate-x-1/2"
         box="border"
         w="700px"
         bg="white"
@@ -142,16 +103,6 @@ useGlobalKeydown('meta,k', () => {
         border="~ solid gray-300 rounded-md"
       >
         <div class="items-center" h="50px" bg="gray-50" flex="~" p="x-4">
-          <!-- <div
-            class="tag"
-            text="sm blue-500"
-            w="50px"
-            h="20px"
-            border="~ solid blue-300 rounded-full"
-            m="r-2"
-          >
-            small
-          </div> -->
           <div class="input" w="full">
             <input
               ref="input"
@@ -168,32 +119,31 @@ useGlobalKeydown('meta,k', () => {
             />
           </div>
         </div>
-        <div class="spotlight-content" overflow="auto" h="max-300px" border="t solid gray-100">
-          <div
+
+        <div class="spotlight-content" overflow="auto" h="max-300px" border="none t solid gray-100">
+          <button
             class="spotlight-item items-center"
-            v-for="o in result"
+            v-for="(o, idx) in filteredSpotOptions"
+            :class="{ 'is-focus': data.selectedIndex === idx }"
             :key="o.id"
-            :id="`spotlight-item-${o.id}`"
             h="50px"
             flex="~"
             p="x-4"
             bg="white"
-            tabindex="-1"
             @click="enterItem(o)"
-            @mousemove="focusCurrent"
           >
             {{ o.title }}
-          </div>
+          </button>
         </div>
       </div>
     </div>
   </transition>
 </template>
 
-<style>
+<style lang="less">
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.5s ease;
+  transition: opacity 0.2s ease;
 }
 
 .fade-enter-from,
@@ -201,15 +151,17 @@ useGlobalKeydown('meta,k', () => {
   opacity: 0;
 }
 
+.spotlight-item {
+  width: 100%;
+
+  @apply outline-none border-none;
+
+  &.is-focus {
+    @apply bg-gray-50;
+  }
+}
+
 .spotlight-item + .spotlight-item {
   @apply border-t border-gray-100;
-}
-
-.spotlight-item.focus {
-  @apply bg-gray-50;
-}
-
-.spotlight-item:focus {
-  outline: none;
 }
 </style>
