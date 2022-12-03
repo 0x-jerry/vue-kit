@@ -1,9 +1,7 @@
 <script lang="ts" setup>
 import TestBox from './components/TestBox.vue'
-import KSpotlight from '@/components/spotlight/KSpotlight.vue'
 import { uuid } from '@0x-jerry/utils'
-import { ISpotlightOption } from '@/components/spotlight'
-import { toast } from '@/components'
+import { KButton, toast, ISpotlightOption, KSpotlight } from '@/components'
 
 const data = reactive({
   visible: false,
@@ -29,6 +27,9 @@ function onClick(item: ISpotlightOption) {
 <template>
   <test-box title="Spotlight">
     <KSpotlight :items="data.items" v-model:visible="data.visible" @click="onClick"> </KSpotlight>
-    <div class="bg-gray-1 p-4">Press meta + K to invoke spotlight toolbar</div>
+    <div class="bg-gray-1 p-4 flex items-center gap-2">
+      <span> Press meta + K to invoke spotlight toolbar, or click </span>
+      <KButton @click="data.visible = true"> Invoke Spotlight </KButton>
+    </div>
   </test-box>
 </template>

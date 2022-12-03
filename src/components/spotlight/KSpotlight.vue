@@ -43,7 +43,7 @@ function preventMoveCursor(e: Event) {
   }
 
   if (ev.key === 'Enter') {
-    enterItem()
+    selectCurrentSpotlightItem()
     ev.preventDefault()
   }
 }
@@ -53,13 +53,19 @@ function whenShow() {
   input.value?.focus()
 }
 
-function enterItem(o?: ISpotlightOption) {
-  o ||= filteredSpotOptions.value[data.selectedIndex]
+function selectCurrentSpotlightItem() {
+  const item = filteredSpotOptions.value[data.selectedIndex]
 
-  if (!o) return
+  if (!item) return
 
-  emit('click', o)
+  emit('click', item)
   close()
+}
+
+function onClickOptionItem(item: ISpotlightOption) {
+  data.selectedIndex = filteredSpotOptions.value.indexOf(item)
+
+  selectCurrentSpotlightItem()
 }
 
 function select(index = 0) {
@@ -130,7 +136,7 @@ function close() {
             flex="~"
             p="x-4"
             bg="white"
-            @click="enterItem(o)"
+            @click="onClickOptionItem(o)"
           >
             {{ o.title }}
           </button>
@@ -156,6 +162,9 @@ function close() {
 
   @apply outline-none border-none;
 
+  cursor: pointer;
+
+  &:hover,
   &.is-focus {
     @apply bg-gray-50;
   }
