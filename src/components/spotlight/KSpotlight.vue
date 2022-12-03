@@ -108,7 +108,7 @@ function close() {
         overflow="hidden"
         border="~ solid gray-300 rounded-md"
       >
-        <div class="items-center" h="50px" bg="gray-50" flex="~" p="x-4">
+        <div class="items-center" h="50px" bg="blue-1 opacity-50" flex="~" p="x-4">
           <div class="input" w="full">
             <input
               ref="input"
@@ -127,19 +127,29 @@ function close() {
         </div>
 
         <div class="spotlight-content" overflow="auto" h="max-300px" border="none t solid gray-100">
-          <button
-            class="spotlight-item items-center"
-            v-for="(o, idx) in filteredSpotOptions"
-            :class="{ 'is-focus': data.selectedIndex === idx }"
-            :key="o.id"
+          <div
+            v-if="filteredSpotOptions.length === 0"
             h="50px"
-            flex="~"
-            p="x-4"
-            bg="white"
-            @click="onClickOptionItem(o)"
+            text="gray-5 lg"
+            class="flex items-center justify-center"
           >
-            {{ o.title }}
-          </button>
+            Empty
+          </div>
+          <template v-else>
+            <button
+              class="spotlight-item items-center"
+              v-for="(o, idx) in filteredSpotOptions"
+              :class="{ 'is-focus': data.selectedIndex === idx }"
+              :key="o.id"
+              h="50px"
+              flex="~"
+              p="x-4"
+              bg="white"
+              @click="onClickOptionItem(o)"
+            >
+              {{ o.title }}
+            </button>
+          </template>
         </div>
       </div>
     </div>
@@ -149,7 +159,7 @@ function close() {
 <style lang="less">
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.2s ease;
+  transition: opacity 0.1s ease;
 }
 
 .fade-enter-from,

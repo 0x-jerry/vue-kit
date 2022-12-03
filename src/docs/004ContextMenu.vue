@@ -36,11 +36,10 @@ const menus: KMenuItem[] = [
 
 <template>
   <test-box title="Context Menu" class="select-none">
-    <k-row class="gap-y-2">
-      <k-context-menu :menus="menus">
+    <k-row class="gap-2">
+      <k-context-menu class="flex-1" :menus="menus">
         <template #reference>
           <div
-            w="400px"
             h="100px"
             border="~ gray-300 hover:blue-400"
             flex="~ "
@@ -52,10 +51,9 @@ const menus: KMenuItem[] = [
         </template>
       </k-context-menu>
 
-      <k-context-menu :min-width="200">
+      <k-context-menu class="flex-1">
         <template #reference>
           <div
-            w="400px"
             h="100px"
             border="~ gray-300 hover:blue-400"
             flex="~ "
