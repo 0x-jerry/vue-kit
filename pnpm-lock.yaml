@@ -7,7 +7,7 @@ specifiers:
   '@iconify/json': ^2.1.147
   '@types/node': ^18.11.10
   '@types/qrcode': ^1.5.0
-  '@unocss/reset': ^0.47.5
+  '@unocss/reset': ^0.48.0
   '@vitejs/plugin-vue': ^3.2.0
   '@vueuse/core': ^9.6.0
   cropperjs: ^1.5.13
@@ -30,7 +30,7 @@ specifiers:
 dependencies:
   '@0x-jerry/utils': 1.12.4
   '@floating-ui/dom': 1.0.7
-  '@unocss/reset': 0.47.5
+  '@unocss/reset': 0.48.0
   '@vueuse/core': 9.6.0_vue@3.2.45
   cropperjs: 1.5.13
   normalize.css: 8.0.1
@@ -423,6 +423,11 @@ packages:
 
   /@unocss/reset/0.47.5:
     resolution: {integrity: sha512-UmAeVMlcGPyrZJdQMGDX7EMVA4UieUyR9f3l6a3B/AcUNPQtcISLIlzzRqcUg2c/SkkA5sHZdXDa+l48b5+rGA==}
+    dev: true
+
+  /@unocss/reset/0.48.0:
+    resolution: {integrity: sha512-i7z6Rbs7fXFD3NdlVJViFltpDJUCo5xDm5y01Xaoa4mJQHr/1335Ht0JW/emAJXf170UYSwb2rUeK1J3fty9eg==}
+    dev: false
 
   /@unocss/scope/0.47.5:
     resolution: {integrity: sha512-vSYOyps6rJGcQztE4IsNkmFWIK06+3A780v+8PAn0wRbjqBoKZ1jCYL3NZ1ykCZBYPCXHcErlA2znIfb3ECbcw==}
