@@ -8,7 +8,9 @@ export function useRouteQuery<T extends string | string[]>(
 
   const value = ref<T>()
 
-  watch(route, () => (value.value = (route.query[name] || defaultValue) as T))
+  watch(route, () => (value.value = (route.query[name] || defaultValue) as T), {
+    immediate: true,
+  })
 
   watch(value, () => {
     const history = router.options.history
