@@ -27,6 +27,7 @@ const props = withDefaults(
      */
     delay?: number
     hideArrow?: boolean
+    autoUpdate?: boolean
   }>(),
   {
     modelValue: undefined,
@@ -71,26 +72,31 @@ useScroll(document, {
 
 watch(
   () => isVisible.value,
-  () => {
-    update()
-  },
+  () => update(),
 )
+
+const hidePopover = () => {
+  if (unref(isCustomTrigger)) return
+
+  if (!unref(isVisible)) return
+
+  emit('update:modelValue', false)
+}
 
 onUnmounted(() => {
   clearTimeout(delayHandler)
+  window.removeEventListener('click', hidePopover)
 })
 
 onMounted(() => {
-  const hidePopover = () => {
-    if (!unref(isVisible)) return
-
-    emit('update:modelValue', false)
-  }
-
   window.addEventListener('click', hidePopover)
-
-  return () => window.removeEventListener('click', hidePopover)
 })
+
+if (props.autoUpdate) {
+  useMutationObserver(ele.ref, () => update(), {
+    attributes: true,
+  })
+}
 
 async function update() {
   if (!isVisible.value) return
