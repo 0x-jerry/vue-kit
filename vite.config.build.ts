@@ -13,7 +13,7 @@ export default defineConfig(() => ({
       fileName: 'vue-kit',
     },
     rollupOptions: {
-      external: ['vue'],
+      external: ['vue', 'vue-router', '@vueuse/core'],
     },
   },
   ...sharedConfig,
