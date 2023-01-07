@@ -1,7 +1,7 @@
 export function useRouteQuery<T extends string | string[]>(
   name: string,
   defaultValue?: T,
-  opt?: { replace?: boolean },
+  opt?: { push?: boolean },
 ) {
   const router = useRouter()
   const route = useRoute()
@@ -21,10 +21,10 @@ export function useRouteQuery<T extends string | string[]>(
 
     const to = fake.toString().slice(base.length)
 
-    if (opt?.replace) {
-      history.replace(to)
-    } else {
+    if (opt?.push) {
       history.push(to)
+    } else {
+      history.replace(to)
     }
   })
 
