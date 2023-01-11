@@ -13,6 +13,7 @@ import {
   Middleware,
 } from '@floating-ui/dom'
 import { KFade } from '../transition'
+import { useClickOutEl } from '@/hooks'
 
 const props = withDefaults(
   defineProps<{
@@ -38,6 +39,7 @@ const props = withDefaults(
 
 const emit = defineEmits({
   'update:modelValue': (val: boolean) => true,
+  clickOutside: () => true,
 })
 
 const ele = {
@@ -171,6 +173,16 @@ function handleClick() {
 
   data.visible = !data.visible
 }
+
+useClickOutEl([ele.ref, ele.content], () => {
+  if (isTriggerByClick) {
+    data.visible = false
+  } else if (isTriggerByHover) {
+    mouseleave()
+  }
+
+  emit('clickOutside')
+})
 </script>
 
 <template>
@@ -179,35 +191,33 @@ function handleClick() {
     :ref="ele.ref"
     @mouseenter="mouseenter"
     @mouseleave="mouseleave"
-    @click.stop="handleClick"
+    @click="handleClick"
     v-bind="$attrs"
   >
     <slot name="reference"></slot>
   </div>
 
   <teleport to="body">
-    <div class="k-popover" :class="{ 'by-hover': trigger === 'hover' }">
-      <k-fade>
+    <k-fade>
+      <div
+        class="k-popover--content"
+        :ref="ele.content"
+        :style="styles.content"
+        v-show="isVisible"
+        @mouseenter="mouseenter"
+        @mouseleave="mouseleave"
+      >
+        <slot>
+          {{ content }}
+        </slot>
         <div
-          class="k-popover--content"
-          :ref="ele.content"
-          :style="styles.content"
-          v-show="isVisible"
-          @mouseenter="mouseenter"
-          @mouseleave="mouseleave"
-        >
-          <slot>
-            {{ content }}
-          </slot>
-          <div
-            class="k-popover--arrow"
-            v-if="!props.hideArrow"
-            :ref="ele.arrow"
-            :style="styles.arrow"
-          ></div>
-        </div>
-      </k-fade>
-    </div>
+          class="k-popover--arrow"
+          v-if="!props.hideArrow"
+          :ref="ele.arrow"
+          :style="styles.arrow"
+        ></div>
+      </div>
+    </k-fade>
   </teleport>
 </template>
 

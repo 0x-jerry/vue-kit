@@ -13,8 +13,10 @@ const isSelected = computed(() => ctx?.selected.value === props.value)
 
 onMounted(() => {
   ctx?.addOption(props.value, props.label ?? String(props.value))
+})
 
-  return () => ctx?.removeOption(props.value)
+onUnmounted(() => {
+  ctx?.removeOption(props.value)
 })
 
 function handleChange() {

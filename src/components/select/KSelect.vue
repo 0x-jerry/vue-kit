@@ -83,14 +83,20 @@ function toggleOptions() {
 }
 
 function hideOptions() {
-  syncWidth()
+  if (!data.expand) return
+
   data.expand = false
 }
 </script>
 
 <template>
   <div class="k-select" :class="{ 'is-disabled': props.disabled, 'is-block': props.block }">
-    <k-popover v-model="data.expand" placement="bottom" :class="{ 'is-block': props.block }">
+    <k-popover
+      v-model="data.expand"
+      placement="bottom"
+      :class="{ 'is-block': props.block }"
+      @click-outside="hideOptions"
+    >
       <template #reference>
         <div class="k-select--content" @click="toggleOptions" :ref="ele.content">
           <slot name="content" v-bind="selectedOption" :expand="data.expand">

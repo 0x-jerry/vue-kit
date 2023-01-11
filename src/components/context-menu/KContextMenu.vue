@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { useGlobalClickEvent } from '@/hooks/useMouseEvent'
 import { KContextMenuContextKey } from './context'
 import { KMenuButton, KMenuDivide, KMenuItem } from './types'
 
@@ -47,7 +46,7 @@ watch(
   },
 )
 
-useGlobalClickEvent(() => hideMenu())
+useEventListener('click', () => hideMenu())
 
 const contextMenuStyle = computed(() => {
   return {

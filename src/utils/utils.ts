@@ -14,3 +14,14 @@ import { is } from '@0x-jerry/utils'
  */
 export const parseStyleProperty = (val: string | number, unit = 'px') =>
   is.string(val) ? val : val + unit
+
+export const isContainEl = (el: HTMLElement, parentEl: HTMLElement) => {
+  let ele: HTMLElement | null = el
+
+  while (ele) {
+    if (ele === parentEl) return true
+    ele = ele.parentElement
+  }
+
+  return false
+}
