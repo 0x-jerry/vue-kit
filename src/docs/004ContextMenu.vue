@@ -40,11 +40,7 @@ const menus: KMenuItem[] = [
       <k-context-menu class="flex-1" :menus="menus">
         <template #reference>
           <div
-            h="100px"
-            border="~ gray-300 hover:blue-400"
-            flex="~ "
-            class="items-center"
-            justify="center"
+            class="items-center flex justify-center border-(~ solid gray-3) hover:(border-gray-4) h-100px"
           >
             <span text="gray-300"> Use Right Click To Open Context Menu </span>
           </div>
@@ -54,11 +50,7 @@ const menus: KMenuItem[] = [
       <k-context-menu class="flex-1">
         <template #reference>
           <div
-            h="100px"
-            border="~ gray-300 hover:blue-400"
-            flex="~ "
-            class="items-center"
-            justify="center"
+            class="items-center flex justify-center border-(~ solid gray-3) hover:(border-gray-4) h-100px"
           >
             <span text="gray-300"> Use Right Click To Open Context Menu </span>
           </div>

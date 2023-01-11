@@ -44,9 +44,13 @@ const _disabled = computed(() => props.disabled || $click.isProcessing)
   @apply text-gray-800;
 
   @apply transition transition-colors;
-  @apply focus:outline-none;
+  outline: none;
 
   cursor: pointer;
+
+  &:hover {
+    outline: none;
+  }
 
   &.is-text {
     background: transparent;
@@ -65,7 +69,7 @@ const _disabled = computed(() => props.disabled || $click.isProcessing)
 
   &.is-button {
     @apply px-2 py-1;
-    @apply border border-gray-200;
+    @apply border-(~ solid gray-2);
     @apply bg-gray-50;
 
     &:hover,

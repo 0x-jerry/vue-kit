@@ -96,27 +96,18 @@ function close() {
   <transition name="fade" @enter="whenShow">
     <div
       ref="spotlightBox"
-      class="fixed w-screen h-screen z-100 top-0 left-0"
-      bg="opacity-70 gray-200"
+      class="fixed w-screen h-screen z-100 top-0 left-0 bg-(opacity-70 gray-2)"
       v-show="visible"
     >
       <div
-        class="fixed top-1/4 left-1/2 items-center transform -translate-x-1/2"
-        box="border"
-        w="700px"
-        bg="white"
-        overflow="hidden"
-        border="~ solid gray-300 rounded-md"
+        class="fixed top-1/4 left-1/2 items-center transform -translate-x-1/2 box-border w-700px bg-white overflow-hidden border-(~ solid gray-3) rounded-md"
       >
-        <div class="items-center" h="50px" bg="blue-1 opacity-50" flex="~" p="x-4">
+        <div class="items-center h-50px bg-(blue-1 opacity-50) flex px-4">
           <div class="input" w="full">
             <input
               ref="input"
-              class="w-full"
-              bg="transparent"
+              class="w-full bg-transparent border-none outline-none"
               :placeholder="data.placeholder"
-              border="none"
-              outline="none"
               type="text"
               @focus="data.placeholder = 'Try type something...'"
               @blur="data.placeholder = 'Press ⌘ + K to focus'"
@@ -126,25 +117,19 @@ function close() {
           </div>
         </div>
 
-        <div class="spotlight-content" overflow="auto" h="max-300px" border="none t solid gray-100">
+        <div class="spotlight-content overflow-auto h-max-300px border-(none t solid gray-1)">
           <div
             v-if="filteredSpotOptions.length === 0"
-            h="50px"
-            text="gray-5 lg"
-            class="flex items-center justify-center"
+            class="flex items-center justify-center text-(gray-3 lg) h-50px"
           >
             Empty
           </div>
           <template v-else>
             <button
-              class="spotlight-item items-center"
+              class="spotlight-item items-center h-50px flex px-4 bg-white"
               v-for="(o, idx) in filteredSpotOptions"
               :class="{ 'is-focus': data.selectedIndex === idx }"
               :key="o.id"
-              h="50px"
-              flex="~"
-              p="x-4"
-              bg="white"
               @click="onClickOptionItem(o)"
             >
               {{ o.title }}

@@ -6,7 +6,7 @@ defineProps<{
 
 <template>
   <div>
-    <div class="test-title" text="xl" font="bold" p="x-2 y-4">
+    <div class="test-title text-xl font-bold px-2 py-4">
       <slot name="title">
         {{ title }}
       </slot>

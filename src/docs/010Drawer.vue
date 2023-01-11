@@ -15,14 +15,14 @@ const data = reactive({
     </k-row>
 
     <k-drawer v-model="data.left" placement="left" title="Drawer left title">
-      <div h="120vh" border="~ solid gray-300"></div>
+      <div class="border-(~ solid gray-300) h-120vh"></div>
     </k-drawer>
 
     <k-drawer v-model="data.right">
       <template #head>
         <div>Drawer right</div>
       </template>
-      <div h="120vh" border="~ solid gray-300"></div>
+      <div class="border-(~ solid gray-300) h-120vh"></div>
       <template #footer>
         <div>Drawer right footer</div>
       </template>

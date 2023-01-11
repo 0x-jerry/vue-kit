@@ -6,7 +6,6 @@ import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Icons from 'unplugin-icons/vite'
 import Unocss from 'unocss/vite'
-import { presetAttributify, presetWind, transformerDirectives } from 'unocss'
 
 export const sharedConfig = {
   resolve: {
@@ -20,10 +19,7 @@ export const sharedConfig = {
     Icons(),
 
     // https://github.com/unocss/unocss
-    Unocss({
-      presets: [presetAttributify(), presetWind()],
-      transformers: [transformerDirectives()],
-    }),
+    Unocss(),
 
     // https://github.com/antfu/unplugin-auto-import
     AutoImport({

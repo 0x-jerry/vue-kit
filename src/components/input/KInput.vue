@@ -35,14 +35,14 @@ function handleInput(e: Event) {
 
   &.is-disabled {
     .k-input {
-      @apply border-gray-200 text-gray-400;
+      @apply border-gray-2 text-gray-400;
       cursor: not-allowed;
     }
   }
 }
 
 .k-input {
-  @apply border border-gray-300;
+  @apply border-(~ solid gray-3);
   @apply transition transition-colors;
   @apply px-2 py-1;
   @apply w-full;
