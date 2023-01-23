@@ -45,4 +45,12 @@ export default defineConfig(() => ({
       exclude: ['**/components/*.vue', '**/*.ts'],
     }),
   ],
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    coverage: {
+      extension: ['.ts'],
+      reporter: ['clover', 'html-spa'],
+    },
+  },
 }))

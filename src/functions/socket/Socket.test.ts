@@ -19,8 +19,8 @@ describe('Socket', () => {
     expect(ev).toEqual(['error'])
   })
 
-  it('serialize string', (done) => {
-    const [socket] = setupSocketServer(done)
+  it('serialize string', async () => {
+    const [socket] = setupSocketServer()
 
     socket.on('message', (d) => {
       expect(d).toEqual({
@@ -30,10 +30,12 @@ describe('Socket', () => {
     })
 
     socket.send('hello')
+
+    await sleep(1000)
   })
 
-  it('serialize json', (done) => {
-    const [socket] = setupSocketServer(done)
+  it('serialize json', async () => {
+    const [socket] = setupSocketServer()
 
     socket.on('message', (d) => {
       expect(d).toEqual({
@@ -47,10 +49,12 @@ describe('Socket', () => {
     socket.send({
       hello: 'world',
     })
+
+    await sleep(1000)
   })
 
-  it('serialize error', (done) => {
-    const [socket] = setupSocketServer(done)
+  it('serialize error', async () => {
+    const [socket] = setupSocketServer()
 
     const fn = vi.fn()
 
@@ -64,10 +68,12 @@ describe('Socket', () => {
     sleep(100).then(() => {
       expect(fn).toBeCalledTimes(1)
     })
+
+    await sleep(1000)
   })
 
-  it('duplicate success connections', (done) => {
-    const [socket] = setupSocketServer(done)
+  it('duplicate success connections', async () => {
+    const [socket] = setupSocketServer()
 
     expect(socket.connected).toBe(false)
 
@@ -76,6 +82,8 @@ describe('Socket', () => {
       console.log('hello')
       expect(socket.connected).toBe(true)
     })
+
+    await sleep(1000)
   })
 
   it('duplicate failed connections', async () => {
@@ -91,7 +99,7 @@ describe('Socket', () => {
   })
 })
 
-function setupSocketServer(done: () => void) {
+function setupSocketServer() {
   // mock
   const mockUrl = `ws://localhost:${port++}`
   const wss = new Server(mockUrl)
@@ -109,7 +117,7 @@ function setupSocketServer(done: () => void) {
         JSON.stringify({
           from: 'wss',
           data: raw,
-        })
+        }),
       )
     })
   })
@@ -117,8 +125,6 @@ function setupSocketServer(done: () => void) {
   // test
 
   const socket = new Socket(mockUrl)
-
-  sleep(1000).then(done)
 
   return [socket, wss] as const
 }
