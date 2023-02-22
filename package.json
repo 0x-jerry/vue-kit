@@ -55,7 +55,7 @@
   "dependencies": {
     "@0x-jerry/utils": "^1.13.0",
     "@floating-ui/dom": "^1.1.0",
-    "@unocss/reset": "^0.48.4",
+    "@unocss/reset": "^0.50.0",
     "@vueuse/core": "^9.11.1",
     "cropperjs": "^1.5.13",
     "normalize.css": "^8.0.1",
