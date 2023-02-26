@@ -18,9 +18,7 @@ const values = [1, 2, 3]
     </k-row>
     <k-row>
       <span>Radio Group: </span>
-      <k-radio-group v-model="data.v2">
-        <k-radio v-for="v in values" :value="v"> {{ v }}</k-radio>
-        <k-radio :value="4" disabled> {{ 4 }}</k-radio>
+      <k-radio-group v-model="data.v2" :options="values.map((n) => ({ label: n, value: n }))">
       </k-radio-group>
     </k-row>
     <k-row>

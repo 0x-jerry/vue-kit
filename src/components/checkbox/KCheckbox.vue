@@ -1,16 +1,21 @@
 <script lang="ts" setup>
+import { useTheme } from '@/hooks'
 import { CheckboxGroupContextKey } from './context'
 
 const props = defineProps<{
   modelValue?: boolean
   value: unknown
+  label?: string | boolean | number
   disabled?: boolean
 }>()
 
 const emit = defineEmits({
   'update:modelValue': (val: unknown) => true,
 })
+
 const ctx = inject(CheckboxGroupContextKey, null)
+
+const { cls } = useTheme()
 
 const checked = computed(() => (ctx ? ctx.value.includes(props.value) : props.modelValue))
 
@@ -26,55 +31,18 @@ function handleChange() {
 </script>
 
 <template>
-  <template v-if="slots.default">
-    <label class="k-checkbox--label" :class="{ 'is-disabled': isDisabled }">
-      <input
-        class="k-checkbox"
-        type="checkbox"
-        :checked="checked"
-        :value="value"
-        @change="handleChange"
-        :disabled="isDisabled"
-      />
-      <span class="k-checkbox--content" v-if="$slots.default">
-        <slot></slot>
-      </span>
-    </label>
-  </template>
-  <template v-else>
+  <label :class="cls('checkbox')">
+    <div class="el"></div>
     <input
-      class="k-checkbox"
+      hidden
       type="checkbox"
       :checked="checked"
       :value="value"
       @change="handleChange"
       :disabled="isDisabled"
     />
-  </template>
+    <span :class="cls('checkbox-content')" v-if="$slots.default">
+      <slot>{{ label }}</slot>
+    </span>
+  </label>
 </template>
-
-<style lang="less">
-.k-checkbox--label {
-  cursor: pointer;
-  width: fit-content;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-
-  &.is-disabled {
-    cursor: not-allowed;
-  }
-}
-
-.k-checkbox {
-  cursor: pointer;
-
-  &:disabled {
-    cursor: not-allowed;
-  }
-
-  &--content {
-    @apply ml-1;
-  }
-}
-</style>

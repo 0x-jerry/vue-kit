@@ -1,14 +1,24 @@
 <script lang="ts" setup>
+import KCheckbox from './KCheckbox.vue'
+import { useTheme } from '@/hooks'
 import { CheckboxGroupContext, CheckboxGroupContextKey } from './context'
+
+interface Option {
+  label: string | number | boolean
+  value: any
+}
 
 const props = defineProps<{
   modelValue: unknown[]
   disabled?: boolean
+  options?: Option[]
 }>()
 
 const emit = defineEmits({
   'update:modelValue': (val: unknown[]) => true,
 })
+
+const { cls } = useTheme()
 
 const ctx: CheckboxGroupContext = {
   get value() {
@@ -37,5 +47,14 @@ provide(CheckboxGroupContextKey, ctx)
 </script>
 
 <template>
-  <slot></slot>
+  <div :class="cls('checkbox-group')">
+    <slot>
+      <KCheckbox
+        v-for="item in options || []"
+        :key="item.value"
+        :value="item.value"
+        :label="item.label"
+      />
+    </slot>
+  </div>
 </template>
