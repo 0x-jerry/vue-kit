@@ -2,18 +2,18 @@
   height: @s-base;
   border-radius: @r-base;
 
-  transition-property: color, border-color;
-
+  .transition();
   border: 1px solid @c-gray-300;
   background: @c-gray-50;
   color: @c-text;
 
   &:hover {
-    color: @c-primary;
+    background-color: @c-primary-50;
+    color: @c-primary-400;
   }
 
   &:active {
-    color: darken(@c-primary, 10%);
+    color: @c-primary-600;
   }
 
   &:hover,
@@ -39,5 +39,6 @@
 }
 
 .transition(@properties: color, border-color, background-color;) {
-  transition: ease 0.4s @properties;
+  transition: ease 0.4s;
+  transition-property+: @properties;
 }

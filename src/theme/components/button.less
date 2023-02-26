@@ -8,14 +8,26 @@
   background: transparent;
   padding: 0 10px;
 
-  .transition();
-
   .input();
 
   &.it-text {
     border: none;
     padding: 0;
     background-color: transparent;
+  }
+
+  &.it-primary {
+    background-color: @c-primary;
+    color: @c-text-reverse;
+    border: none;
+
+    &:hover {
+      background: @c-primary-400;
+    }
+
+    &:active {
+      background: @c-primary-600;
+    }
   }
 
   &.is-loading {

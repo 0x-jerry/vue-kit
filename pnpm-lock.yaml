@@ -9,6 +9,7 @@ specifiers:
   '@types/qrcode': ^1.5.0
   '@unocss/reset': ^0.50.1
   '@vitejs/plugin-vue': ^4.0.0
+  '@vue/runtime-core': ^3.2.47
   '@vue/test-utils': ^2.3.0
   '@vueuse/core': ^9.13.0
   cropperjs: ^1.5.13
@@ -36,6 +37,7 @@ dependencies:
   '@0x-jerry/utils': 1.13.0
   '@floating-ui/dom': 1.2.1
   '@unocss/reset': 0.50.1
+  '@vue/runtime-core': 3.2.47
   '@vueuse/core': 9.13.0_vue@3.2.47
   cropperjs: 1.5.13
   normalize.css: 8.0.1
