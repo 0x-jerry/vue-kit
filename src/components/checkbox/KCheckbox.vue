@@ -41,7 +41,7 @@ function handleChange() {
       @change="handleChange"
       :disabled="isDisabled"
     />
-    <span :class="cls('checkbox-content')" v-if="$slots.default">
+    <span :class="cls('checkbox-content')" v-if="$slots.default || label">
       <slot>{{ label }}</slot>
     </span>
   </label>

@@ -17,6 +17,10 @@ const values = [1, 2, 3]
       <k-checkbox v-model="data.v1[3]" :value="4" disabled> {{ 4 }}</k-checkbox>
     </k-row>
     <k-row>
+      <span>Checkbox: </span>
+      <k-checkbox-group v-model="data.v2" :options="values.map((n) => ({ label: n, value: n }))" />
+    </k-row>
+    <k-row>
       <span>Radio Group: </span>
       <k-checkbox-group v-model="data.v2">
         <k-checkbox value="ff"> ff </k-checkbox>

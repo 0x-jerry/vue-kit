@@ -4,52 +4,13 @@
 }
 
 .@{prefix}radio {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+  .radio();
 
-  cursor: pointer;
-
-  & > .el {
-    cursor: inherit;
-    @size: 14px;
-
-    width: @size;
-    height: @size;
-
-    border-radius: @size * 2;
-    border: 1px solid @c-gray-300;
-
-    .transition();
-    position: relative;
+  .el {
+    border-radius: 99px;
 
     &::before {
-      @_size: @size * 0.6;
-
-      width: @_size;
-      height: @_size;
-      border-radius: @_size * 2;
-
-      content: '';
-      .pos-center();
-      .transition();
+      border-radius: 99px;
     }
-
-    &:hover {
-      border-color: @c-primary;
-    }
-  }
-
-  &:has(> input:checked) {
-    > .el {
-      &::before {
-        background-color: @c-primary;
-      }
-    }
-  }
-
-  input:disabled,
-  &:has(input:disabled) {
-    cursor: not-allowed;
   }
 }
