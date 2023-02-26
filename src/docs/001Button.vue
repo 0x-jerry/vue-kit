@@ -7,11 +7,11 @@ const data = reactive({})
 
 <template>
   <test-box title="Button">
-    <k-flex>
+    <div class="flex gap-4">
       <k-button>Normal</k-button>
       <k-button :click="() => sleep(1000)"> Click Props </k-button>
       <k-button disabled>Disabled</k-button>
       <k-button :click="() => sleep(1000)" variety="text"> Text </k-button>
-    </k-flex>
+    </div>
   </test-box>
 </template>

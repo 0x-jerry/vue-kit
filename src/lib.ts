@@ -1,7 +1,7 @@
 // bundle entry
 import '@unocss/reset/normalize.css'
 
-import './components/styles/index.less'
+import './theme/index.less'
 import 'uno.css'
 
 export * from './components'

@@ -1,14 +1,17 @@
 <script lang="ts" setup>
+import { useTheme } from '@/hooks'
 import { useOnClick, useClickProps } from '@/hooks/useOnClick'
 import { PropType } from 'vue'
+
+const { cls } = useTheme()
 
 const $click = useOnClick()
 
 const props = defineProps({
   ...useClickProps,
   variety: {
-    type: String as PropType<'text' | 'button'>,
-    default: 'button',
+    type: String as PropType<'text' | 'primary' | 'blank'>,
+    default: 'blank',
   },
   disabled: {
     type: Boolean,
@@ -21,84 +24,18 @@ const _disabled = computed(() => props.disabled || $click.isProcessing)
 
 <template>
   <button
-    class="k-button"
-    :class="[
-      {
-        'is-loading': $click.isProcessing,
-      },
-      `is-${variety}`,
-    ]"
+    :class="
+      cls(
+        'btn',
+        {
+          loading: $click.isProcessing,
+        },
+        `it-${variety}`,
+      )
+    "
     :disabled="_disabled"
     @click="$click.handler"
   >
     <slot></slot>
   </button>
 </template>
-
-<style lang="less">
-.k-button {
-  font-size: inherit;
-  display: flex;
-  align-items: center;
-
-  @apply text-gray-800;
-
-  @apply transition transition-colors;
-  outline: none;
-
-  cursor: pointer;
-
-  &:hover {
-    outline: none;
-  }
-
-  &.is-text {
-    background: transparent;
-    border: none;
-    padding: 0;
-
-    &:hover,
-    &:active {
-      @apply text-blue-500;
-    }
-
-    &:active {
-      @apply text-blue-700 border-current;
-    }
-  }
-
-  &.is-button {
-    @apply px-2 py-1;
-    @apply border-(~ solid gray-2);
-    @apply bg-gray-50;
-
-    &:hover,
-    &:active {
-      @apply text-blue-500 border-current;
-    }
-
-    &:active {
-      @apply text-blue-700 border-current;
-    }
-
-    &:disabled {
-      &:hover {
-        @apply border-gray-200;
-      }
-    }
-  }
-
-  &:disabled {
-    cursor: not-allowed;
-    @apply text-gray-400;
-
-    &:hover {
-      @apply text-gray-400;
-    }
-  }
-
-  &.is-loading {
-    @apply cursor-wait;
-  }
-}
-</style>

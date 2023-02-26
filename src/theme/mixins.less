@@ -1,0 +1,43 @@
+.input() {
+  height: @s-base;
+  border-radius: @r-base;
+
+  transition-property: color, border-color;
+
+  border: 1px solid @c-gray-300;
+  background: @c-gray-50;
+  color: @c-text;
+
+  &:hover {
+    color: @c-primary;
+  }
+
+  &:active {
+    color: darken(@c-primary, 10%);
+  }
+
+  &:hover,
+  &:active {
+    border-color: currentColor;
+  }
+
+  &:disabled {
+    color: @c-disabled;
+    cursor: not-allowed;
+    border-color: currentColor;
+
+    &:hover {
+      color: @c-disabled;
+      border-color: @c-disabled;
+    }
+  }
+
+  &.s-sm {
+    height: @s-sm;
+    border-radius: @r-sm;
+  }
+}
+
+.transition(@properties: color, border-color, background-color;) {
+  transition: ease 0.4s @properties;
+}

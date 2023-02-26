@@ -1,0 +1,24 @@
+.@{prefix}btn {
+  font-size: inherit;
+  display: flex;
+  align-items: center;
+  outline: none;
+
+  cursor: pointer;
+  background: transparent;
+  padding: 0 10px;
+
+  .transition();
+
+  .input();
+
+  &.it-text {
+    border: none;
+    padding: 0;
+    background-color: transparent;
+  }
+
+  &.is-loading {
+    cursor: wait;
+  }
+}

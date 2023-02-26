@@ -11,11 +11,12 @@ div {
     width: @size;
     border-radius: @size * 2;
 
-    @apply bg-gray-3;
-    @apply transition transition-colors;
+    background-color: @c-gray-300;
+
+    .transition(background-color);
 
     &:hover {
-      @apply bg-gray-4;
+      background-color: @c-gray-400;
     }
   }
 }
