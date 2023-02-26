@@ -65,7 +65,6 @@ const config = {
   },
   size: {
     base: '30px',
-    sm: '24px',
   },
   var: {
     prefix: 'k-',

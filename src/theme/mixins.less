@@ -33,14 +33,9 @@
       border-color: @c-disabled;
     }
   }
-
-  &.s-sm {
-    height: @s-sm;
-    border-radius: @r-sm;
-  }
 }
 
-.radio(@size: 14px) {
+.radio(@size: @s-base * 0.5) {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -78,6 +73,7 @@
 
   &:has(> input:checked) {
     > .el {
+      border-color: @c-primary;
       &::before {
         background-color: @c-primary;
       }
