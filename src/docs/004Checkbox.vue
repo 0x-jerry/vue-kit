@@ -3,10 +3,10 @@ import TestBox from './components/TestBox.vue'
 
 const data = reactive({
   v1: [true],
-  v2: [],
+  v2: [true],
 })
 
-const values = [1, 2, 3]
+const values = [1, 2, 3, true]
 </script>
 
 <template>
