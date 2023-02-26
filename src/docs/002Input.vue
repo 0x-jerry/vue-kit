@@ -8,11 +8,11 @@ const data = reactive({
 
 <template>
   <test-box title="Input">
-    <k-row>
+    <div class="flex gap-4">
       <k-input v-model="data.v" />
       <k-input v-model="data.v" />
       <k-input v-model="data.v" disabled />
       <k-input modelValue="" placeholder="this is a placeholder" />
-    </k-row>
+    </div>
   </test-box>
 </template>

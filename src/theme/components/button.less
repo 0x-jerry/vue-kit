@@ -1,14 +1,21 @@
 .@{prefix}btn {
   font-size: inherit;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   outline: none;
 
   cursor: pointer;
-  background: transparent;
+  .input();
+
   padding: 0 10px;
 
-  .input();
+  &:hover {
+    background-color: @c-primary-50;
+
+    &:disabled {
+      background-color: @c-gray-50;
+    }
+  }
 
   &.it-text {
     border: none;
@@ -27,6 +34,12 @@
 
     &:active {
       background: @c-primary-600;
+    }
+
+    &:disabled {
+      background: @c-gray-50;
+      color: @c-disabled;
+      border: 1px solid currentColor;
     }
   }
 

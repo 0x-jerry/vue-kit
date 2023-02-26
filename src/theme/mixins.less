@@ -2,13 +2,13 @@
   height: @s-base;
   border-radius: @r-base;
 
-  .transition();
   border: 1px solid @c-gray-300;
-  background: @c-gray-50;
+  background: @c-white;
   color: @c-text;
 
+  .transition();
+
   &:hover {
-    background-color: @c-primary-50;
     color: @c-primary-400;
   }
 
@@ -21,10 +21,12 @@
     border-color: currentColor;
   }
 
+  &.is-disabled,
   &:disabled {
     color: @c-disabled;
     cursor: not-allowed;
     border-color: currentColor;
+    background: @c-gray-50;
 
     &:hover {
       color: @c-disabled;
