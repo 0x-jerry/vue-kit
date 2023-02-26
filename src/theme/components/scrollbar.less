@@ -4,19 +4,29 @@ div {
 
   &::-webkit-scrollbar {
     width: @size;
-    background: rgba(0, 0, 0, 0.03);
+    background-color: transparent;
+    .transition(background-color);
   }
 
   &::-webkit-scrollbar-thumb {
     width: @size;
     border-radius: @size * 2;
 
-    background-color: @c-gray-300;
-
+    background-color: transparent;
     .transition(background-color);
 
     &:hover {
       background-color: @c-gray-400;
+    }
+  }
+
+  &:hover {
+    &::-webkit-scrollbar {
+      background: rgba(0, 0, 0, 0.03);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: @c-gray-300;
     }
   }
 }

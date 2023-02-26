@@ -35,9 +35,9 @@ const menus: KMenuItem[] = [
 </script>
 
 <template>
-  <test-box title="Context Menu" class="select-none">
+  <test-box title="Context Menu">
     <k-row class="gap-2">
-      <k-context-menu class="flex-1" :menus="menus">
+      <k-context-menu class="flex-1 select-none" :menus="menus">
         <template #reference>
           <div
             class="items-center flex justify-center border-(~ solid gray-3) hover:(border-gray-4) h-100px"
