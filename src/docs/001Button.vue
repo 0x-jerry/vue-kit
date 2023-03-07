@@ -7,7 +7,7 @@ const data = reactive({})
 
 <template>
   <test-box title="Button">
-    <div class="flex gap-4">
+    <div class="flex gap-sm">
       <k-button>Normal</k-button>
       <k-button variety="primary">Primary</k-button>
       <k-button disabled variety="primary">Primary</k-button>

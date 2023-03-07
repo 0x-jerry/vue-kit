@@ -8,7 +8,7 @@ const data = reactive({
 
 <template>
   <test-box title="Input">
-    <div class="flex gap-4">
+    <div class="flex gap-sm">
       <k-input v-model="data.v" />
       <k-input v-model="data.v" />
       <k-input v-model="data.v" disabled />
