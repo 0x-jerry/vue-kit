@@ -1,1 +1,26 @@
-@import './basic-vars.less';
+@import './color.less';
+
+:root {
+  --text: #181818;
+  --text-reverse: #ffffff;
+  --disabled: #e3e3e3;
+}
+
+// --- colors
+@c-brand: #cu.brand() [color];
+@c-brand-light: #cu.brand(20) [color];
+@c-brand-dark: #cu.brand(-20) [color];
+@c-disabled: #cu.gray(40) [color];
+
+@c-text: #cu.text() [color];
+@c-text-reverse: var(--text-reverse);
+@c-text-disabled: #cu.gray(10) [color];
+
+// --- prefix
+@prefix: k;
+
+// --- size
+@s-base: 32px;
+
+// --- radius
+@r-base: 4px;

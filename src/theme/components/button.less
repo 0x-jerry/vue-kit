@@ -1,46 +1,61 @@
-.@{prefix}btn {
+.@{prefix}-btn {
+  --x: 0px;
+  --y: 0px;
+
+  --bg: #cu.gray(40) [color];
+
   font-size: inherit;
   display: inline-flex;
   align-items: center;
   outline: none;
+  position: relative;
 
   cursor: pointer;
   .input();
+  background: none;
 
   padding: 0 10px;
 
-  &:hover {
-    background-color: @c-primary-50;
+  // transition: 0.1s linear;
+  // transition-property: transform;
 
-    &:disabled {
-      background-color: @c-gray-50;
+  transform-style: preserve-3d;
+  transform: perspective(1000px) rotateY(var(--y)) rotateX(var(--x));
+
+  &-bg {
+    background: var(--bg);
+
+    transition: 0.2s ease;
+    transition-property+: transform, background;
+
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -100;
+
+    border-radius: @r-base;
+
+    transform: translateZ(-4px);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    --bg: @c-disabled;
+    color: @c-text-disabled;
+  }
+
+  &:active:not(:disabled) {
+    .@{prefix}-btn-bg {
+      transform: translateZ(-6px) scale(1.1);
     }
   }
 
-  &.it-text {
-    border: none;
-    padding: 0;
-    background-color: transparent;
-  }
-
-  &.it-primary {
-    background-color: @c-primary;
+  &.it-primary:not(:disabled) {
     color: @c-text-reverse;
-    border: none;
 
-    &:hover {
-      background: @c-primary-400;
-    }
-
-    &:active {
-      background: @c-primary-600;
-    }
-
-    &:disabled {
-      background: @c-gray-50;
-      color: @c-disabled;
-      border: 1px solid currentColor;
-    }
+    --bg: @c-brand;
   }
 
   &.is-loading {

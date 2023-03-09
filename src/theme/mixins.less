@@ -1,38 +1,15 @@
+@input-bg: #cu.gray(40) [color];
+@input-bg-hover: #cu.gray(30) [color];
+
 .input() {
   height: @s-base;
   border-radius: @r-base;
 
-  border: 1px solid @c-gray-300;
-  background: @c-white;
+  background: @input-bg;
   color: @c-text;
+  border: none;
 
   .transition();
-
-  &:hover {
-    color: @c-primary-400;
-  }
-
-  &:active {
-    color: @c-primary-600;
-  }
-
-  &:hover,
-  &:active {
-    border-color: currentColor;
-  }
-
-  &.is-disabled,
-  &:disabled {
-    color: @c-disabled;
-    cursor: not-allowed;
-    border-color: currentColor;
-    background: @c-gray-50;
-
-    &:hover {
-      color: @c-disabled;
-      border-color: @c-disabled;
-    }
-  }
 }
 
 .radio(@size: @s-base * 0.5) {
@@ -48,7 +25,7 @@
     width: @size;
     height: @size;
 
-    border: 1px solid @c-gray-300;
+    border: 1px solid @c-disabled;
 
     .transition();
     position: relative;
@@ -67,15 +44,15 @@
 
   &:hover {
     > .el {
-      border-color: @c-primary;
+      border-color: @c-brand;
     }
   }
 
   &:has(> input:checked) {
     > .el {
-      border-color: @c-primary;
+      border-color: @c-brand;
       &::before {
-        background-color: @c-primary;
+        background-color: @c-brand;
       }
     }
   }
@@ -84,7 +61,7 @@
     cursor: not-allowed;
 
     > .el {
-      background-color: @c-gray-50;
+      background-color: @c-disabled;
       border-color: @c-disabled;
     }
   }

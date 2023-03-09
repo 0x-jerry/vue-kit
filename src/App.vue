@@ -6,12 +6,13 @@
   </k-conf-provider>
 </template>
 
-<style>
+<style lang="less">
+@import './theme/index.less';
+
 html,
 body {
   font-size: 14px;
-  @apply font-sans;
-
-  @apply text-gray-700;
+  --uno: font-sans;
+  color: @c-text;
 }
 </style>
