@@ -53,8 +53,8 @@ const overlayStyle = computed(() => {
   const { x, y } = pos.value
 
   return {
-    '--y': `${-x * range}deg`,
-    '--x': `${y * range}deg`,
+    '--ry': `${-x * range}deg`,
+    '--rx': `${y * range}deg`,
   }
 })
 </script>

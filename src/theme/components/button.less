@@ -1,6 +1,6 @@
 .@{prefix}-btn {
-  --x: 0px;
-  --y: 0px;
+  --rx: 0px;
+  --ry: 0px;
 
   --bg: #cu.gray(40) [color];
 
@@ -14,13 +14,13 @@
   .input();
   background: none;
 
-  padding: 0 10px;
+  padding: 0 18px;
 
   transition: 50ms linear;
   transition-property: transform;
 
   transform-style: preserve-3d;
-  transform: perspective(1000px) rotateY(var(--y)) rotateX(var(--x));
+  transform: perspective(1000px) rotateY(var(--ry)) rotateX(var(--rx));
 
   &-bg {
     background: var(--bg);
