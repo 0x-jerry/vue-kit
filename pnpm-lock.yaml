@@ -5,6 +5,7 @@ specifiers:
   '@0x-jerry/x-release': ^0.3.6
   '@floating-ui/dom': ^1.2.1
   '@iconify/json': ^2.2.27
+  '@types/animejs': ^3.1.7
   '@types/node': ^18.14.1
   '@types/qrcode': ^1.5.0
   '@unocss/reset': ^0.50.1
@@ -12,6 +13,7 @@ specifiers:
   '@vue/runtime-core': ^3.2.47
   '@vue/test-utils': ^2.3.0
   '@vueuse/core': ^9.13.0
+  animejs: ^3.2.1
   cropperjs: ^1.5.13
   happy-dom: ^8.9.0
   jsdom: ^21.1.0
@@ -39,6 +41,7 @@ dependencies:
   '@unocss/reset': 0.50.1
   '@vue/runtime-core': 3.2.47
   '@vueuse/core': 9.13.0_vue@3.2.47
+  animejs: 3.2.1
   cropperjs: 1.5.13
   normalize.css: 8.0.1
   qrcode: 1.5.1
@@ -48,6 +51,7 @@ dependencies:
 devDependencies:
   '@0x-jerry/x-release': 0.3.6
   '@iconify/json': 2.2.27
+  '@types/animejs': 3.1.7
   '@types/node': 18.14.1
   '@types/qrcode': 1.5.0
   '@vitejs/plugin-vue': 4.0.0_vite@4.1.4+vue@3.2.47
@@ -915,6 +919,10 @@ packages:
     engines: {node: '>= 10'}
     dev: true
 
+  /@types/animejs/3.1.7:
+    resolution: {integrity: sha512-kFSyjM+fLo3oE9noWEtUvF82ttN8fTrKohiEMIrSzEzEjnsCmtO0rBCUQBlSPEb2w8vfN+v4/Zo0tK21Bgmq4g==}
+    dev: true
+
   /@types/chai-subset/1.3.3:
     resolution: {integrity: sha512-frBecisrNGz+F4T6bcc+NLeolfiojh5FxW2klu669+8BARtyQv2C/GkNW6FUodVe4BroGMP/wER/YDGc7rEllw==}
     dependencies:
@@ -1343,6 +1351,10 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /animejs/3.2.1:
+    resolution: {integrity: sha512-sWno3ugFryK5nhiDm/2BKeFCpZv7vzerWUcUPyAZLDhMek3+S/p418ldZJbJXo5ZUOpfm2kP2XRO4NJcULMy9A==}
+    dev: false
 
   /ansi-regex/5.0.1:
     resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==}

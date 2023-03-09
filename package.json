@@ -59,6 +59,7 @@
     "@unocss/reset": "^0.50.1",
     "@vue/runtime-core": "^3.2.47",
     "@vueuse/core": "^9.13.0",
+    "animejs": "^3.2.1",
     "cropperjs": "^1.5.13",
     "normalize.css": "^8.0.1",
     "qrcode": "^1.5.1",
@@ -68,6 +69,7 @@
   "devDependencies": {
     "@0x-jerry/x-release": "^0.3.6",
     "@iconify/json": "^2.2.27",
+    "@types/animejs": "^3.1.7",
     "@types/node": "^18.14.1",
     "@types/qrcode": "^1.5.0",
     "@vitejs/plugin-vue": "^4.0.0",
