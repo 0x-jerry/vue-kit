@@ -11,7 +11,7 @@ const data = reactive({})
       <k-button>Normal</k-button>
       <k-button variety="primary">Primary</k-button>
       <k-button disabled variety="primary">Primary</k-button>
-      <k-button :click="() => sleep(1000)"> Click Props </k-button>
+      <k-button @click="sleep(1000)"> Click Props </k-button>
       <k-button disabled>Disabled</k-button>
     </div>
   </test-box>

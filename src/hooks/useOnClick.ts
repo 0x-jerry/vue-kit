@@ -8,7 +8,7 @@ export const useClickProps = buildProps({
     type: Boolean,
     default: false,
   },
-  click: {
+  onClick: {
     type: Function as PropType<(payload: MouseEvent) => Promisable<any>>,
     required: false,
   },
@@ -25,7 +25,7 @@ export function useOnClick() {
     _isProcessing.value = true
 
     try {
-      await props?.click?.(payload)
+      await props?.onClick?.(payload)
     } catch (error) {
       throw error
     } finally {
