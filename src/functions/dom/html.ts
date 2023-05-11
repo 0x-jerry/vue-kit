@@ -1,4 +1,4 @@
-import { createAutoIncrementGenerator, Fn, is } from '@0x-jerry/utils'
+import { createAutoIncrementGenerator, Fn, isFn, isIterable, isObject } from '@0x-jerry/utils'
 import { isElement } from '../utils'
 
 /**
@@ -98,9 +98,9 @@ export function composeHtmlString(strings: TemplateStringsArray, ...values: any[
   }
 
   function concatValue(value: any) {
-    if (is.object(value) && is.iterable(value)) {
+    if (isObject(value) && isIterable(value)) {
       for (const item of value) {
-        if (is.fn(item)) {
+        if (isFn(item)) {
           continue
         }
 
@@ -117,7 +117,7 @@ export function composeHtmlString(strings: TemplateStringsArray, ...values: any[
       return
     }
 
-    if (is.fn(value)) {
+    if (isFn(value)) {
       const id = nextId()
 
       _html += `"${id}"`

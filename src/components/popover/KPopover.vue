@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { is } from '@0x-jerry/utils'
+import { isNullish } from '@0x-jerry/utils'
 import { CSSProperties } from 'vue'
 import {
   computePosition,
@@ -57,7 +57,7 @@ const styles = {
   arrow: reactive({} as CSSProperties),
 }
 
-const isCustomTrigger = computed(() => !is.nullish(props.modelValue))
+const isCustomTrigger = computed(() => !isNullish(props.modelValue))
 
 const isTriggerByHover = computed(() => !unref(isCustomTrigger) && props.trigger === 'hover')
 const isTriggerByClick = computed(() => !unref(isCustomTrigger) && props.trigger === 'click')
@@ -143,8 +143,8 @@ function updateArrow(pos: ComputePositionReturn) {
   )[pos.placement.split('-')[0]]!
 
   Object.assign(styles.arrow, {
-    left: !is.nullish(arrow.x) ? `${arrow.x}px` : '',
-    top: !is.nullish(arrow.y) ? `${arrow.y}px` : '',
+    left: !isNullish(arrow.x) ? `${arrow.x}px` : '',
+    top: !isNullish(arrow.y) ? `${arrow.y}px` : '',
     right: '',
     bottom: '',
     [staticSide]: '-4px',

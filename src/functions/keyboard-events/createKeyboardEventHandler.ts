@@ -1,4 +1,4 @@
-import { Arrayable, is, toArray } from '@0x-jerry/utils'
+import { Arrayable, isString, toArray } from '@0x-jerry/utils'
 import { KeyOption, parseKeyOption, SpecialKey, specialKeys } from './parse'
 
 type KeyboardEventListener = (e: KeyOption) => unknown
@@ -10,7 +10,7 @@ export const createKeyboardEventHandler = (
   keyOptions: Arrayable<string | KeyOption>,
   listener: KeyboardEventListener,
 ) => {
-  const options = toArray(keyOptions).map((item) => (is.string(item) ? parseKeyOption(item) : item))
+  const options = toArray(keyOptions).map((item) => (isString(item) ? parseKeyOption(item) : item))
 
   return (e: KeyboardEvent) => {
     for (const keyOption of options) {

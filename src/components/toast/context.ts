@@ -1,4 +1,4 @@
-import { is, remove } from '@0x-jerry/utils'
+import { isString, remove } from '@0x-jerry/utils'
 import { installToastApp } from './install'
 
 export interface ToastOption {
@@ -11,7 +11,7 @@ export interface ToastOption {
 
 const toastTypes = ['success', 'error', 'info', 'warning'] as const
 
-export type ToastType = typeof toastTypes[number]
+export type ToastType = (typeof toastTypes)[number]
 
 export type ToastExposeAPI = {
   [key in ToastType]: (opt: ToastOption | string) => ToastInstance
@@ -38,7 +38,7 @@ function createToastInstance(opt: Partial<ToastOption> | string, type: ToastType
     toastCtx.installed = 'app'
   }
 
-  const option = createToastOption(is.string(opt) ? { message: opt } : opt)
+  const option = createToastOption(isString(opt) ? { message: opt } : opt)
 
   const ins = _createToastInstance(option, type)
 

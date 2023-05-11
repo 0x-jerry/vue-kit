@@ -1,4 +1,4 @@
-import { is } from '@0x-jerry/utils'
+import { isString } from '@0x-jerry/utils'
 
 /**
  *
@@ -13,7 +13,7 @@ import { is } from '@0x-jerry/utils'
  *
  */
 export const parseStyleProperty = (val: string | number, unit = 'px') =>
-  is.string(val) ? val : val + unit
+  isString(val) ? val : val + unit
 
 export const isContainEl = (el: HTMLElement, parentEl: HTMLElement) => {
   let ele: HTMLElement | null = el

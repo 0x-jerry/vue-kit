@@ -1,7 +1,7 @@
 // @jest-environment jsdom
 import { Socket } from './Socket'
 import { Server } from 'mock-socket'
-import { sleep, is } from '@0x-jerry/utils'
+import { sleep, isObject } from '@0x-jerry/utils'
 
 let port = 7999
 
@@ -108,7 +108,7 @@ function setupSocketServer() {
     socket.on('message', (data) => {
       const raw = JSON.parse(data as string)
 
-      if (is.object(raw) && raw.type === 'test') {
+      if (isObject(raw) && raw.type === 'test') {
         socket.send(raw.res)
         return
       }
