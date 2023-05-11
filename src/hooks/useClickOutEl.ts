@@ -1,6 +1,6 @@
 import { isContainEl } from '@/utils'
-import { Arrayable, toArray } from '@0x-jerry/utils'
-import { Ref } from 'vue'
+import { type Arrayable, toArray } from '@0x-jerry/utils'
+import { type Ref } from 'vue'
 
 export function useClickOutEl(
   els: Arrayable<Ref<HTMLElement | null | undefined>>,

@@ -1,4 +1,4 @@
-import { InjectionKey } from 'vue'
+import { type InjectionKey } from 'vue'
 
 export const CheckboxGroupContextKey = Symbol() as InjectionKey<CheckboxGroupContext>
 

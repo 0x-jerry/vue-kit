@@ -1,9 +1,9 @@
-import type { GetPropsType } from '@/utils'
+import type { ExtractPropTypes } from 'vue'
 import type { ComponentInternalInstance, ComputedRef } from 'vue'
 
 export const useProps = <T extends {}>(
   vm?: ComponentInternalInstance,
-): (T extends GetPropsType<infer _> ? T : GetPropsType<T>) | undefined => {
+): (T extends ExtractPropTypes<infer _> ? T : ExtractPropTypes<T>) | undefined => {
   vm ||= getCurrentInstance()!
 
   return vm.proxy?.$props as any

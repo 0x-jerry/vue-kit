@@ -1,7 +1,7 @@
-import { buildProps, GetPropsType } from '@/utils'
-import { PropType } from 'vue'
+import { buildProps } from '@/utils'
+import type { ExtractPropTypes, PropType } from 'vue'
 
-export type ToastPropType = GetPropsType<typeof toastProps>
+export type ToastPropType = ExtractPropTypes<typeof toastProps>
 
 export const toastProps = buildProps({
   position: {

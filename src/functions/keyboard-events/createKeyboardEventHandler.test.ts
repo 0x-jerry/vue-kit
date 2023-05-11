@@ -1,6 +1,6 @@
 // @jest-environment jsdom
 import { createKeyboardEventHandler } from './createKeyboardEventHandler'
-import { KeyOption } from './parse'
+import { type KeyOption } from './parse'
 
 describe('crateKeyboardHandler', () => {
   it('should listen to key `k`', () => {
@@ -42,7 +42,7 @@ describe('crateKeyboardHandler', () => {
         key: 'k',
         metaKey: true,
         shiftKey: true,
-      })
+      }),
     )
 
     expect(opt?.key).toBe('k')
@@ -51,7 +51,7 @@ describe('crateKeyboardHandler', () => {
       new KeyboardEvent('keydown', {
         key: 'a',
         metaKey: true,
-      })
+      }),
     )
 
     expect(opt?.key).toBe('a')

@@ -2,10 +2,10 @@ import {
   createPromiseInstance,
   createSimpleLogger,
   noop,
-  PromiseInstance,
+  type PromiseInstance,
   type SimpleLogger,
 } from '@0x-jerry/utils'
-import { RPCRequest, RPCResponse, RPCMessage } from './types'
+import { type RPCRequest, type RPCResponse, type RPCMessage } from './types'
 
 export interface RPCMethods {
   [key: string]: (...args: any[]) => any
@@ -62,7 +62,7 @@ export interface RPCServerProxy<T extends RPCMethods> {
 
 export function createRPC<Server extends RPCMethods, Client extends RPCMethods = {}>(
   client: Client,
-  opt: RPCOption
+  opt: RPCOption,
 ): RPCServerProxy<Server> {
   const options: Required<RPCOption> = Object.assign(
     {
@@ -71,7 +71,7 @@ export function createRPC<Server extends RPCMethods, Client extends RPCMethods =
       verbose: false,
       send: noop,
     },
-    opt
+    opt,
   )
 
   const ctx: RPCContext = {
@@ -178,7 +178,7 @@ function getProxyObject(ctx: RPCContext, record: Map<string, PromiseInstance<unk
     {},
     {
       get: getter,
-    }
+    },
   )
 
   function checkTimeout(id: string) {

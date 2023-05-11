@@ -1,5 +1,5 @@
-import { Arrayable, isString, toArray } from '@0x-jerry/utils'
-import { KeyOption, parseKeyOption, SpecialKey, specialKeys } from './parse'
+import { type Arrayable, isString, toArray } from '@0x-jerry/utils'
+import { type KeyOption, parseKeyOption, type SpecialKey, specialKeys } from './parse'
 
 type KeyboardEventListener = (e: KeyOption) => unknown
 

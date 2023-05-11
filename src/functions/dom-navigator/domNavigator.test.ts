@@ -1,5 +1,5 @@
 // @jest-environment jsdom
-import { createDomNavigator, KeyboardNavigatorOption, utils } from './domNavigator'
+import { createDomNavigator, type KeyboardNavigatorOption, utils } from './domNavigator'
 
 const getGlobalOffset = utils.getGlobalOffset
 
@@ -185,7 +185,7 @@ describe('keyboard navigator', () => {
     window.dispatchEvent(
       new KeyboardEvent('keydown', {
         key: 'Enter',
-      })
+      }),
     )
 
     expect(times).toBe(1)

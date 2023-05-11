@@ -1,7 +1,7 @@
 import { MessageChannel } from 'worker_threads'
 import { sleep } from '@0x-jerry/utils'
-import { createRPC, RPCMethods, RPCOption, RPCTimeoutError } from './rpc'
-import { RPCRequest, RPCResponse } from './types'
+import { createRPC, type RPCMethods, type RPCOption, RPCTimeoutError } from './rpc'
+import { type RPCRequest, type RPCResponse } from './types'
 
 const A = {
   ping(s: string) {
@@ -128,7 +128,7 @@ describe('rpc test', () => {
 function createRPCPair<MethodsB extends RPCMethods, MethodsA extends RPCMethods>(
   A: MethodsA,
   B?: MethodsB,
-  opt?: RPCOption
+  opt?: RPCOption,
 ) {
   const channel = new MessageChannel()
 

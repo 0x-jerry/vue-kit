@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { CSSProperties } from 'vue'
+import { type CSSProperties } from 'vue'
 import { KPopover } from '../popover'
-import { SelectContext, SelectContextKey } from './context'
+import { type SelectContext, SelectContextKey } from './context'
 import CaretDownIcon from '~icons/carbon/caret-down'
 
 const props = defineProps<{

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { toast, ToastType } from '@/components/toast/context'
+import { toast, type ToastType } from '@/components/toast/context'
 import TestBox from './components/TestBox.vue'
 
 const data = reactive({

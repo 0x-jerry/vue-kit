@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useTheme } from '@/hooks'
 import { useOnClick, useClickProps } from '@/hooks/useOnClick'
-import { PropType } from 'vue'
+import { type PropType } from 'vue'
 
 const { cls } = useTheme()
 
@@ -10,7 +10,7 @@ const $click = useOnClick()
 const props = defineProps({
   ...useClickProps,
   variety: {
-    type: String as PropType<'primary' | 'blank'>,
+    type: String as PropType<'primary' | 'blank' | 'text'>,
     default: 'blank',
   },
   disabled: {

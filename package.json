@@ -41,7 +41,7 @@
     "build:resolver": "tsup",
     "build:dts": "vue-tsc -d --emitDeclarationOnly --outDir dist/types -p tsconfig.build.json",
     "g:css": "tsx src/theme/generate.ts",
-    "test": "vue-tsc --noEmit",
+    "lint": "vue-tsc --noEmit",
     "serve": "vite preview",
     "release": "x-release"
   },
@@ -74,6 +74,7 @@
     "@types/qrcode": "^1.5.0",
     "@vitejs/plugin-vue": "^4.2.2",
     "@vue/test-utils": "^2.3.2",
+    "@vue/tsconfig": "^0.3.2",
     "happy-dom": "^9.11.0",
     "jsdom": "^22.0.0",
     "less": "^4.1.3",

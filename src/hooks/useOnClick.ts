@@ -1,7 +1,7 @@
-import { buildProps, GetPropsType } from '@/utils'
+import { buildProps } from '@/utils'
 import type { Promisable } from '@0x-jerry/utils'
-import { PropType } from 'vue'
 import { useProps } from './useProps'
+import type { ExtractPropTypes } from 'vue'
 
 export const useClickProps = buildProps({
   loading: {
@@ -14,7 +14,7 @@ export const useClickProps = buildProps({
   },
 })
 
-export type UseClickPropsType = GetPropsType<typeof useClickProps>
+export type UseClickPropsType = ExtractPropTypes<typeof useClickProps>
 
 export function useOnClick() {
   const _isProcessing = ref(false)

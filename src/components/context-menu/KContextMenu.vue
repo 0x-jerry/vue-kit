@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { KContextMenuContextKey } from './context'
-import { KMenuButton, KMenuDivide, KMenuItem } from './types'
+import type { KMenuButton, KMenuDivide, KMenuItem } from './types'
 
 const props = withDefaults(
   defineProps<{

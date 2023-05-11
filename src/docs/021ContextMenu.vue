@@ -3,7 +3,7 @@ import TestBox from './components/TestBox.vue'
 import EditIcon from '~icons/carbon/edit'
 import UndoIcon from '~icons/carbon/undo'
 import RedoIcon from '~icons/carbon/redo'
-import { KMenuItem } from '@/components/context-menu'
+import { type KMenuItem } from '@/components/context-menu'
 
 const data = reactive({})
 

@@ -1,5 +1,5 @@
 import { useConfProvider } from '../conf-provider/context'
-import { ToastPropType } from './props'
+import { type ToastPropType } from './props'
 
 export interface ToastConfig extends ToastPropType {}
 
@@ -15,7 +15,10 @@ export function useToastConfig(config?: Partial<ToastConfig>): Readonly<Required
     },
   }
 
-  function getOption<K extends keyof ToastConfig>(key: K, defaultValue: ToastConfig[K]) {
+  function getOption<K extends keyof ToastConfig>(
+    key: K,
+    defaultValue: NonNullable<ToastConfig[K]>,
+  ) {
     return config?.[key] ?? conf?.[key] ?? defaultValue
   }
 }

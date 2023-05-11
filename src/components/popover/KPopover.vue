@@ -1,16 +1,16 @@
 <script lang="ts" setup>
 import { isNullish } from '@0x-jerry/utils'
-import { CSSProperties } from 'vue'
+import { type CSSProperties } from 'vue'
 import {
   computePosition,
-  Placement,
   flip,
   shift,
   offset,
   arrow,
-  ComputePositionReturn,
   autoPlacement,
-  Middleware,
+  type Placement,
+  type ComputePositionReturn,
+  type Middleware,
 } from '@floating-ui/dom'
 import { KFade } from '../transition'
 import { useClickOutEl } from '@/hooks'

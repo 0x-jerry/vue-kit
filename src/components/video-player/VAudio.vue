@@ -3,7 +3,7 @@ import { computed, reactive, ref, watch } from 'vue'
 import IconSkipNext from '~icons/mdi/skip-next'
 import IconSkipPrevious from '~icons/mdi/skip-previous'
 import IconMenu from '~icons/mdi/menu'
-import { AudioOption } from './types'
+import { type AudioOption } from './types'
 import VProgress from './VProgress.vue'
 import VCover from './VCover.vue'
 import VPlayIcon from './VPlayIcon.vue'
@@ -146,7 +146,7 @@ watch(
   () => {
     const idx = props.currentPlayIndex ?? 0
     actions.switch(idx)
-  }
+  },
 )
 
 defineExpose(actions)

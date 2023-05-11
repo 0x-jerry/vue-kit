@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import TestBox from './components/TestBox.vue'
 import { uuid } from '@0x-jerry/utils'
-import { KButton, toast, ISpotlightOption, KSpotlight } from '@/components'
+import { KButton, toast, type ISpotlightOption, KSpotlight } from '@/components'
 
 const data = reactive({
   visible: false,

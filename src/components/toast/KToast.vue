@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useToastConfig } from './config'
-import { toastCtx, ToastInstance } from './context'
+import { toastCtx, type ToastInstance } from './context'
 import { toastProps } from './props'
 
 toastCtx.installed = 'component'

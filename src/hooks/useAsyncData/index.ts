@@ -1,5 +1,5 @@
-import { Fn } from '@0x-jerry/utils'
-import { Ref } from 'vue'
+import { type Fn } from '@0x-jerry/utils'
+import { type Ref } from 'vue'
 
 type Result<T> = T extends Promise<infer U> ? U : T
 

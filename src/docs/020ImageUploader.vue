@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { KImageUploaderUploadContext, KImageUploader } from '@/components'
+import { type KImageUploaderUploadContext, KImageUploader } from '@/components'
 import TestBox from './components/TestBox.vue'
 import TestUploadImageHook from './components/TestUploadImageHook.vue'
 

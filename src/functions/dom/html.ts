@@ -1,4 +1,4 @@
-import { createAutoIncrementGenerator, Fn, isFn, isIterable, isObject } from '@0x-jerry/utils'
+import { createAutoIncrementGenerator, type Fn, isFn, isIterable, isObject } from '@0x-jerry/utils'
 import { isElement } from '../utils'
 
 /**

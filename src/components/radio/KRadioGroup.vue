@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import KRadio from './KRadio.vue'
-import { RadioGroupContext, RadioGroupContextKey } from './context'
+import { type RadioGroupContext, RadioGroupContextKey } from './context'
 import { useTheme } from '@/hooks'
 
 interface Option {

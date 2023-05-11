@@ -1,5 +1,5 @@
-import { InjectionKey } from 'vue'
-import { ConfProviderPropType } from './props'
+import { type InjectionKey } from 'vue'
+import { type ConfProviderPropType } from './props'
 
 export const ConfProviderContextKey = Symbol() as InjectionKey<ConfProviderContext>
 

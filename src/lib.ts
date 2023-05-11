@@ -4,4 +4,4 @@ export * from './components'
 export * from './hooks'
 export * from './functions'
 
-export type { PropOptions, GetPropType, GetPropsType } from './utils'
+export type { PropOptions, GetPropType } from './utils'

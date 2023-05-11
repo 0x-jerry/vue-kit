@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { KImageUploaderUploadContext } from './types'
-import { Arrayable, toArray } from '@0x-jerry/utils'
+import { type KImageUploaderUploadContext } from './types'
+import { type Arrayable, toArray } from '@0x-jerry/utils'
 import IconPlus from '~icons/carbon/add'
 import IconDelete from '~icons/carbon/delete'
 import IconEdit from '~icons/carbon/edit'

@@ -1,4 +1,4 @@
-import { Promisable } from '@0x-jerry/utils'
+import { type Promisable } from '@0x-jerry/utils'
 import { HookManager } from '@/utils'
 import type { InjectionKey } from 'vue'
 

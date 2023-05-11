@@ -1,5 +1,5 @@
-import { Promisable } from '@0x-jerry/utils'
-import { Ref, shallowRef, toRaw } from 'vue'
+import { type Promisable } from '@0x-jerry/utils'
+import { type Ref, toRaw } from 'vue'
 
 export interface TransactionContext<T> {
   /**

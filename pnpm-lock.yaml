@@ -57,6 +57,9 @@ devDependencies:
   '@vue/test-utils':
     specifier: ^2.3.2
     version: 2.3.2(vue@3.3.1)
+  '@vue/tsconfig':
+    specifier: ^0.3.2
+    version: 0.3.2
   happy-dom:
     specifier: ^9.11.0
     version: 9.11.0
@@ -940,6 +943,10 @@ packages:
     optionalDependencies:
       '@vue/compiler-dom': 3.3.1
       '@vue/server-renderer': 3.3.1(vue@3.3.1)
+    dev: true
+
+  /@vue/tsconfig@0.3.2:
+    resolution: {integrity: sha512-jWzZbGyrZAEbHYGn0kPzJ+MMtIkIxb0+hL5+RghBowyOxMRs9jMdp5XvpXz3wgCzjRZiUucy29042HBe9cxoYA==}
     dev: true
 
   /@vueuse/core@10.1.2(vue@3.3.1):

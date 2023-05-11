@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed, reactive, ref } from 'vue'
 import { useGlobalKeydown } from '@/hooks'
-import { ISpotlightOption } from './spotlight'
+import { type ISpotlightOption } from './spotlight'
 
 export interface SpotlightProps {
   visible: boolean
