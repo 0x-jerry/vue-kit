@@ -1,4 +1,8 @@
-lockfileVersion: '6.0'
+lockfileVersion: '6.1'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
 
 dependencies:
   '@0x-jerry/utils':
@@ -8,8 +12,8 @@ dependencies:
     specifier: ^1.2.7
     version: 1.2.7
   '@unocss/reset':
-    specifier: ^0.51.12
-    version: 0.51.12
+    specifier: ^0.53.0
+    version: 0.53.0
   '@vue/runtime-core':
     specifier: ^3.3.1
     version: 3.3.1
@@ -705,6 +709,11 @@ packages:
 
   /@unocss/reset@0.51.12:
     resolution: {integrity: sha512-VWcudNyGPGU/C+Jrfzbx8BqhFh/QENfUPkKcC8hpqxC4b5PsTJcF8zLu6KgabM0X0CzVouIvVcdZIcUCUEH77Q==}
+    dev: true
+
+  /@unocss/reset@0.53.0:
+    resolution: {integrity: sha512-4XJkEtVxUGYp+WX2aRTrZLNp6MEwulBvhhpkAjwfkS+wVdo9lMma0O93TCqJaFeYx7lU8W92APB4n918rz9scA==}
+    dev: false
 
   /@unocss/scope@0.51.12:
     resolution: {integrity: sha512-O2IeIuw2wFYBi2gZbC4e6/jxjJXnXCJBvabPvCag3YT7gZL1nwU9eX1/8PqtZWboEui7H7HutGuqIy+UVxyuLQ==}
