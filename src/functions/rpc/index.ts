@@ -1,2 +1,2 @@
 export * from './rpc'
-export * from './types.d'
+export * from './types'

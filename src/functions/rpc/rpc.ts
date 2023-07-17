@@ -122,7 +122,7 @@ export function createRPC<Server extends RPCMethods, Client extends RPCMethods =
       const fn = client[msg.m]
       if (!fn) throw new Error(`Not found method: [${msg.m}]`)
 
-      response.r = await fn.call(client, ...msg.p)
+      response.r = await fn.call(client, ...(msg.p || []))
     } catch (error) {
       logger?.warn('Error occurs when call method:', msg, error)
       response.e = error
