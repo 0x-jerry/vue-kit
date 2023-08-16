@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { KContextMenuContextKey } from './context'
+import { useContextMenuContext } from './context';
 import type { KMenuButton, KMenuDivide, KMenuItem } from './types'
 
 const props = withDefaults(
@@ -76,7 +76,7 @@ function close() {
   setVisible(false)
 }
 
-provide(KContextMenuContextKey, {
+useContextMenuContext.provide({
   close,
 })
 

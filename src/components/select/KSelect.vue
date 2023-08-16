@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { type CSSProperties } from 'vue'
 import { KPopover } from '../popover'
-import { type SelectContext, SelectContextKey } from './context'
+import { useSelectContext, type SelectContext } from './context'
 import CaretDownIcon from '~icons/carbon/caret-down'
 
 const props = defineProps<{
@@ -65,7 +65,7 @@ const ctx: SelectContext = {
   },
 }
 
-provide(SelectContextKey, ctx)
+useSelectContext.provide(ctx)
 
 function syncWidth() {
   const content = unref(ele.content)

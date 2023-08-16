@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useTheme } from '@/hooks'
-import { CheckboxGroupContextKey } from './context'
+import { useCheckboxGroupContext } from './context';
 
 const props = defineProps<{
   modelValue?: boolean
@@ -13,7 +13,7 @@ const emit = defineEmits({
   'update:modelValue': (val: unknown) => true,
 })
 
-const ctx = inject(CheckboxGroupContextKey, null)
+const ctx = useCheckboxGroupContext()
 
 const { cls } = useTheme()
 

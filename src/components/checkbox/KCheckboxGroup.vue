@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import KCheckbox from './KCheckbox.vue'
 import { useTheme } from '@/hooks'
-import { type CheckboxGroupContext, CheckboxGroupContextKey } from './context'
+import { type CheckboxGroupContext, useCheckboxGroupContext } from './context'
 
 interface Option {
   label: string | number | boolean
@@ -43,7 +43,7 @@ const ctx: CheckboxGroupContext = {
   },
 }
 
-provide(CheckboxGroupContextKey, ctx)
+useCheckboxGroupContext.provide(ctx)
 </script>
 
 <template>

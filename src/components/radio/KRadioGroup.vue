@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import KRadio from './KRadio.vue'
-import { type RadioGroupContext, RadioGroupContextKey } from './context'
+import { type RadioGroupContext, useRadioGroupContext } from './context'
 import { useTheme } from '@/hooks'
 
 interface Option {
@@ -34,7 +34,7 @@ const ctx: RadioGroupContext = {
   },
 }
 
-provide(RadioGroupContextKey, ctx)
+useRadioGroupContext.provide(ctx)
 </script>
 
 <template>

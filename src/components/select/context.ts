@@ -1,6 +1,7 @@
+import { defineContext } from '@/hooks/defineContext'
 import { type InjectionKey } from 'vue'
 
-export const SelectContextKey = Symbol() as InjectionKey<SelectContext>
+const SelectContextKey = Symbol() as InjectionKey<SelectContext>
 
 export interface SelectContext<V = unknown> {
   readonly disabled: boolean
@@ -13,3 +14,5 @@ export interface SelectContext<V = unknown> {
   removeOption(value: V): void
   change(value: V): void
 }
+
+export const useSelectContext = defineContext(SelectContextKey)

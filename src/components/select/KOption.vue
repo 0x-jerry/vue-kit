@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { SelectContextKey } from './context'
+import { useSelectContext } from './context';
 
 const props = defineProps<{
   value: unknown
@@ -7,7 +7,7 @@ const props = defineProps<{
   disabled?: boolean
 }>()
 
-const ctx = inject(SelectContextKey, null)
+const ctx = useSelectContext()
 
 const isSelected = computed(() => ctx?.selected.value === props.value)
 

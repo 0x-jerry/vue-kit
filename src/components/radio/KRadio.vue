@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useTheme } from '@/hooks'
-import { RadioGroupContextKey } from './context'
+import { useRadioGroupContext } from './context';
 
 const props = defineProps<{
   modelValue?: unknown
@@ -15,7 +15,7 @@ const emit = defineEmits({
 
 const { cls } = useTheme()
 
-const ctx = inject(RadioGroupContextKey, null)
+const ctx = useRadioGroupContext()
 
 const checked = computed(() => props.value === (ctx ? ctx.value : props.modelValue))
 
