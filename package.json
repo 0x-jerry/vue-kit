@@ -54,7 +54,7 @@
     "dts": true
   },
   "dependencies": {
-    "@0x-jerry/utils": "^1.18.0",
+    "@0x-jerry/utils": "^2.0.0",
     "@floating-ui/dom": "^1.4.5",
     "@unocss/reset": "^0.53.5",
     "@vueuse/core": "^10.2.1",
