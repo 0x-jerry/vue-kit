@@ -1,5 +1,6 @@
-import { createAutoIncrementGenerator, type Fn, isFn, isIterable, isObject } from '@0x-jerry/utils'
+import { type Fn, isFn, isIterable, isObject } from '@0x-jerry/utils'
 import { isElement } from '../utils'
+import { uniqueId } from 'lodash-es'
 
 /**
  * create a dom element
@@ -72,7 +73,7 @@ function walk(root: Node, cb: (node: Node) => void) {
 }
 
 export function composeHtmlString(strings: TemplateStringsArray, ...values: any[]) {
-  const nextId = createAutoIncrementGenerator('e')
+  const nextId = () => uniqueId('e')
 
   let _html = ''
 

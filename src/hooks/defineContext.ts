@@ -1,13 +1,13 @@
 import { inject, provide, type InjectionKey } from 'vue'
 
-interface DefineContext<Options extends any[], Context> {
+export interface DefineContext<Options extends any[], Context> {
   (): Context | null
   (defaultValue: Context): Context
 
   provide(...arg: Options): Context
 }
 
-export function defineContext<T extends {}>(key: InjectionKey<T>): DefineContext<[T], T> 
+export function defineContext<T extends {}>(key: InjectionKey<T>): DefineContext<[T], T>
 export function defineContext<T extends (...args: any[]) => any>(
   key: string | symbol | InjectionKey<any>,
   factory: T,

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { createPromiseInstance } from '@0x-jerry/utils'
+import { createPromise } from '@0x-jerry/utils'
 import CropperJS from 'cropperjs'
 import { KImageUploaderContextKey } from '../image-uploader'
 
@@ -26,7 +26,7 @@ const source = computed(() => props.url || data.url)
 let cropper: Cropper
 
 function cropImage(files: File[]) {
-  const p = createPromiseInstance()
+  const p = createPromise()
   const [file] = files
 
   if (!file) {

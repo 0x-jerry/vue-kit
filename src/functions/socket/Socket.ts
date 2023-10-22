@@ -1,4 +1,4 @@
-import { EventEmitter, createSimpleLogger, type SimpleLogger } from '@0x-jerry/utils'
+import { EventEmitter, createLogger as createLogger, type Logger } from '@0x-jerry/utils'
 
 type WebSocketEvents = {
   error(e: any): void
@@ -25,7 +25,7 @@ export interface SocketOption {
 export class Socket extends EventEmitter<WebSocketEvents> {
   #s?: WebSocket
 
-  #logger?: SimpleLogger
+  #logger?: Logger
 
   get socket() {
     return this.#s
@@ -45,7 +45,7 @@ export class Socket extends EventEmitter<WebSocketEvents> {
     super()
 
     if (opt.verbose) {
-      this.#logger = createSimpleLogger()
+      this.#logger = createLogger()
     }
 
     // avoid uncaught exception

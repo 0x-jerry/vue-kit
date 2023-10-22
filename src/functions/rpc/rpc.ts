@@ -1,9 +1,9 @@
 import {
-  createPromiseInstance,
-  createSimpleLogger,
+  createPromise,
+  createLogger,
   noop,
   type PromiseInstance,
-  type SimpleLogger,
+  type Logger,
 } from '@0x-jerry/utils'
 import { type RPCRequest, type RPCResponse, type RPCMessage } from './types'
 
@@ -78,7 +78,7 @@ export function createRPC<Server extends RPCMethods, Client extends RPCMethods =
     ...options,
   }
 
-  const logger: SimpleLogger | null = ctx.verbose ? createSimpleLogger() : null
+  const logger: Logger | null = ctx.verbose ? createLogger() : null
 
   const record = new Map<string, PromiseInstance>()
 
@@ -161,7 +161,7 @@ function getProxyObject(ctx: RPCContext, record: Map<string, PromiseInstance<unk
         p: args,
       }
 
-      const p = createPromiseInstance()
+      const p = createPromise()
       record.set(request.id, p)
 
       if (ctx.timeout) {
