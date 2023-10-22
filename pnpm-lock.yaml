@@ -38,8 +38,8 @@ dependencies:
 
 devDependencies:
   '@0x-jerry/x-release':
-    specifier: ^0.3.8
-    version: 0.3.8
+    specifier: ^0.4.0
+    version: 0.4.0
   '@iconify/json':
     specifier: ^2.2.91
     version: 2.2.91
@@ -120,8 +120,8 @@ packages:
       nanoid: 4.0.2
     dev: false
 
-  /@0x-jerry/x-release@0.3.8:
-    resolution: {integrity: sha512-ERXmuxa+WYvLhP1WRPdRhz70AukKMFzgLcVD3JYNSZgo4U3avq87F6Jk8Kg28X8A5cEDo9pW+pGi8bB4puX9kw==}
+  /@0x-jerry/x-release@0.4.0:
+    resolution: {integrity: sha512-oE+MgEG5hbY5cCt/FeaEfIBb3xNgJVOm3jZCrN3OgQzx0DgRtzPFQVpVfpJ4MHMMqRr1N0NPfNZp0UvHLV/n+w==}
     hasBin: true
     dependencies:
       '@0x-jerry/load-pkg': 0.1.2
@@ -131,7 +131,7 @@ packages:
       picocolors: 1.0.0
       prompts: 2.4.2
       semver: 7.5.4
-      unconfig: 0.3.9
+      unconfig: 0.3.11
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -2255,11 +2255,6 @@ packages:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
     dev: true
 
-  /jiti@1.19.1:
-    resolution: {integrity: sha512-oVhqoRDaBXf7sjkll95LHVS6Myyyb1zaunVwk4Z0+WPSW4gjS0pl01zYKHScTuyEhQsFxV5L4DR5r+YqSyqyyg==}
-    hasBin: true
-    dev: true
-
   /jiti@1.20.0:
     resolution: {integrity: sha512-3TV69ZbrvV6U5DfQimop50jE9Dl6J8O1ja1dvBbMba/sZ3YBEQqJ2VZRoQPVnhlzjNtU1vaXRZVrVjU4qtm8yA==}
     hasBin: true
@@ -3306,14 +3301,6 @@ packages:
       mlly: 1.4.2
     dev: true
 
-  /unconfig@0.3.9:
-    resolution: {integrity: sha512-8yhetFd48M641mxrkWA+C/lZU4N0rCOdlo3dFsyFPnBHBjMJfjT/3eAZBRT2RxCRqeBMAKBVgikejdS6yeBjMw==}
-    dependencies:
-      '@antfu/utils': 0.7.5
-      defu: 6.1.2
-      jiti: 1.19.1
-    dev: true
-
   /unimport@3.0.14:
     resolution: {integrity: sha512-67Rh/sGpEuVqdHWkXaZ6NOq+I7sKt86o+DUtKeGB6dh4Hk1A8AQrzyVGg2+LaVEYotStH7HwvV9YSaRjyT7Uqg==}
     dependencies:
@@ -3484,7 +3471,7 @@ packages:
     dependencies:
       cac: 6.7.14
       debug: 4.3.4
-      mlly: 1.4.0
+      mlly: 1.4.2
       pathe: 1.1.1
       picocolors: 1.0.0
       vite: 4.4.4(@types/node@20.4.2)(less@4.1.3)
