@@ -1,5 +1,3 @@
 # vue-kit
 
-[preview](https://0x-jerry.github.io/vue-kit/)
-
-自用 UI 组件
+一些常用的 Vue 编程模式
