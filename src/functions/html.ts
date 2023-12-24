@@ -1,5 +1,5 @@
 import { type Fn, isFn, isIterable, isObject } from '@0x-jerry/utils'
-import { isElement } from '../utils'
+import { isElement } from './utils'
 import { uniqueId } from 'lodash-es'
 
 /**

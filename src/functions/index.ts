@@ -1,5 +1,2 @@
-export * from './dom'
-export * from './dom-navigator'
-export * from './keyboard-events'
-export * from './rpc'
-export * from './socket'
+export { chooseFiles } from './chooseFiles'
+export { html } from './html'
