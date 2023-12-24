@@ -1,6 +1,6 @@
 {
   "name": "@0x-jerry/vue-kit",
-  "description": "Vue component kit.",
+  "description": "Vue kit",
   "version": "1.7.0",
   "type": "module",
   "main": "./src/lib.ts",
