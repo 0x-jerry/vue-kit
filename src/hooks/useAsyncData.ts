@@ -1,4 +1,5 @@
 import { type Fn } from '@0x-jerry/utils'
+import { cloneDeep } from 'lodash-es'
 import { ref, type Ref } from 'vue'
 
 type Result<T> = T extends Promise<infer U> ? U : T
@@ -26,13 +27,18 @@ export function useAsyncData<T extends Fn>(
 
   const loading = ref(false)
 
+  let latestReqId = 0
+
   async function load(...args: Params) {
     loading.value = true
 
     try {
-      const res = await fn.call(null, ...args)
+      const currentReqId = ++latestReqId
+      const res = await fn(...args)
 
-      data.value = res
+      if (currentReqId === latestReqId) {
+        data.value = res || cloneDeep(defaultValue)
+      }
     } finally {
       loading.value = false
     }
