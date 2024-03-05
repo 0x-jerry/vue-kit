@@ -45,4 +45,25 @@ describe('useAsyncData', () => {
     await res
     expect(data.isLoading.value).toBe(false)
   })
+
+  it('should loading when request multiple times', async () => {
+    const data = useAsyncData(async () => {
+      await sleep(100)
+      return 1
+    }, 0)
+
+    expect(data.isLoading.value).toBe(false)
+
+    const res = data.load()
+    await sleep(10)
+    const res2 = data.load()
+
+    expect(data.isLoading.value).toBe(true)
+
+    await res
+    expect(data.isLoading.value).toBe(true)
+
+    await res2
+    expect(data.isLoading.value).toBe(false)
+  })
 })

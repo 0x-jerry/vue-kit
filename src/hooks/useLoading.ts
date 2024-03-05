@@ -5,24 +5,24 @@ export type UseLoadingResult<T> = T & {
 }
 
 export function useLoading<Fn extends (...args: any) => any>(fn: Fn) {
-  const isLoading = ref(false)
+  const executingCount = ref(0)
 
   const wrapperFn = async (...args: any) => {
     try {
-      isLoading.value = true
+      executingCount.value++
 
       const result = await fn(...args)
       return result
     } catch (error) {
       throw error
     } finally {
-      isLoading.value = false
+      executingCount.value--
     }
   }
 
   Object.defineProperty(wrapperFn, 'isLoading', {
     get() {
-      return isLoading.value
+      return executingCount.value > 0
     },
   })
 

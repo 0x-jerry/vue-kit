@@ -55,4 +55,28 @@ describe('useLoading', () => {
 
     expect(fnWrapper.isLoading).toBe(false)
   })
+
+  it('should loading when execute multiple times', async () => {
+    const addOne = async (value: number) => {
+      await sleep(100)
+      return value + 1
+    }
+
+    const fnWrapper = useLoading(addOne)
+    expect(fnWrapper.isLoading).toBe(false)
+
+    const p = fnWrapper(1)
+    await sleep(10)
+    const p2 = fnWrapper(2)
+
+    expect(fnWrapper.isLoading).toBe(true)
+    const result = await p
+    expect(result).toBe(2)
+
+    expect(fnWrapper.isLoading).toBe(true)
+    const result2 = await p2
+    expect(result2).toBe(3)
+
+    expect(fnWrapper.isLoading).toBe(false)
+  })
 })

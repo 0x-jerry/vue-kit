@@ -1,6 +1,6 @@
 import { type Fn } from '@0x-jerry/utils'
 import { cloneDeep } from 'lodash-es'
-import { ref, type Ref } from 'vue'
+import { computed, ref, type Ref } from 'vue'
 
 type Result<T> = T extends Promise<infer U> ? U : T
 
@@ -25,12 +25,12 @@ export function useAsyncData<T extends Fn>(
 
   const data = ref(defaultValue)
 
-  const loading = ref(false)
+  const requestCount = ref(0)
 
   let latestReqId = 0
 
   async function load(...args: Params) {
-    loading.value = true
+    requestCount.value++
 
     try {
       const currentReqId = ++latestReqId
@@ -40,13 +40,13 @@ export function useAsyncData<T extends Fn>(
         data.value = res || cloneDeep(defaultValue)
       }
     } finally {
-      loading.value = false
+      requestCount.value--
     }
   }
 
   return {
     load,
     data,
-    isLoading: loading,
+    isLoading: computed(() => requestCount.value > 0),
   }
 }
