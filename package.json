@@ -39,7 +39,7 @@
     "dts": true
   },
   "dependencies": {
-    "@0x-jerry/utils": "^2.2.7",
+    "@0x-jerry/utils": "^2.3.0",
     "@vueuse/core": "^10.10.0",
     "lodash-es": "^4.17.21",
     "vue": "^3.4.27"

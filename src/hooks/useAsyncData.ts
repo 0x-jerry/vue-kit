@@ -1,4 +1,4 @@
-import { type Fn } from '@0x-jerry/utils'
+import type { Fn } from '@0x-jerry/utils'
 import { cloneDeep } from 'lodash-es'
 import { computed, ref, type Ref } from 'vue'
 
