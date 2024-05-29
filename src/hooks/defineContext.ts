@@ -8,10 +8,10 @@ export interface DefineContext<Options extends any[], Context> {
 }
 
 export function defineContext<T extends {}>(key: InjectionKey<T>): DefineContext<[T], T>
-export function defineContext<T extends (...args: any[]) => any>(
-  key: string | symbol | InjectionKey<any>,
-  factory: T,
-): DefineContext<Parameters<T>, ReturnType<T>>
+export function defineContext<F extends (...args: any[]) => any>(
+  key: string | symbol | InjectionKey<ReturnType<F>>,
+  factory: F,
+): DefineContext<Parameters<F>, ReturnType<F>>
 
 // implement
 export function defineContext<Fn extends (...args: any[]) => any>(
