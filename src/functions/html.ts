@@ -1,6 +1,5 @@
 import { type Fn, isFn, isIterable, isObject } from '@0x-jerry/utils'
 import { isElement } from './utils'
-import { uniqueId } from 'lodash-es'
 
 /**
  * create a dom element
@@ -72,8 +71,14 @@ function walk(root: Node, cb: (node: Node) => void) {
   }
 }
 
+function uniqueId(prefix: string) {
+  let i = 0
+
+  return () => `${prefix}${i++}`
+}
+
 export function composeHtmlString(strings: TemplateStringsArray, ...values: any[]) {
-  const nextId = () => uniqueId('e')
+  const nextId = uniqueId('e')
 
   let _html = ''
 
