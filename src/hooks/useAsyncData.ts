@@ -1,5 +1,5 @@
 import type { Fn } from '@0x-jerry/utils'
-import { computed, ref, type Ref } from 'vue'
+import { computed, ref, type Ref, type UnwrapRef } from 'vue'
 
 type Result<T> = T extends Promise<infer U> ? U : T
 
@@ -36,7 +36,7 @@ export function useAsyncData<T extends Fn>(
       const res = await fn(...args)
 
       if (currentReqId === latestReqId) {
-        data.value = res || structuredClone(defaultValue)
+        data.value = (res || structuredClone(defaultValue)) as UnwrapRef<Result<ReturnType<T>>>
       }
     } finally {
       requestCount.value--
