@@ -40,21 +40,21 @@
     "dts": true
   },
   "dependencies": {
-    "@0x-jerry/utils": "^2.4.3",
+    "@0x-jerry/utils": "^2.5.0",
     "@vueuse/core": "^10.11.0",
-    "vue": "^3.4.33"
+    "vue": "^3.4.34"
   },
   "devDependencies": {
     "@0x-jerry/x-release": "^2.2.2",
-    "@types/node": "^20.14.11",
-    "@vitest/coverage-v8": "^2.0.3",
+    "@types/node": "^20.14.12",
+    "@vitest/coverage-v8": "^2.0.4",
     "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.5.1",
     "happy-dom": "^14.12.3",
-    "jsdom": "^24.1.0",
-    "tsup": "^8.2.1",
+    "jsdom": "^24.1.1",
+    "tsup": "^8.2.3",
     "tsx": "^4.16.2",
-    "typescript": "^5.5.3",
-    "vitest": "^2.0.3"
+    "typescript": "^5.5.4",
+    "vitest": "^2.0.4"
   }
 }
