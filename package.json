@@ -40,7 +40,7 @@
     "dts": true
   },
   "dependencies": {
-    "@0x-jerry/utils": "^2.5.0",
+    "@0x-jerry/utils": "^3.0.0",
     "@vueuse/core": "^10.11.0",
     "vue": "^3.4.34"
   },
