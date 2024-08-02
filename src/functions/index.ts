@@ -1,2 +1,2 @@
-export { chooseFiles } from './chooseFiles'
+export { chooseFiles, validateFiles } from './chooseFiles'
 export { html } from './html'
