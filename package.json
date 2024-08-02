@@ -46,6 +46,7 @@
   },
   "devDependencies": {
     "@0x-jerry/x-release": "^2.2.2",
+    "@biomejs/biome": "^1.8.3",
     "@types/node": "^20.14.12",
     "@vitest/coverage-v8": "^2.0.4",
     "@vue/test-utils": "^2.4.6",
