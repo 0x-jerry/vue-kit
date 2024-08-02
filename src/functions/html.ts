@@ -22,7 +22,7 @@ import { isElement } from './utils'
  * @param values
  * @returns
  */
-export function html(strings: TemplateStringsArray, ...values: any[]): DocumentFragment {
+export function html(strings: TemplateStringsArray, ...values: unknown[]): DocumentFragment {
   const ctx = composeHtmlString(strings, ...values)
 
   const root = document.createElement('div')
@@ -31,7 +31,7 @@ export function html(strings: TemplateStringsArray, ...values: any[]): DocumentF
 
   walk(root, (node) => {
     if (node.nodeType === document.COMMENT_NODE) {
-      const el = ctx.elements[node.textContent!.trim()]
+      const el = ctx.elements[(node.textContent || '').trim()]
 
       if (el) {
         node.parentElement?.replaceChild(el, node)
@@ -45,11 +45,10 @@ export function html(strings: TemplateStringsArray, ...values: any[]): DocumentF
     }
 
     for (const item of Array.from(node.attributes)) {
-      let fn
-
-      if (item.name.startsWith('on') && (fn = ctx.events[item.value])) {
+      if (item.name.startsWith('on') && ctx.events[item.value]) {
         const eventName = item.name.slice(2)
 
+        const fn = ctx.events[item.value]
         node.addEventListener(eventName, fn)
         node.removeAttribute(item.name)
       }
@@ -77,7 +76,7 @@ function uniqueId(prefix: string) {
   return () => `${prefix}${i++}`
 }
 
-export function composeHtmlString(strings: TemplateStringsArray, ...values: any[]) {
+export function composeHtmlString(strings: TemplateStringsArray, ...values: unknown[]) {
   const nextId = uniqueId('e')
 
   let _html = ''
@@ -103,7 +102,7 @@ export function composeHtmlString(strings: TemplateStringsArray, ...values: any[
     elements,
   }
 
-  function concatValue(value: any) {
+  function concatValue(value: unknown) {
     if (isObject(value) && isIterable(value)) {
       for (const item of value) {
         if (isFn(item)) {
