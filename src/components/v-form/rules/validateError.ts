@@ -1,8 +1,8 @@
 import { isString } from '@0x-jerry/utils'
 import { ruleConfig } from './configs'
-import type { IFormFieldValidateContext } from './types'
+import type { IValidateContext } from './types'
 
-export function getErrorMessage(ctx: IFormFieldValidateContext, msgKey: string, message?: string) {
+export function getErrorMessage(ctx: IValidateContext, msgKey: string, message?: string) {
   if (message) {
     return message
   }

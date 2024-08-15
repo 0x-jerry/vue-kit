@@ -16,10 +16,10 @@ export interface IExtendRule {
 export type IRule = ExtendRules<IExtendRule> | IRuleFunction
 
 export type IRuleFunction<Rule = unknown> = (
-  ctx: IFormFieldValidateContext<Rule>,
+  ctx: IValidateContext<Rule>,
 ) => Awaitable<string | void>
 
-export interface IFormFieldValidateContext<Rule = unknown> {
+export interface IValidateContext<Rule = unknown> {
   field: string
   label?: string
   value: unknown

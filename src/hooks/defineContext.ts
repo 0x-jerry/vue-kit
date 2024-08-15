@@ -8,7 +8,8 @@ export interface DefineContext<Options extends unknown[], Context> {
 }
 
 export function defineContext<T extends {}>(key: InjectionKey<T>): DefineContext<[T], T>
-export function defineContext<F extends (...args: unknown[]) => unknown>(
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+export function defineContext<F extends (...args: any[]) => unknown>(
   key: string | symbol | InjectionKey<ReturnType<F>>,
   factory: F,
 ): DefineContext<Parameters<F>, ReturnType<F>>

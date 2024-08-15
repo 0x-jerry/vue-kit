@@ -1,5 +1,5 @@
 import { isFn } from '@0x-jerry/utils'
-import type { IFormFieldValidateContext, IRule, IRuleFunction } from './types'
+import type { IValidateContext, IRule, IRuleFunction } from './types'
 import { ruleConfig } from './configs'
 
 export const validate: IRuleFunction<IRule> = async (ctx) => {
@@ -22,7 +22,7 @@ export const validate: IRuleFunction<IRule> = async (ctx) => {
   }
 }
 
-async function _validate(validator: IRuleFunction, ctx: IFormFieldValidateContext) {
+async function _validate(validator: IRuleFunction, ctx: IValidateContext) {
   let errorMsg: string | undefined
 
   try {
