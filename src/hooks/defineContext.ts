@@ -1,6 +1,6 @@
 import { inject, provide, type InjectionKey } from 'vue'
 
-export interface DefineContext<Options extends any[], Context> {
+export interface DefineContext<Options extends unknown[], Context> {
   (): Context | null
   (defaultValue: Context): Context
 
@@ -8,17 +8,17 @@ export interface DefineContext<Options extends any[], Context> {
 }
 
 export function defineContext<T extends {}>(key: InjectionKey<T>): DefineContext<[T], T>
-export function defineContext<F extends (...args: any[]) => any>(
+export function defineContext<F extends (...args: unknown[]) => unknown>(
   key: string | symbol | InjectionKey<ReturnType<F>>,
   factory: F,
 ): DefineContext<Parameters<F>, ReturnType<F>>
 
 // implement
-export function defineContext<Fn extends (...args: any[]) => any>(
-  key: string | symbol | InjectionKey<any>,
+export function defineContext<Fn extends (...args: unknown[]) => unknown>(
+  key: string | symbol | InjectionKey<unknown>,
   factory?: Fn,
 ) {
-  const useContext = (defaultContext: any) => {
+  const useContext = (defaultContext: unknown) => {
     const ctx = inject(key, defaultContext)
 
     return ctx
@@ -30,19 +30,19 @@ export function defineContext<Fn extends (...args: any[]) => any>(
 
   function getProviderFn() {
     if (typeof factory === 'function') {
-      return (...args: any) => {
+      return (...args: unknown[]) => {
         const ctx = factory(...args)
 
         provide(key, ctx)
 
         return ctx
       }
-    } else {
-      return (value: any) => {
-        provide(key, value)
+    }
 
-        return value
-      }
+    return (value: unknown) => {
+      provide(key, value)
+
+      return value
     }
   }
 }
