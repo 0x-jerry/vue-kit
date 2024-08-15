@@ -11,7 +11,7 @@ export function chooseFiles(opt: ChooseFilesOption = {}): Promise<File[]> {
   return new Promise((resolve, reject) => {
     const input = createInputElement()
 
-    input.accept = opt.extensions?.map((n) => `.${n}`).join(',') ?? ''
+    input.accept = opt.extensions?.map((ext) => `.${ext}`).join(',') ?? ''
     input.multiple = opt.multiple ?? false
 
     input.onchange = () => {
