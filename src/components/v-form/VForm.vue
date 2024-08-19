@@ -1,16 +1,20 @@
 <script setup lang="ts">
-import { VLayout } from '../v-layout';
-import { useForm } from './hooks/useForm';
-import type { VFormProps } from './types';
+import { VLayout } from "../v-layout";
+import { useForm } from "./hooks/useForm";
+import type { VFormProps } from "./types";
 
-const props = defineProps<VFormProps>()
+const props = defineProps<VFormProps>();
 
-const formCtx = useForm.provide()
+const formCtx = useForm.provide();
 
+// todo, check this usage
 async function onSubmit() {
-  // validate
+  await formCtx.validate();
 }
 
+defineExpose({
+  formContext: formCtx,
+});
 </script>
 
 <template>

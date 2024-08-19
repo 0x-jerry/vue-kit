@@ -1,7 +1,7 @@
 import type { Arrayable } from '@0x-jerry/utils'
 import type { VLayoutProps } from '../v-layout'
 import type { IRule } from './rules'
-import type { IFormContext } from './hooks/useForm'
+import type { IFormInteralContext } from './hooks/useForm'
 
 export interface VFormProps<LayoutConfig = VLayoutProps> {
   /**
@@ -37,4 +37,4 @@ export interface VFormFieldProps {
   rules?: Arrayable<IRule>
 }
 
-type IFormEvalFunction<T = unknown> = (ctx: IFormContext) => T
+type IFormEvalFunction<T = unknown> = (ctx: IFormInteralContext) => T

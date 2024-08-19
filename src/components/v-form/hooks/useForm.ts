@@ -5,37 +5,50 @@ import { ensureArray, type Arrayable } from '@0x-jerry/utils'
 import { type IRule, validate as runValidate } from '../rules'
 import { getValue, setValue } from '../utils'
 
-export interface IFormContext {
-  data: Ref<Record<string, unknown>>
+type IFormFieldPath = VFormFieldProps['field']
+
+export interface IFromActions {
+  addField: (field: VFormFieldProps) => void;
+  removeField: (field: IFormFieldPath) => VFormFieldProps[];
+  validate: (field?: IFormFieldPath) => Promise<IFieldRuleError[]>;
+  update: (data: Record<string, unknown>) => void;
+  updateField: (field: IFormFieldPath, value?: unknown) => void;
+  getData: () => Record<string, unknown>
 }
 
-export interface IFormInteralContext extends IFormContext {
+export interface IFormInteralContext extends IFromActions {
+  data: Ref<Record<string, unknown>>
   fileds: VFormFieldProps[]
   globalRules: Record<string, Arrayable<IRule>>
 }
 
-type IFormFieldPath = VFormFieldProps['field']
 
 const key = Symbol() as InjectionKey<IFormInteralContext>
 
 export const useForm = defineContext(key, createFormContext)
 
 export function createFormContext(): IFormInteralContext {
-  const ctx: IFormInteralContext = {
-    data: ref({}),
-    fileds: [],
-    globalRules: {},
-  }
-
-  const actions = {
+  const actions: IFromActions = {
     addField,
     removeField,
     validate,
     update,
     updateField,
+    getData,
+  }
+
+  const ctx: IFormInteralContext = {
+    data: ref({}),
+    fileds: [],
+    globalRules: {},
+    ...actions
   }
 
   return ctx
+
+  function getData() {
+    return ctx.data.value
+  }
 
   function _collectFieldRules() {
     const rules = Object.entries(ctx.globalRules).map(([key, value]) => {
