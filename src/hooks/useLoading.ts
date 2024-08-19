@@ -1,20 +1,19 @@
+import type { Fn } from '@0x-jerry/utils'
 import { ref } from 'vue'
 
 export type UseLoadingResult<T> = T & {
   isLoading: boolean
 }
 
-export function useLoading<Fn extends (...args: any) => any>(fn: Fn) {
+export function useLoading<T extends Fn>(fn: T) {
   const executingCount = ref(0)
 
-  const wrapperFn = async (...args: any) => {
+  const wrapperFn = async (...args: unknown[]) => {
     try {
       executingCount.value++
 
       const result = await fn(...args)
       return result
-    } catch (error) {
-      throw error
     } finally {
       executingCount.value--
     }
@@ -26,5 +25,5 @@ export function useLoading<Fn extends (...args: any) => any>(fn: Fn) {
     },
   })
 
-  return wrapperFn as UseLoadingResult<Fn>
+  return wrapperFn as UseLoadingResult<T>
 }

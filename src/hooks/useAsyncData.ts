@@ -19,7 +19,7 @@ export function useAsyncData<T extends Fn>(
 export function useAsyncData<T extends Fn>(
   fn: T,
   defaultValue?: Result<ReturnType<T>>,
-): UseAsyncDataResult<T, any> {
+): UseAsyncDataResult<T, unknown> {
   type Params = Parameters<T>
 
   const data = ref(defaultValue)
