@@ -14,7 +14,7 @@ export interface IFormInteralContext extends IFormContext {
   globalRules: Record<string, Arrayable<IRule>>
 }
 
-type IFormFieldType = VFormFieldProps['field']
+type IFormFieldPath = VFormFieldProps['field']
 
 const key = Symbol() as InjectionKey<IFormInteralContext>
 
@@ -51,8 +51,8 @@ export function createFormContext(): IFormInteralContext {
       const validateRules = ensureArray(field.rules)
 
       if (validateRules.length) {
-        const filedKey = arrayToString(field.field)
-        const hit = rules.find((n) => arrayToString(n.field) === filedKey)
+        const filedKey = fieldArrayToString(field.field)
+        const hit = rules.find((n) => fieldArrayToString(n.field) === filedKey)
 
         if (hit) {
           hit.rules.push(...validateRules)
@@ -68,9 +68,9 @@ export function createFormContext(): IFormInteralContext {
     return rules
   }
 
-  async function _validateField(field: IFormFieldType, rules: IRule[]) {
-    const fieldKey = arrayToString(field)
-    const fieldConfig = ctx.fileds.find((f) => arrayToString(f.field) === fieldKey)
+  async function _validateField(field: IFormFieldPath, rules: IRule[]) {
+    const fieldKey = fieldArrayToString(field)
+    const fieldConfig = ctx.fileds.find((f) => fieldArrayToString(f.field) === fieldKey)
 
     if (!fieldConfig) {
       return
@@ -99,8 +99,33 @@ export function createFormContext(): IFormInteralContext {
     return result
   }
 
-  async function validate(field?: IFormFieldType) {
-    const rules = _collectFieldRules()
+  function _getFieldConfig(field: IFormFieldPath) {
+    const filedKey = fieldArrayToString(field)
+    const hit = ctx.fileds.find((f) => fieldArrayToString(f.field) === filedKey)
+    return hit
+  }
+
+  function _getFieldRules(field: IFormFieldPath) {
+    const filedKey = fieldArrayToString(field)
+
+    const rules = ensureArray(ctx.globalRules[filedKey])
+
+    const fieldConfig = _getFieldConfig(field)
+
+    if (fieldConfig?.rules) {
+      rules.push(...ensureArray(fieldConfig.rules))
+    }
+
+    const result: IFieldRuleCollection = {
+      field,
+      rules,
+    }
+
+    return [result]
+  }
+
+  async function validate(field?: IFormFieldPath) {
+    const rules = field ? _getFieldRules(field) : _collectFieldRules()
 
     const p = rules.map((rule) => _validateField(rule.field, rule.rules))
 
@@ -110,7 +135,7 @@ export function createFormContext(): IFormInteralContext {
     return errors as IFieldRuleError[]
   }
 
-  function updateField(field: IFormFieldType, value?: unknown) {
+  function updateField(field: IFormFieldPath, value?: unknown) {
     setValue(ctx.data.value, ensureArray(field), value)
   }
 
@@ -118,9 +143,9 @@ export function createFormContext(): IFormInteralContext {
     ctx.data.value = data
   }
 
-  function removeField(field: IFormFieldType) {
-    const filedKey = arrayToString(field)
-    const hitFieldIndex = ctx.fileds.findIndex((f) => arrayToString(f.field) === filedKey)
+  function removeField(field: IFormFieldPath) {
+    const filedKey = fieldArrayToString(field)
+    const hitFieldIndex = ctx.fileds.findIndex((f) => fieldArrayToString(f.field) === filedKey)
 
     if (hitFieldIndex < 0) {
       throw new Error(`Not found field by key: ${filedKey}`)
@@ -130,8 +155,8 @@ export function createFormContext(): IFormInteralContext {
   }
 
   function addField(field: VFormFieldProps) {
-    const filedKey = arrayToString(field.field)
-    const hitField = ctx.fileds.find((f) => arrayToString(f.field) === filedKey)
+    const filedKey = fieldArrayToString(field.field)
+    const hitField = ctx.fileds.find((f) => fieldArrayToString(f.field) === filedKey)
 
     if (hitField) {
       throw new Error(`Found the same keys for: ${filedKey}`)
@@ -141,16 +166,16 @@ export function createFormContext(): IFormInteralContext {
   }
 }
 
-function arrayToString(arr: Arrayable<unknown>, joinChar = '-') {
-  return ensureArray(arr).join(joinChar)
+function fieldArrayToString(arr: Arrayable<unknown>) {
+  return ensureArray(arr).join('.')
 }
 
 interface IFieldRuleCollection {
-  field: IFormFieldType
+  field: IFormFieldPath
   rules: IRule[]
 }
 
 interface IFieldRuleError {
-  field: IFormFieldType
+  field: IFormFieldPath
   errors: string[]
 }
