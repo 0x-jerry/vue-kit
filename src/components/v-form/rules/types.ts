@@ -20,7 +20,6 @@ export type IRuleFunction<Rule = unknown> = (
 ) => Awaitable<string | void>
 
 export interface IValidateContext<Rule = unknown> {
-  field: string
   label?: string
   value: unknown
   rule: Rule

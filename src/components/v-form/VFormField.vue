@@ -14,10 +14,10 @@ const fieldPath = computed(() => ensureArray(props.field))
 
 const model = computed({
   get() {
-    return getValue(formCtx.data, fieldPath.value)
+    return getValue(formCtx.data.value, fieldPath.value)
   },
   set(value) {
-    return setValue(formCtx.data, fieldPath.value, value)
+    return setValue(formCtx.data.value, fieldPath.value, value)
   }
 })
 
