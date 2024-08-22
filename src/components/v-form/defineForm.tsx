@@ -1,20 +1,14 @@
-import { useInstanceRef } from "src/hooks";
-import {
-  defineComponent,
-  h,
-  type Component,
-  type FunctionalComponent,
-  type Slots,
-} from "vue";
+import { defineComponent, type FunctionalComponent, type Slots } from "vue";
 import VForm from "./VForm.vue";
 import type { IFromActions } from "./hooks/useForm";
 import type { IFormEvalFunction, VFormFieldProps, VFormProps } from "./types";
 import { getComponent } from "./configs";
 import { calcFieldKey } from "./utils";
 import { isFn } from "@0x-jerry/utils";
+import { useInstanceRef } from "../../hooks";
 
 export interface IFormContext extends IFromActions {
-  Component: Component;
+  Component: FunctionalComponent;
 }
 
 /**
