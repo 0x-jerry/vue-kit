@@ -10,10 +10,7 @@ export interface VFormProps<LayoutConfig = VLayoutProps> {
   data: unknown
   layout?: LayoutConfig
   rules?: Record<string, Arrayable<IRule>>
-}
-
-export interface IFromConfig extends VFormFieldProps {
-  fileds: VFormFieldProps[]
+  fields?: VFormFieldProps[]
 }
 
 export interface VFormFieldProps {
