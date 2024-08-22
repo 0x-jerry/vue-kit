@@ -1,13 +1,13 @@
 import type { Arrayable } from '@0x-jerry/utils'
 import type { VLayoutProps } from '../v-layout'
 import type { IRule } from './rules'
-import type { IFormInteralContext, IFromActions } from './hooks/useForm'
+import type { IFromActions } from './hooks/useForm'
 
 export interface VFormProps<LayoutConfig = VLayoutProps> {
   /**
    * Default data
    */
-  data: unknown
+  data?: Record<string, unknown>
   layout?: LayoutConfig
   rules?: Record<string, Arrayable<IRule>>
   fields?: VFormFieldProps[]

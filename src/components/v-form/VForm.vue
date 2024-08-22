@@ -1,15 +1,23 @@
 <script setup lang="ts">
+import { toRaw } from "vue";
 import { VLayout } from "../v-layout";
 import { useForm } from "./hooks/useForm";
 import type { VFormProps } from "./types";
 
 const props = defineProps<VFormProps>();
+const emit = defineEmits(["submit"]);
 
 const formCtx = useForm.provide();
+formCtx.update(props.data);
 
-// todo, check this usage
 async function onSubmit() {
-  await formCtx.validate();
+  const errors = await formCtx.validate();
+  if (errors.length) {
+    throw errors;
+  }
+
+  const clonedData = structuredClone(toRaw(formCtx.data.value));
+  emit("submit", clonedData);
 }
 
 defineExpose({

@@ -11,7 +11,7 @@ export interface IFromActions {
   addField: (field: VFormFieldProps) => void;
   removeField: (field: IFormFieldPath) => VFormFieldProps[];
   validate: (field?: IFormFieldPath) => Promise<IFieldRuleError[]>;
-  update: (data: Record<string, unknown>) => void;
+  update: (data?: Record<string, unknown>) => void;
   updateField: (field: IFormFieldPath, value?: unknown) => void;
   getData: IGetData
 }
@@ -161,8 +161,8 @@ export function createFormContext(): IFormInteralContext {
     setValue(ctx.data.value, ensureArray(field), value)
   }
 
-  function update(data: Record<string, unknown>) {
-    ctx.data.value = data
+  function update(data?: Record<string, unknown>) {
+    ctx.data.value = data || {}
   }
 
   function removeField(field: IFormFieldPath) {
