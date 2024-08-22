@@ -3,7 +3,7 @@ import { ref, type InjectionKey, type Ref } from 'vue'
 import type { VFormFieldProps } from '../types'
 import { ensureArray, type Arrayable } from '@0x-jerry/utils'
 import { type IRule, validate as runValidate } from '../rules'
-import { getValue, setValue } from '../utils'
+import { calcFieldKey, getValue, setValue } from '../utils'
 
 type IFormFieldPath = VFormFieldProps['field']
 
@@ -13,12 +13,17 @@ export interface IFromActions {
   validate: (field?: IFormFieldPath) => Promise<IFieldRuleError[]>;
   update: (data: Record<string, unknown>) => void;
   updateField: (field: IFormFieldPath, value?: unknown) => void;
-  getData: () => Record<string, unknown>
+  getData: IGetData
+}
+
+interface IGetData {
+  (field: IFormFieldPath): unknown
+  (): Record<string, unknown>
 }
 
 export interface IFormInteralContext extends IFromActions {
   data: Ref<Record<string, unknown>>
-  fileds: VFormFieldProps[]
+  fields: VFormFieldProps[]
   globalRules: Record<string, Arrayable<IRule>>
 }
 
@@ -39,14 +44,18 @@ export function createFormContext(): IFormInteralContext {
 
   const ctx: IFormInteralContext = {
     data: ref({}),
-    fileds: [],
+    fields: [],
     globalRules: {},
     ...actions
   }
 
   return ctx
 
-  function getData() {
+  function getData(field: IFormFieldPath): unknown
+  function getData(): Record<string, unknown>
+  function getData(field?: IFormFieldPath) {
+    if (field) return getValue(ctx.data.value, ensureArray(field))
+
     return ctx.data.value
   }
 
@@ -60,12 +69,12 @@ export function createFormContext(): IFormInteralContext {
       return rule
     })
 
-    for (const field of ctx.fileds) {
+    for (const field of ctx.fields) {
       const validateRules = ensureArray(field.rules)
 
       if (validateRules.length) {
-        const filedKey = fieldArrayToString(field.field)
-        const hit = rules.find((n) => fieldArrayToString(n.field) === filedKey)
+        const filedKey = calcFieldKey(field.field)
+        const hit = rules.find((n) => calcFieldKey(n.field) === filedKey)
 
         if (hit) {
           hit.rules.push(...validateRules)
@@ -82,8 +91,8 @@ export function createFormContext(): IFormInteralContext {
   }
 
   async function _validateField(field: IFormFieldPath, rules: IRule[]) {
-    const fieldKey = fieldArrayToString(field)
-    const fieldConfig = ctx.fileds.find((f) => fieldArrayToString(f.field) === fieldKey)
+    const fieldKey = calcFieldKey(field)
+    const fieldConfig = ctx.fields.find((f) => calcFieldKey(f.field) === fieldKey)
 
     if (!fieldConfig) {
       return
@@ -113,13 +122,13 @@ export function createFormContext(): IFormInteralContext {
   }
 
   function _getFieldConfig(field: IFormFieldPath) {
-    const filedKey = fieldArrayToString(field)
-    const hit = ctx.fileds.find((f) => fieldArrayToString(f.field) === filedKey)
+    const filedKey = calcFieldKey(field)
+    const hit = ctx.fields.find((f) => calcFieldKey(f.field) === filedKey)
     return hit
   }
 
   function _getFieldRules(field: IFormFieldPath) {
-    const filedKey = fieldArrayToString(field)
+    const filedKey = calcFieldKey(field)
 
     const rules = ensureArray(ctx.globalRules[filedKey])
 
@@ -157,30 +166,26 @@ export function createFormContext(): IFormInteralContext {
   }
 
   function removeField(field: IFormFieldPath) {
-    const filedKey = fieldArrayToString(field)
-    const hitFieldIndex = ctx.fileds.findIndex((f) => fieldArrayToString(f.field) === filedKey)
+    const filedKey = calcFieldKey(field)
+    const hitFieldIndex = ctx.fields.findIndex((f) => calcFieldKey(f.field) === filedKey)
 
     if (hitFieldIndex < 0) {
       throw new Error(`Not found field by key: ${filedKey}`)
     }
 
-    return ctx.fileds.splice(hitFieldIndex, 1)
+    return ctx.fields.splice(hitFieldIndex, 1)
   }
 
   function addField(field: VFormFieldProps) {
-    const filedKey = fieldArrayToString(field.field)
-    const hitField = ctx.fileds.find((f) => fieldArrayToString(f.field) === filedKey)
+    const filedKey = calcFieldKey(field.field)
+    const hitField = ctx.fields.find((f) => calcFieldKey(f.field) === filedKey)
 
     if (hitField) {
       throw new Error(`Found the same keys for: ${filedKey}`)
     }
 
-    ctx.fileds.push(field)
+    ctx.fields.push(field)
   }
-}
-
-function fieldArrayToString(arr: Arrayable<unknown>) {
-  return ensureArray(arr).join('.')
 }
 
 interface IFieldRuleCollection {

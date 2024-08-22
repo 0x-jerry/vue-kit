@@ -1,10 +1,19 @@
 import { useInstanceRef } from "src/hooks";
-import { defineComponent, h, type Component } from "vue";
+import {
+  defineComponent,
+  h,
+  type Component,
+  type FunctionalComponent,
+  type Slots,
+} from "vue";
 import VForm from "./VForm.vue";
 import type { IFromActions } from "./hooks/useForm";
-import type { VFormFieldProps, VFormProps } from "./types";
+import type { IFormEvalFunction, VFormFieldProps, VFormProps } from "./types";
+import { getComponent } from "./configs";
+import { calcFieldKey } from "./utils";
+import { isFn } from "@0x-jerry/utils";
 
-export interface IFormContext extends Partial<IFromActions> {
+export interface IFormContext extends IFromActions {
   Component: Component;
 }
 
@@ -18,7 +27,7 @@ export interface IDefineFormConfig extends Omit<VFormProps, "fields"> {
 interface IFormFieldConfig extends VFormFieldProps {
   slot?: string;
   compoennt?: string;
-  componentProps?: unknown;
+  componentProps?: Record<string, unknown>;
 }
 
 /**
@@ -30,7 +39,7 @@ export function defineForm(option: Partial<IDefineFormConfig>): IFormContext {
   const Component = createForm();
   const instance = useInstanceRef(VForm);
 
-  const result = new Proxy(
+  const instanceActions = new Proxy(
     {},
     {
       get(_target, p, _receiver) {
@@ -43,9 +52,9 @@ export function defineForm(option: Partial<IDefineFormConfig>): IFormContext {
         return formCtx?.[p];
       },
     }
-  );
+  ) as IFormContext;
 
-  return result as IFormContext;
+  return instanceActions;
 
   function createForm() {
     return defineComponent({
@@ -53,13 +62,52 @@ export function defineForm(option: Partial<IDefineFormConfig>): IFormContext {
       setup(_, ctx) {
         return () => {
           const formProps: any = {
+            ...option,
             ...ctx.attrs,
             ref: instance,
           };
 
-          return <VForm {...formProps}>{ctx.slots}</VForm>;
+          return (
+            <VForm {...formProps}>
+              {(option.fields || []).map((field) =>
+                renderField(field, ctx.slots)
+              )}
+            </VForm>
+          );
         };
       },
     });
   }
+
+  function renderField(item: IFormFieldConfig, slots: Slots) {
+    const Ctor = item.slot
+      ? slots[item.slot]
+      : (getComponent(item.compoennt!)?.Ctor as FunctionalComponent);
+
+    if (!Ctor) return;
+
+    if (item.if != null && !interopWithContext(item.if, instanceActions)) {
+      return;
+    }
+
+    const props = {
+      ...item.componentProps,
+      key: calcFieldKey(item.field),
+      modelValue: instanceActions.getData?.(item.field),
+      "onUpdate:modelValue": (val: unknown) =>
+        instanceActions.updateField?.(item.field, val),
+    };
+
+    const show =
+      item.show == null ? true : interopWithContext(item.show, instanceActions);
+
+    return <Ctor v-show={show} {...props}></Ctor>;
+  }
+}
+
+function interopWithContext(
+  item: IFormEvalFunction<boolean> | boolean,
+  ctx: IFromActions
+) {
+  return isFn(item) ? item(ctx) : item;
 }
