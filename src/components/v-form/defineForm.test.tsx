@@ -39,5 +39,6 @@ describe("VForm", () => {
     const app = mount(Comp);
 
     expect(app.get("form")).toBeTruthy();
+    expect(app.get('input')).toBeTruthy();
   });
 });
