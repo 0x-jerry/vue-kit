@@ -1,6 +1,6 @@
-import { ref, type InjectionKey, type Ref } from 'vue'
+import { ref, shallowRef, type InjectionKey, type Ref, type ShallowRef } from 'vue'
 import type { VFormFieldProps } from '../types'
-import { ensureArray, type Arrayable } from '@0x-jerry/utils'
+import { ensureArray, remove, type Arrayable } from '@0x-jerry/utils'
 import { type IRule, validate as runValidate } from '../rules'
 import { calcFieldKey, getValue, setValue } from '../utils'
 import { defineContext } from '../../../hooks'
@@ -11,9 +11,16 @@ export interface IFromActions {
   addField: (field: VFormFieldProps) => void
   removeField: (field: IFormFieldPath) => VFormFieldProps[]
   validate: (field?: IFormFieldPath) => Promise<IFieldRuleError[]>
+  clearValidate: () => void
   update: (data?: Record<string, unknown>) => void
   updateField: (field: IFormFieldPath, value?: unknown) => void
   getData: IGetData
+  getErrors: IGetErrors
+}
+
+interface IGetErrors {
+  (field: IFormFieldPath): IFieldRuleError | undefined
+  (): IFieldRuleError[]
 }
 
 interface IGetData {
@@ -23,6 +30,7 @@ interface IGetData {
 
 export interface IFormInteralContext extends IFromActions {
   data: Ref<Record<string, unknown>>
+  validateErrors: ShallowRef<IFieldRuleError[]>
   fields: VFormFieldProps[]
   globalRules: Record<string, Arrayable<IRule>>
 }
@@ -36,19 +44,32 @@ export function createFormContext(): IFormInteralContext {
     addField,
     removeField,
     validate,
+    clearValidate,
     update,
     updateField,
     getData,
+    getErrors,
   }
 
   const ctx: IFormInteralContext = {
     data: ref({}),
+    validateErrors: shallowRef([]),
     fields: [],
     globalRules: {},
     ...actions,
   }
 
   return ctx
+
+  function getErrors(): IFieldRuleError[]
+  function getErrors(field: IFormFieldPath): IFieldRuleError | undefined
+  function getErrors(field?: IFormFieldPath): IFieldRuleError | undefined | IFieldRuleError[] {
+    if (field != null) {
+      const key = calcFieldKey(field)
+      return ctx.validateErrors.value.find((n) => calcFieldKey(field) === key)
+    }
+    return ctx.validateErrors.value
+  }
 
   function getData(field: IFormFieldPath): unknown
   function getData(): Record<string, unknown>
@@ -145,6 +166,21 @@ export function createFormContext(): IFormInteralContext {
     return [result]
   }
 
+  function clearValidate() {
+    ctx.validateErrors.value = []
+  }
+
+  function _updateValidateErrors(errors: IFieldRuleError[]) {
+    const newErrors = [...ctx.validateErrors.value]
+
+    for (const error of errors) {
+      const key = calcFieldKey(error)
+      remove(newErrors, (n) => calcFieldKey(n.field) === key)
+    }
+
+    ctx.validateErrors.value = newErrors
+  }
+
   async function validate(field?: IFormFieldPath) {
     const rules = field ? _getFieldRules(field) : _collectFieldRules()
 
@@ -152,6 +188,8 @@ export function createFormContext(): IFormInteralContext {
 
     let errors = await Promise.all(p)
     errors = errors.filter((n) => n != null && n.errors.length > 0)
+
+    _updateValidateErrors(errors as IFieldRuleError[])
 
     return errors as IFieldRuleError[]
   }

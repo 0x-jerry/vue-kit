@@ -3,5 +3,8 @@
   "testing.automaticallyOpenPeekView": "never",
   "[typescriptreact]": {
     "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
   }
 }

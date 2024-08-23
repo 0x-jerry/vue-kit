@@ -91,10 +91,17 @@ export function defineForm(option: Partial<IDefineFormConfig>): IFormContext {
 
     const show = item.show == null ? true : interopWithContext(item.show, instanceActions)
 
+    const filedError = instanceActions.getErrors(item.field)
+
     return (
-      <div>
-        <label>{item.label}</label>
-        <Ctor v-show={show} {...props} />
+      <div class="v-form-field">
+        <label class="v-form-label">{item.label}</label>
+        <div v-show={filedError} class="v-form-field-error">
+          {filedError?.errors.at(0)}
+        </div>
+        <div class="v-form-field-content">
+          <Ctor v-show={show} {...props} />
+        </div>
       </div>
     )
   }
