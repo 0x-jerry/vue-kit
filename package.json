@@ -37,7 +37,7 @@
     "dts": true
   },
   "dependencies": {
-    "@0x-jerry/utils": "^2.5.0",
+    "@0x-jerry/utils": "^3.0.0",
     "@vitejs/plugin-vue": "^5.1.2",
     "@vitejs/plugin-vue-jsx": "^4.0.1",
     "@vueuse/core": "^10.11.0",
