@@ -1,10 +1,10 @@
-import { defineComponent, type FunctionalComponent, type Slots } from 'vue'
+import { defineComponent, type Component, type FunctionalComponent, type Slots } from 'vue'
 import VForm from './VForm.vue'
 import type { IFromActions } from './hooks/useForm'
 import type { IFormEvalFunction, VFormFieldProps, VFormProps } from './types'
 import { getComponent } from './configs'
 import { calcFieldKey } from './utils'
-import { isFn } from '@0x-jerry/utils'
+import { isFn, isString } from '@0x-jerry/utils'
 import { useInstanceRef } from '../../hooks'
 
 export interface IFormContext extends IFromActions {
@@ -20,7 +20,7 @@ export interface IDefineFormConfig extends Omit<VFormProps, 'fields'> {
 
 interface IFormFieldConfig extends VFormFieldProps {
   slot?: string
-  compoennt?: string
+  compoennt?: string | Component
   componentProps?: Record<string, unknown>
 }
 
@@ -71,7 +71,9 @@ export function defineForm(option: Partial<IDefineFormConfig>): IFormContext {
   function renderField(item: IFormFieldConfig, slots: Slots) {
     const Ctor = item.slot
       ? slots[item.slot]
-      : (getComponent(item.compoennt)?.Ctor as FunctionalComponent)
+      : isString(item.compoennt)
+        ? (getComponent(item.compoennt)?.Ctor as FunctionalComponent)
+        : (item.compoennt as FunctionalComponent | undefined)
 
     if (!Ctor) return
 
