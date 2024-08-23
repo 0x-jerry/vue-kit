@@ -170,13 +170,16 @@ export function createFormContext(): IFormInteralContext {
     ctx.validateErrors.value = []
   }
 
-  function _updateValidateErrors(errors: IFieldRuleError[]) {
-    const newErrors = [...ctx.validateErrors.value]
-
-    for (const error of errors) {
-      const key = calcFieldKey(error)
-      remove(newErrors, (n) => calcFieldKey(n.field) === key)
+  function _updateValidateErrors(errors: IFieldRuleError[], field?: IFormFieldPath) {
+    if (!field) {
+      ctx.validateErrors.value = errors
+      return
     }
+
+    const newErrors = [...ctx.validateErrors.value]
+    const key = calcFieldKey(field)
+    remove(newErrors, (n) => calcFieldKey(n.field) === key)
+    newErrors.push(...errors)
 
     ctx.validateErrors.value = newErrors
   }
@@ -189,7 +192,7 @@ export function createFormContext(): IFormInteralContext {
     let errors = await Promise.all(p)
     errors = errors.filter((n) => n != null && n.errors.length > 0)
 
-    _updateValidateErrors(errors as IFieldRuleError[])
+    _updateValidateErrors(errors as IFieldRuleError[], field)
 
     return errors as IFieldRuleError[]
   }

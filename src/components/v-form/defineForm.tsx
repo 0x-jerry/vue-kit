@@ -12,7 +12,7 @@ export interface IFormContext extends IFromActions {
 }
 
 /**
- * todo, support reactive data
+ * todo, support reactive data? or provide apis to change state?
  */
 export interface IDefineFormConfig extends Omit<VFormProps, 'fields'> {
   fields?: IFormFieldConfig[]
@@ -33,20 +33,17 @@ export function defineForm(option: Partial<IDefineFormConfig>): IFormContext {
   const Component = createForm()
   const instance = useInstanceRef(VForm)
 
-  const instanceActions = new Proxy(
-    {},
-    {
-      get(_target, p, _receiver) {
-        if (p === 'Component') {
-          return Component
-        }
+  const instanceActions = new Proxy({} as IFormContext, {
+    get(_target, p, _receiver) {
+      if (p === 'Component') {
+        return Component
+      }
 
-        const formCtx = instance.value?.formContext
+      const formCtx = instance.value?.formContext
 
-        return formCtx?.[p as keyof typeof formCtx]
-      },
+      return formCtx?.[p as keyof typeof formCtx]
     },
-  ) as IFormContext
+  })
 
   return instanceActions
 
