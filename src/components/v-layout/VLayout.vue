@@ -13,14 +13,11 @@ export interface VLayoutProps {
   col?: number | string
 }
 
-const props = withDefaults(
-  defineProps<VLayoutProps>(),
-  {
-    type: 'grid',
-    gap: 16,
-    col: 4,
-  },
-)
+const props = withDefaults(defineProps<VLayoutProps>(), {
+  type: 'grid',
+  gap: 16,
+  col: 4,
+})
 
 const style = computed(() => {
   const { type, col } = props
@@ -42,13 +39,11 @@ const style = computed(() => {
   return style
 })
 
-
 function getGapValue() {
   const [x, y = x] = props.gap.toString().trim().split(/\s+/)
 
   return [normalizeCssValue(x), normalizeCssValue(y)].join(' ')
 }
-
 </script>
 
 <template>

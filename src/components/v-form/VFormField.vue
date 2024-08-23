@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import { useForm } from './hooks/useForm';
-import { getValue, setValue } from './utils';
-import type { VFormFieldProps } from './types';
-import { ensureArray } from '@0x-jerry/utils';
+import { computed } from 'vue'
+import { useForm } from './hooks/useForm'
+import { getValue, setValue } from './utils'
+import type { VFormFieldProps } from './types'
+import { ensureArray } from '@0x-jerry/utils'
 
 const props = defineProps<VFormFieldProps>()
 
@@ -18,9 +18,8 @@ const model = computed({
   },
   set(value) {
     return setValue(formCtx.data.value, fieldPath.value, value)
-  }
+  },
 })
-
 </script>
 
 <template>

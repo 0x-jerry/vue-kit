@@ -8,11 +8,11 @@ import { defineContext } from '../../../hooks'
 type IFormFieldPath = VFormFieldProps['field']
 
 export interface IFromActions {
-  addField: (field: VFormFieldProps) => void;
-  removeField: (field: IFormFieldPath) => VFormFieldProps[];
-  validate: (field?: IFormFieldPath) => Promise<IFieldRuleError[]>;
-  update: (data?: Record<string, unknown>) => void;
-  updateField: (field: IFormFieldPath, value?: unknown) => void;
+  addField: (field: VFormFieldProps) => void
+  removeField: (field: IFormFieldPath) => VFormFieldProps[]
+  validate: (field?: IFormFieldPath) => Promise<IFieldRuleError[]>
+  update: (data?: Record<string, unknown>) => void
+  updateField: (field: IFormFieldPath, value?: unknown) => void
   getData: IGetData
 }
 
@@ -26,7 +26,6 @@ export interface IFormInteralContext extends IFromActions {
   fields: VFormFieldProps[]
   globalRules: Record<string, Arrayable<IRule>>
 }
-
 
 const key = Symbol() as InjectionKey<IFormInteralContext>
 
@@ -46,7 +45,7 @@ export function createFormContext(): IFormInteralContext {
     data: ref({}),
     fields: [],
     globalRules: {},
-    ...actions
+    ...actions,
   }
 
   return ctx

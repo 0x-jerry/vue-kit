@@ -1,44 +1,44 @@
-import { defineComponent } from "vue";
-import { defineForm } from "./defineForm";
-import { mount } from "@vue/test-utils";
-import { registerComponent } from "./configs";
+import { defineComponent } from 'vue'
+import { defineForm } from './defineForm'
+import { mount } from '@vue/test-utils'
+import { registerComponent } from './configs'
 
 registerComponent(
-  "Input",
+  'Input',
   defineComponent(() => {
-    return () => <input></input>;
-  })
-);
+    return () => <input />
+  }),
+)
 
-describe("VForm", () => {
-  it("basic usage", () => {
-    const form = defineForm({});
+describe('VForm', () => {
+  it('basic usage', () => {
+    const form = defineForm({})
 
-    expect(form.Component).toBeTruthy();
+    expect(form.Component).toBeTruthy()
 
     const Comp = defineComponent(() => {
       const form = defineForm({
         layout: {
-          type: "flex-col",
+          type: 'flex-col',
         },
         fields: [
           {
-            label: "F 1",
-            field: "key1",
-            compoennt: "Input",
+            label: 'F 1',
+            field: 'key1',
+            compoennt: 'Input',
             componentProps: {
               max: 10,
             },
           },
         ],
-      });
+      })
 
-      return () => <form.Component />;
-    });
+      return () => <form.Component />
+    })
 
-    const app = mount(Comp);
+    const app = mount(Comp)
 
-    expect(app.get("form")).toBeTruthy();
-    expect(app.get('input')).toBeTruthy();
-  });
-});
+    expect(app.get('form')).toBeTruthy()
+    expect(app.get('input')).toBeTruthy()
+  })
+})
