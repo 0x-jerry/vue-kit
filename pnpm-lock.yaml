@@ -38,7 +38,7 @@ importers:
         version: 22.5.0
       '@vitest/coverage-v8':
         specifier: ^2.0.5
-        version: 2.0.5(vitest@2.0.5(@types/node@22.5.0)(happy-dom@15.0.0)(jsdom@24.1.1))
+        version: 2.0.5(vitest@2.0.5(@types/node@22.5.0)(happy-dom@15.0.0)(jsdom@25.0.0))
       '@vue/test-utils':
         specifier: ^2.4.6
         version: 2.4.6
@@ -49,8 +49,8 @@ importers:
         specifier: ^15.0.0
         version: 15.0.0
       jsdom:
-        specifier: ^24.1.1
-        version: 24.1.1
+        specifier: ^25.0.0
+        version: 25.0.0
       tsup:
         specifier: ^8.2.4
         version: 8.2.4(jiti@1.21.6)(postcss@8.4.41)(tsx@4.17.0)(typescript@5.5.4)(yaml@2.5.0)
@@ -62,7 +62,7 @@ importers:
         version: 5.5.4
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@22.5.0)(happy-dom@15.0.0)(jsdom@24.1.1)
+        version: 2.0.5(@types/node@22.5.0)(happy-dom@15.0.0)(jsdom@25.0.0)
 
 packages:
 
@@ -1346,8 +1346,8 @@ packages:
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
 
-  jsdom@24.1.1:
-    resolution: {integrity: sha512-5O1wWV99Jhq4DV7rCLIoZ/UIhyQeDR7wHVyZAHAshbrvZsLs+Xzz7gtwnlJTJDjleiTKh54F4dXrX70vJQTyJQ==}
+  jsdom@25.0.0:
+    resolution: {integrity: sha512-OhoFVT59T7aEq75TVw9xxEfkXgacpqAhQaYgP9y/fDqWQCMB/b1H66RfmPm/MaeaAIU9nDwMOVTlPN51+ao6CQ==}
     engines: {node: '>=18'}
     peerDependencies:
       canvas: ^2.11.2
@@ -2557,7 +2557,7 @@ snapshots:
       vite: 5.4.2(@types/node@22.5.0)
       vue: 3.4.38(typescript@5.5.4)
 
-  '@vitest/coverage-v8@2.0.5(vitest@2.0.5(@types/node@22.5.0)(happy-dom@15.0.0)(jsdom@24.1.1))':
+  '@vitest/coverage-v8@2.0.5(vitest@2.0.5(@types/node@22.5.0)(happy-dom@15.0.0)(jsdom@25.0.0))':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@bcoe/v8-coverage': 0.2.3
@@ -2571,7 +2571,7 @@ snapshots:
       std-env: 3.7.0
       test-exclude: 7.0.1
       tinyrainbow: 1.2.0
-      vitest: 2.0.5(@types/node@22.5.0)(happy-dom@15.0.0)(jsdom@24.1.1)
+      vitest: 2.0.5(@types/node@22.5.0)(happy-dom@15.0.0)(jsdom@25.0.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -3200,7 +3200,7 @@ snapshots:
 
   js-tokens@4.0.0: {}
 
-  jsdom@24.1.1:
+  jsdom@25.0.0:
     dependencies:
       cssstyle: 4.0.1
       data-urls: 5.0.0
@@ -3666,7 +3666,7 @@ snapshots:
       '@types/node': 22.5.0
       fsevents: 2.3.3
 
-  vitest@2.0.5(@types/node@22.5.0)(happy-dom@15.0.0)(jsdom@24.1.1):
+  vitest@2.0.5(@types/node@22.5.0)(happy-dom@15.0.0)(jsdom@25.0.0):
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@vitest/expect': 2.0.5
@@ -3690,7 +3690,7 @@ snapshots:
     optionalDependencies:
       '@types/node': 22.5.0
       happy-dom: 15.0.0
-      jsdom: 24.1.1
+      jsdom: 25.0.0
     transitivePeerDependencies:
       - less
       - lightningcss
