@@ -1,10 +1,10 @@
 import type { FunctionalComponent, Slots } from 'vue'
-import { createFormContext, useForm, type IFromActions } from './hooks/useForm'
-import type { IFormEvalFunction, IFormFieldConfig, VFormProps } from './types'
+import type { IFormEvalFunction, IFormFieldConfig, IFromActions, IFormConfig } from './types'
 import { getComponent } from './configs'
 import { calcFieldKey } from './utils'
 import { isFn, isString } from '@0x-jerry/utils'
 import { VLayout } from '../v-layout'
+import { createFormContext } from './hooks/createForm'
 
 export interface IFormContext extends IFromActions {
   Component: FunctionalComponent
@@ -13,7 +13,7 @@ export interface IFormContext extends IFromActions {
 /**
  * todo, support reactive data? or provide apis to change state?
  */
-interface IDefineFormConfig extends VFormProps {
+interface IDefineFormConfig extends IFormConfig {
   fields?: IFormFieldConfig[]
 }
 
@@ -21,33 +21,34 @@ interface IDefineFormConfig extends VFormProps {
  *
  * !!!All methods are only avaiable after mounted
  *
- * @param option
+ * @param config
  * @returns
  */
-export function defineForm(option: Partial<IDefineFormConfig>): IFormContext {
-  const _formContext = createFormContext() 
-  const formContext = _formContext as unknown as IFormContext
+export function defineForm(config: Partial<IDefineFormConfig>): IFormContext {
+  const formContext = createFormContext()
 
-  const Component = createWrapperComponent() 
+  formContext.update(config.data)
+  formContext.fields = config.fields ?? []
 
-  Object.defineProperty(formContext, 'Component', {
-    value: Component
+  const exposeFormContext = formContext as unknown as IFormContext
+  Object.defineProperty(exposeFormContext, 'Component', {
+    value: createWrapperComponent(),
   })
 
-  return formContext
+  return exposeFormContext
 
   function createWrapperComponent() {
     const Component: FunctionalComponent = (_props, ctx) => {
-      useForm.provide(_formContext)
-
       const onSubmit = (e: Event) => {
         e.preventDefault()
       }
 
+      const fields = formContext.fields
+
       return (
         <form class="v-form" onSubmit={onSubmit}>
-          <VLayout {...option.layout}>
-            {(option.fields || []).map((field) => renderField(field, ctx.slots))}
+          <VLayout {...config.layout}>
+            {fields.map((field) => renderField(field, ctx.slots))}
           </VLayout>
         </form>
       )
@@ -65,20 +66,20 @@ export function defineForm(option: Partial<IDefineFormConfig>): IFormContext {
 
     if (!Ctor) return
 
-    if (item.if != null && !interopWithContext(item.if, formContext)) {
+    if (item.if != null && !interopWithContext(item.if, exposeFormContext)) {
       return
     }
 
     const props = {
       ...item.componentProps,
       key: calcFieldKey(item.field),
-      modelValue: formContext.getData?.(item.field),
-      'onUpdate:modelValue': (val: unknown) => formContext.updateField?.(item.field, val),
+      modelValue: exposeFormContext.getData(item.field),
+      'onUpdate:modelValue': (val: unknown) => exposeFormContext.updateField(item.field, val),
     }
 
-    const show = item.show == null ? true : interopWithContext(item.show, formContext)
+    const show = item.show == null ? true : interopWithContext(item.show, exposeFormContext)
 
-    const fieldError = formContext.getErrors?.(item.field)
+    const fieldError = exposeFormContext.getErrors?.(item.field)
 
     return (
       <div class="v-form-field" data-key={calcFieldKey(item.field)}>

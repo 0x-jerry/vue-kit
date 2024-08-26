@@ -1,5 +1,5 @@
 import { defineComponent, nextTick, onMounted } from 'vue'
-import { defineForm, type IFormContext } from './defineForm'
+import { defineForm } from './defineForm'
 import { mount } from '@vue/test-utils'
 import { registerComponent, unregisterComponent } from './configs'
 import { useVModel } from '@vueuse/core'
@@ -70,7 +70,6 @@ describe('VForm', () => {
     })
 
     const app = mount(Comp)
-    await nextTick()
     expect(app.get('input').element.value).toBe('default value')
   })
 
