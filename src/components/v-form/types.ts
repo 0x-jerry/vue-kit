@@ -2,6 +2,7 @@ import type { Arrayable } from '@0x-jerry/utils'
 import type { VLayoutProps } from '../v-layout'
 import type { IRule } from './rules'
 import type { IFromActions } from './hooks/useForm'
+import type { Component } from 'vue'
 
 export interface VFormProps<LayoutConfig = VLayoutProps> {
   /**
@@ -10,10 +11,9 @@ export interface VFormProps<LayoutConfig = VLayoutProps> {
   data?: Record<string, unknown>
   layout?: LayoutConfig
   rules?: Record<string, Arrayable<IRule>>
-  fields?: VFormFieldProps[]
 }
 
-export interface VFormFieldProps {
+export interface IFormFieldConfig {
   field: Arrayable<string | number>
   label?: string
   /**
@@ -26,12 +26,11 @@ export interface VFormFieldProps {
    */
   show?: boolean | IFormEvalFunction<boolean>
 
-  /**
-   * If this is a string, treat it as a slot, otherwise treat it as a component
-   */
-  render?: string | IFormEvalFunction
-
   rules?: Arrayable<IRule>
+
+  slot?: string
+  compoennt?: string | Component
+  componentProps?: Record<string, unknown>
 }
 
 export type IFormEvalFunction<T = unknown> = (ctx: IFromActions) => T

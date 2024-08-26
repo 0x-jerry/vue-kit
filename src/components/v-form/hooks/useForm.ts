@@ -1,15 +1,15 @@
 import { ref, shallowRef, type InjectionKey, type Ref, type ShallowRef } from 'vue'
-import type { VFormFieldProps } from '../types'
+import type { IFormFieldConfig } from '../types'
 import { ensureArray, remove, type Arrayable } from '@0x-jerry/utils'
 import { type IRule, validate as runValidate } from '../rules'
 import { calcFieldKey, getValue, setValue } from '../utils'
 import { defineContext } from '../../../hooks'
 
-type IFormFieldPath = VFormFieldProps['field']
+type IFormFieldPath = IFormFieldConfig['field']
 
 export interface IFromActions {
-  addField: (field: VFormFieldProps) => void
-  removeField: (field: IFormFieldPath) => VFormFieldProps[]
+  addField: (field: IFormFieldConfig) => void
+  removeField: (field: IFormFieldPath) => IFormFieldConfig[]
   validate: (field?: IFormFieldPath) => Promise<IFieldRuleError[]>
   clearValidate: () => void
   update: (data?: Record<string, unknown>) => void
@@ -31,13 +31,13 @@ interface IGetData {
 export interface IFormInteralContext extends IFromActions {
   data: Ref<Record<string, unknown>>
   validateErrors: ShallowRef<IFieldRuleError[]>
-  fields: VFormFieldProps[]
+  fields: IFormFieldConfig[]
   globalRules: Record<string, Arrayable<IRule>>
 }
 
 const key = Symbol() as InjectionKey<IFormInteralContext>
 
-export const useForm = defineContext(key, createFormContext)
+export const useForm = defineContext(key)
 
 export function createFormContext(): IFormInteralContext {
   const actions: IFromActions = {
@@ -216,7 +216,7 @@ export function createFormContext(): IFormInteralContext {
     return ctx.fields.splice(hitFieldIndex, 1)
   }
 
-  function addField(field: VFormFieldProps) {
+  function addField(field: IFormFieldConfig) {
     const filedKey = calcFieldKey(field.field)
     const hitField = ctx.fields.find((f) => calcFieldKey(f.field) === filedKey)
 

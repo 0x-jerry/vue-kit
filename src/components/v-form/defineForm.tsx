@@ -1,11 +1,10 @@
-import type { Component, FunctionalComponent, Slots } from 'vue'
-import VForm from './VForm.vue'
-import type { IFromActions } from './hooks/useForm'
-import type { IFormEvalFunction, VFormFieldProps, VFormProps } from './types'
+import type { FunctionalComponent, Slots } from 'vue'
+import { createFormContext, useForm, type IFromActions } from './hooks/useForm'
+import type { IFormEvalFunction, IFormFieldConfig, VFormProps } from './types'
 import { getComponent } from './configs'
 import { calcFieldKey } from './utils'
 import { isFn, isString } from '@0x-jerry/utils'
-import { useInstanceRef } from '../../hooks'
+import { VLayout } from '../v-layout'
 
 export interface IFormContext extends IFromActions {
   Component: FunctionalComponent
@@ -14,14 +13,8 @@ export interface IFormContext extends IFromActions {
 /**
  * todo, support reactive data? or provide apis to change state?
  */
-export interface IDefineFormConfig extends Omit<VFormProps, 'fields'> {
+interface IDefineFormConfig extends VFormProps {
   fields?: IFormFieldConfig[]
-}
-
-interface IFormFieldConfig extends VFormFieldProps {
-  slot?: string
-  compoennt?: string | Component
-  componentProps?: Record<string, unknown>
 }
 
 /**
@@ -32,35 +25,31 @@ interface IFormFieldConfig extends VFormFieldProps {
  * @returns
  */
 export function defineForm(option: Partial<IDefineFormConfig>): IFormContext {
-  const Component = createWrapperComponent()
-  const instance = useInstanceRef(VForm)
+  const _formContext = createFormContext() 
+  const formContext = _formContext as unknown as IFormContext
 
-  const instanceActions = new Proxy({} as IFormContext, {
-    get(_target, p, _receiver) {
-      if (p === 'Component') {
-        return Component
-      }
+  const Component = createWrapperComponent() 
 
-      const formCtx = instance.value?.formContext
-
-      return formCtx?.[p as keyof IFromActions]
-    },
+  Object.defineProperty(formContext, 'Component', {
+    value: Component
   })
 
-  return instanceActions
+  return formContext
 
   function createWrapperComponent() {
     const Component: FunctionalComponent = (_props, ctx) => {
-      const formProps: Record<string, unknown> = {
-        ...option,
-        ...ctx.attrs,
-        ref: instance,
+      useForm.provide(_formContext)
+
+      const onSubmit = (e: Event) => {
+        e.preventDefault()
       }
 
       return (
-        <VForm {...formProps}>
-          {(option.fields || []).map((field) => renderField(field, ctx.slots))}
-        </VForm>
+        <form class="v-form" onSubmit={onSubmit}>
+          <VLayout {...option.layout}>
+            {(option.fields || []).map((field) => renderField(field, ctx.slots))}
+          </VLayout>
+        </form>
       )
     }
 
@@ -76,26 +65,26 @@ export function defineForm(option: Partial<IDefineFormConfig>): IFormContext {
 
     if (!Ctor) return
 
-    if (item.if != null && !interopWithContext(item.if, instanceActions)) {
+    if (item.if != null && !interopWithContext(item.if, formContext)) {
       return
     }
 
     const props = {
       ...item.componentProps,
       key: calcFieldKey(item.field),
-      modelValue: instanceActions.getData?.(item.field),
-      'onUpdate:modelValue': (val: unknown) => instanceActions.updateField?.(item.field, val),
+      modelValue: formContext.getData?.(item.field),
+      'onUpdate:modelValue': (val: unknown) => formContext.updateField?.(item.field, val),
     }
 
-    const show = item.show == null ? true : interopWithContext(item.show, instanceActions)
+    const show = item.show == null ? true : interopWithContext(item.show, formContext)
 
-    const filedError = instanceActions.getErrors?.(item.field)
+    const fieldError = formContext.getErrors?.(item.field)
 
     return (
       <div class="v-form-field" data-key={calcFieldKey(item.field)}>
         <label class="v-form-label">{item.label}</label>
-        <div v-show={filedError} class="v-form-field-error">
-          {filedError?.errors.at(0)}
+        <div v-show={fieldError} class="v-form-field-error">
+          {fieldError?.errors.at(0)}
         </div>
         <div class="v-form-field-content">
           <Ctor v-show={show} {...props} />
