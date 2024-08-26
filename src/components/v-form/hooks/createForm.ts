@@ -1,5 +1,10 @@
-import { ref, shallowRef, type Ref, type ShallowRef } from 'vue'
-import type { IFormFieldConfig, IFromActions } from '../types'
+import { computed, ref, shallowRef, type ComputedRef, type Ref, type ShallowRef } from 'vue'
+import type {
+  IFieldRuleCollection,
+  IFieldRuleError,
+  IFormFieldConfig,
+  IFromActions,
+} from '../types'
 import { ensureArray, remove, type Arrayable } from '@0x-jerry/utils'
 import { type IRule, validate as runValidate } from '../rules'
 import { calcFieldKey, getValue, setValue } from '../utils'
@@ -9,7 +14,7 @@ type IFormFieldPath = IFormFieldConfig['field']
 export interface IFormInteralContext extends IFromActions {
   data: Ref<Record<string, unknown>>
   validateErrors: ShallowRef<IFieldRuleError[]>
-  fields: IFormFieldConfig[]
+  fields: ComputedRef<IFormFieldConfig[]>
   globalRules: Record<string, Arrayable<IRule>>
 }
 
@@ -26,7 +31,7 @@ export function createFormContext(): IFormInteralContext {
   const ctx: IFormInteralContext = {
     data: ref({}),
     validateErrors: shallowRef([]),
-    fields: [],
+    fields: computed(() => []),
     globalRules: {},
     ...actions,
   }
@@ -61,7 +66,7 @@ export function createFormContext(): IFormInteralContext {
       return rule
     })
 
-    for (const field of ctx.fields) {
+    for (const field of ctx.fields.value) {
       const validateRules = ensureArray(field.rules)
 
       if (validateRules.length) {
@@ -84,7 +89,7 @@ export function createFormContext(): IFormInteralContext {
 
   async function _validateField(field: IFormFieldPath, rules: IRule[]) {
     const fieldKey = calcFieldKey(field)
-    const fieldConfig = ctx.fields.find((f) => calcFieldKey(f.field) === fieldKey)
+    const fieldConfig = ctx.fields.value.find((f) => calcFieldKey(f.field) === fieldKey)
 
     if (!fieldConfig) {
       return
@@ -115,7 +120,7 @@ export function createFormContext(): IFormInteralContext {
 
   function _getFieldConfig(field: IFormFieldPath) {
     const filedKey = calcFieldKey(field)
-    const hit = ctx.fields.find((f) => calcFieldKey(f.field) === filedKey)
+    const hit = ctx.fields.value.find((f) => calcFieldKey(f.field) === filedKey)
     return hit
   }
 
@@ -176,36 +181,4 @@ export function createFormContext(): IFormInteralContext {
   function update(data?: Record<string, unknown>) {
     ctx.data.value = data || {}
   }
-
-  function removeField(field: IFormFieldPath) {
-    const filedKey = calcFieldKey(field)
-    const hitFieldIndex = ctx.fields.findIndex((f) => calcFieldKey(f.field) === filedKey)
-
-    if (hitFieldIndex < 0) {
-      throw new Error(`Not found field by key: ${filedKey}`)
-    }
-
-    return ctx.fields.splice(hitFieldIndex, 1)
-  }
-
-  function addField(field: IFormFieldConfig) {
-    const filedKey = calcFieldKey(field.field)
-    const hitField = ctx.fields.find((f) => calcFieldKey(f.field) === filedKey)
-
-    if (hitField) {
-      throw new Error(`Found the same keys for: ${filedKey}`)
-    }
-
-    ctx.fields.push(field)
-  }
-}
-
-interface IFieldRuleCollection {
-  field: IFormFieldPath
-  rules: IRule[]
-}
-
-interface IFieldRuleError {
-  field: IFormFieldPath
-  errors: string[]
 }

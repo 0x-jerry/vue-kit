@@ -1,7 +1,7 @@
 import type { Arrayable } from '@0x-jerry/utils'
 import type { VLayoutProps } from '../v-layout'
 import type { IRule } from './rules'
-import type { Component } from 'vue'
+import type { Component, ComputedRef, MaybeRefOrGetter, ShallowRef, toValue } from 'vue'
 
 export interface IFormConfig {
   /**
@@ -36,11 +36,18 @@ export interface IFormFieldConfig {
 
 export type IFormEvalFunction<T = unknown> = (ctx: IFromActions) => T
 
+export type IToValue<T> = MaybeRefOrGetter<T> | ComputedRef<T> | ShallowRef<T>
+
 // ---------
 
 export interface IFieldRuleError {
   field: IFormFieldPath
   errors: string[]
+}
+
+export interface IFieldRuleCollection {
+  field: IFormFieldPath
+  rules: IRule[]
 }
 
 export interface IGetErrors {

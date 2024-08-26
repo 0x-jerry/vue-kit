@@ -1,5 +1,11 @@
-import type { FunctionalComponent, Slots } from 'vue'
-import type { IFormEvalFunction, IFormFieldConfig, IFromActions, IFormConfig } from './types'
+import { computed, toValue, type FunctionalComponent, type Slots } from 'vue'
+import type {
+  IFormEvalFunction,
+  IFormFieldConfig,
+  IFromActions,
+  IFormConfig,
+  IToValue,
+} from './types'
 import { getComponent } from './configs'
 import { calcFieldKey } from './utils'
 import { isFn, isString } from '@0x-jerry/utils'
@@ -14,7 +20,7 @@ export interface IFormContext extends IFromActions {
  * todo, support reactive data? or provide apis to change state?
  */
 interface IDefineFormConfig extends IFormConfig {
-  fields?: IFormFieldConfig[]
+  fields?: IToValue<IFormFieldConfig[]>
 }
 
 /**
@@ -28,7 +34,7 @@ export function defineForm(config: Partial<IDefineFormConfig>): IFormContext {
   const formContext = createFormContext()
 
   formContext.update(config.data)
-  formContext.fields = config.fields ?? []
+  formContext.fields = computed(() => toValue(config.fields || []))
 
   const exposeFormContext = formContext as unknown as IFormContext
   Object.defineProperty(exposeFormContext, 'Component', {
@@ -43,7 +49,8 @@ export function defineForm(config: Partial<IDefineFormConfig>): IFormContext {
         e.preventDefault()
       }
 
-      const fields = formContext.fields
+      // todo, calculate render fields
+      const fields = formContext.fields.value
 
       return (
         <form class="v-form" onSubmit={onSubmit}>
