@@ -37,7 +37,7 @@ export function registerComponent(name: string, Ctor: Component) {
   })
 }
 
-export function removeComponent(name: string) {
+export function unregisterComponent(name: string) {
   const idx = FormConfig.Components.findIndex((n) => n.name === name)
 
   if (idx >= 0) {

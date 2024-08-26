@@ -1,4 +1,4 @@
-import { defineComponent, type Component, type FunctionalComponent, type Slots } from 'vue'
+import type { Component, FunctionalComponent, Slots } from 'vue'
 import VForm from './VForm.vue'
 import type { IFromActions } from './hooks/useForm'
 import type { IFormEvalFunction, VFormFieldProps, VFormProps } from './types'
@@ -26,11 +26,13 @@ interface IFormFieldConfig extends VFormFieldProps {
 
 /**
  *
- * @param option todo, make this reactive
+ * !!!All methods are only avaiable after mounted
+ *
+ * @param option
  * @returns
  */
 export function defineForm(option: Partial<IDefineFormConfig>): IFormContext {
-  const Component = createForm()
+  const Component = createWrapperComponent()
   const instance = useInstanceRef(VForm)
 
   const instanceActions = new Proxy({} as IFormContext, {
@@ -41,31 +43,28 @@ export function defineForm(option: Partial<IDefineFormConfig>): IFormContext {
 
       const formCtx = instance.value?.formContext
 
-      return formCtx?.[p as keyof typeof formCtx]
+      return formCtx?.[p as keyof IFromActions]
     },
   })
 
   return instanceActions
 
-  function createForm() {
-    return defineComponent({
-      name: 'FormWrapper',
-      setup(_, ctx) {
-        return () => {
-          const formProps: Record<string, unknown> = {
-            ...option,
-            ...ctx.attrs,
-            ref: instance,
-          }
+  function createWrapperComponent() {
+    const Component: FunctionalComponent = (_props, ctx) => {
+      const formProps: Record<string, unknown> = {
+        ...option,
+        ...ctx.attrs,
+        ref: instance,
+      }
 
-          return (
-            <VForm {...formProps}>
-              {(option.fields || []).map((field) => renderField(field, ctx.slots))}
-            </VForm>
-          )
-        }
-      },
-    })
+      return (
+        <VForm {...formProps}>
+          {(option.fields || []).map((field) => renderField(field, ctx.slots))}
+        </VForm>
+      )
+    }
+
+    return Component
   }
 
   function renderField(item: IFormFieldConfig, slots: Slots) {
@@ -90,10 +89,10 @@ export function defineForm(option: Partial<IDefineFormConfig>): IFormContext {
 
     const show = item.show == null ? true : interopWithContext(item.show, instanceActions)
 
-    const filedError = instanceActions.getErrors(item.field)
+    const filedError = instanceActions.getErrors?.(item.field)
 
     return (
-      <div class="v-form-field">
+      <div class="v-form-field" data-key={calcFieldKey(item.field)}>
         <label class="v-form-label">{item.label}</label>
         <div v-show={filedError} class="v-form-field-error">
           {filedError?.errors.at(0)}
