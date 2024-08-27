@@ -96,4 +96,81 @@ describe('VForm', () => {
     await nextTick()
     expect(app.get('input').element.value).toBe('1234')
   })
+
+  it('if condition', async () => {
+    const Comp = defineComponent(() => {
+      const form = defineForm({
+        fields: [
+          {
+            label: 'i0',
+            field: 'i0',
+            compoennt: 'Input',
+          },
+          {
+            label: 'i1',
+            field: 'i1',
+            compoennt: 'Input',
+            if: false,
+          },
+          {
+            label: 'i2',
+            field: 'i2',
+            compoennt: 'Input',
+            if: () => true,
+          },
+        ],
+      })
+
+      return () => <form.Component />
+    })
+
+    const app = mount(Comp)
+    const allfields = app.findAll('.v-form-field')
+
+    expect(allfields.length).toBe(2)
+    expect(allfields.at(0)?.attributes('data-key')).toBe('i0')
+    expect(allfields.at(1)?.attributes('data-key')).toBe('i2')
+  })
+
+  it('show condition', async () => {
+    const Comp = defineComponent(() => {
+      const form = defineForm({
+        fields: [
+          {
+            label: 'i0',
+            field: 'i0',
+            compoennt: 'Input',
+          },
+          {
+            label: 'i1',
+            field: 'i1',
+            compoennt: 'Input',
+            show: false,
+          },
+          {
+            label: 'i2',
+            field: 'i2',
+            compoennt: 'Input',
+            show: () => true,
+          },
+        ],
+      })
+
+      return () => <form.Component />
+    })
+
+    const app = mount(Comp)
+
+    const allfields = app.findAll('.v-form-field')
+
+    expect(allfields.length).toBe(3)
+    expect(allfields.at(0)?.attributes('data-key')).toBe('i0')
+    expect(allfields.at(0)?.isVisible()).toBe(true)
+
+    expect(allfields.at(1)?.attributes('data-key')).toBe('i1')
+    expect(allfields.at(1)?.isVisible()).toBe(false)
+
+    expect(allfields.at(2)?.attributes('data-key')).toBe('i2')
+    expect(allfields.at(2)?.isVisible()).toBe(true)
+  })
 })

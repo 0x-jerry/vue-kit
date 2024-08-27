@@ -1,12 +1,12 @@
 import type { Component } from 'vue'
 import { VLayout } from '../v-layout'
 
-export const FormConfig: IFormConfig = {
+export const FormConfig: IFormGlobalConfig = {
   FormLayout: VLayout,
   Components: [],
 }
 
-export interface IFormConfig {
+export interface IFormGlobalConfig {
   FormLayout: Component
   Components: IFormComponent[]
 }

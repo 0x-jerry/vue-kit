@@ -1,15 +1,16 @@
 import type { Arrayable } from '@0x-jerry/utils'
 import type { VLayoutProps } from '../v-layout'
 import type { IRule } from './rules'
-import type { Component, ComputedRef, MaybeRefOrGetter, ShallowRef, toValue } from 'vue'
+import type { Component, ComputedRef, MaybeRefOrGetter, ShallowRef } from 'vue'
 
-export interface IFormConfig {
+export interface IFormOptions {
   /**
    * Default data
    */
   data?: Record<string, unknown>
   layout?: VLayoutProps
   rules?: Record<string, Arrayable<IRule>>
+  fields?: IToValue<IFormFieldConfig[]>
 }
 
 export type IFormFieldPath = Arrayable<string | number>

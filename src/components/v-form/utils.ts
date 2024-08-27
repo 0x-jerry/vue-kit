@@ -1,4 +1,5 @@
-import { ensureArray, isObject, type Arrayable } from '@0x-jerry/utils'
+import { ensureArray, isFn, isObject, type Arrayable } from '@0x-jerry/utils'
+import type { IFormEvalFunction, IFromActions } from './types'
 
 export function getValue(data: unknown, fields: Array<string | number>): unknown {
   if (fields.length < 1) return
@@ -36,4 +37,8 @@ export function setValue(data: unknown, fields: Array<string | number>, value: u
 
 export function calcFieldKey(arr: Arrayable<unknown>) {
   return ensureArray(arr).join('.')
+}
+
+export function interopWithContext<T>(item: IFormEvalFunction<T> | T, ctx: IFromActions) {
+  return isFn(item) ? item(ctx) : item
 }

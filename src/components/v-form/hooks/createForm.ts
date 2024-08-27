@@ -1,13 +1,22 @@
-import { computed, ref, shallowRef, type ComputedRef, type Ref, type ShallowRef } from 'vue'
+import {
+  computed,
+  ref,
+  shallowRef,
+  toValue,
+  type ComputedRef,
+  type Ref,
+  type ShallowRef,
+} from 'vue'
 import type {
   IFieldRuleCollection,
   IFieldRuleError,
+  IFormOptions,
   IFormFieldConfig,
   IFromActions,
 } from '../types'
 import { ensureArray, remove, type Arrayable } from '@0x-jerry/utils'
 import { type IRule, validate as runValidate } from '../rules'
-import { calcFieldKey, getValue, setValue } from '../utils'
+import { calcFieldKey, getValue, interopWithContext, setValue } from '../utils'
 
 type IFormFieldPath = IFormFieldConfig['field']
 
@@ -16,9 +25,10 @@ export interface IFormInteralContext extends IFromActions {
   validateErrors: ShallowRef<IFieldRuleError[]>
   fields: ComputedRef<IFormFieldConfig[]>
   globalRules: Record<string, Arrayable<IRule>>
+  getVisibleFields: () => IFormFieldConfig[]
 }
 
-export function createFormContext(): IFormInteralContext {
+export function createFormContext(opt: Partial<IFormOptions> = {}): IFormInteralContext {
   const actions: IFromActions = {
     validate,
     clearValidate,
@@ -29,14 +39,21 @@ export function createFormContext(): IFormInteralContext {
   }
 
   const ctx: IFormInteralContext = {
-    data: ref({}),
+    data: ref(opt.data || {}),
     validateErrors: shallowRef([]),
-    fields: computed(() => []),
+    fields: computed(() => toValue(opt.fields || [])),
     globalRules: {},
+    getVisibleFields,
     ...actions,
   }
 
   return ctx
+
+  function getVisibleFields() {
+    const fields = ctx.fields.value
+
+    return fields.filter((f) => (f.if == null ? true : interopWithContext(f.if, ctx)))
+  }
 
   function getErrors(): IFieldRuleError[]
   function getErrors(field: IFormFieldPath): IFieldRuleError | undefined

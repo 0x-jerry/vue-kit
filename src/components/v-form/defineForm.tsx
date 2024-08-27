@@ -1,14 +1,8 @@
 import { computed, toValue, type FunctionalComponent, type Slots } from 'vue'
-import type {
-  IFormEvalFunction,
-  IFormFieldConfig,
-  IFromActions,
-  IFormConfig,
-  IToValue,
-} from './types'
+import type { IFormFieldConfig, IFromActions, IFormOptions } from './types'
 import { getComponent } from './configs'
-import { calcFieldKey } from './utils'
-import { isFn, isString } from '@0x-jerry/utils'
+import { calcFieldKey, interopWithContext } from './utils'
+import { isString } from '@0x-jerry/utils'
 import { VLayout } from '../v-layout'
 import { createFormContext } from './hooks/createForm'
 
@@ -17,20 +11,11 @@ export interface IFormContext extends IFromActions {
 }
 
 /**
- * todo, support reactive data? or provide apis to change state?
- */
-interface IDefineFormConfig extends IFormConfig {
-  fields?: IToValue<IFormFieldConfig[]>
-}
-
-/**
- *
- * !!!All methods are only avaiable after mounted
  *
  * @param config
  * @returns
  */
-export function defineForm(config: Partial<IDefineFormConfig>): IFormContext {
+export function defineForm(config: Partial<IFormOptions>): IFormContext {
   const formContext = createFormContext()
 
   formContext.update(config.data)
@@ -49,8 +34,7 @@ export function defineForm(config: Partial<IDefineFormConfig>): IFormContext {
         e.preventDefault()
       }
 
-      // todo, calculate render fields
-      const fields = formContext.fields.value
+      const fields = formContext.getVisibleFields()
 
       return (
         <form class="v-form" onSubmit={onSubmit}>
@@ -73,10 +57,6 @@ export function defineForm(config: Partial<IDefineFormConfig>): IFormContext {
 
     if (!Ctor) return
 
-    if (item.if != null && !interopWithContext(item.if, exposeFormContext)) {
-      return
-    }
-
     const props = {
       ...item.componentProps,
       key: calcFieldKey(item.field),
@@ -84,24 +64,22 @@ export function defineForm(config: Partial<IDefineFormConfig>): IFormContext {
       'onUpdate:modelValue': (val: unknown) => exposeFormContext.updateField(item.field, val),
     }
 
-    const show = item.show == null ? true : interopWithContext(item.show, exposeFormContext)
+    const showField = item.show == null ? true : interopWithContext(item.show, exposeFormContext)
 
-    const fieldError = exposeFormContext.getErrors?.(item.field)
+    const fieldError = exposeFormContext.getErrors(item.field)
+
+    const fieldKey = calcFieldKey(item.field)
 
     return (
-      <div class="v-form-field" data-key={calcFieldKey(item.field)}>
+      <div class="v-form-field" data-key={fieldKey} key={fieldKey} v-show={showField}>
         <label class="v-form-label">{item.label}</label>
         <div v-show={fieldError} class="v-form-field-error">
           {fieldError?.errors.at(0)}
         </div>
         <div class="v-form-field-content">
-          <Ctor v-show={show} {...props} />
+          <Ctor {...props} />
         </div>
       </div>
     )
   }
-}
-
-function interopWithContext(item: IFormEvalFunction<boolean> | boolean, ctx: IFromActions) {
-  return isFn(item) ? item(ctx) : item
 }
