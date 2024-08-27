@@ -1,4 +1,4 @@
-import type { FunctionalComponent, Slots } from 'vue'
+import { mergeProps, type FunctionalComponent, type Slots } from 'vue'
 import type { IFormFieldConfig, IFromActions, IFormOptions } from './types'
 import { getComponent } from './configs'
 import { calcFieldKey, interopWithContext } from './utils'
@@ -27,14 +27,15 @@ export function defineForm(config: Partial<IFormOptions>): IFormContext {
 
   function createWrapperComponent() {
     const Component: FunctionalComponent = (_props, ctx) => {
-      const onSubmit = (e: Event) => {
-        e.preventDefault()
-      }
-
       const fields = formContext.getVisibleFields()
 
+      const formProps = mergeProps(ctx.attrs, {
+        class: 'v-form',
+        onSubmit: (e: Event) => e.preventDefault(),
+      })
+
       return (
-        <form class="v-form" onSubmit={onSubmit}>
+        <form {...formProps}>
           <VLayout {...config.layout}>
             {fields.map((field) => renderField(field, ctx.slots))}
           </VLayout>
@@ -56,11 +57,16 @@ export function defineForm(config: Partial<IFormOptions>): IFormContext {
 
     const triggerValidateOn = config.triggerValidateOn || 'change'
 
-    const props = {
-      ...item.componentProps,
-      key: calcFieldKey(item.field),
+    const showField = item.show == null ? true : interopWithContext(item.show, formContext)
+
+    const fieldError = formContext.getErrors(item.field)
+
+    const fieldKey = calcFieldKey(item.field)
+
+    const fieldComponentProps = mergeProps(item.componentProps || {}, {
       modelValue: formContext.getData(item.field),
       'onUpdate:modelValue': (val: unknown) => formContext.updateField(item.field, val),
+      hasValidateError: !!fieldError,
       onBlur: () => {
         if (triggerValidateOn === 'blur') {
           formContext.validate(item.field)
@@ -71,13 +77,7 @@ export function defineForm(config: Partial<IFormOptions>): IFormContext {
           formContext.validate(item.field)
         }
       },
-    }
-
-    const showField = item.show == null ? true : interopWithContext(item.show, formContext)
-
-    const fieldError = formContext.getErrors(item.field)
-
-    const fieldKey = calcFieldKey(item.field)
+    })
 
     return (
       <div class="v-form-field" data-key={fieldKey} key={fieldKey} v-show={showField}>
@@ -86,7 +86,7 @@ export function defineForm(config: Partial<IFormOptions>): IFormContext {
           {fieldError?.errors.at(0)}
         </div>
         <div class="v-form-field-content">
-          <Ctor {...props} />
+          <Ctor {...fieldComponentProps} />
         </div>
       </div>
     )

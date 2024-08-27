@@ -9,6 +9,7 @@ function setupFormComponents() {
   const TestInputComponent = defineComponent({
     props: {
       modelValue: String,
+      hasValidateError: Boolean,
     },
     emits: ['update:modelValue', 'change', 'blur'],
     setup: (props, ctx) => {
@@ -16,6 +17,9 @@ function setupFormComponents() {
 
       return () => (
         <input
+          class={{
+            'is-error': props.hasValidateError,
+          }}
           v-model={value.value}
           onInput={() => ctx.emit('change')}
           onBlur={() => ctx.emit('blur')}
@@ -287,5 +291,40 @@ describe('VForm', () => {
     // Ensure validate process is done and dom updated
     await sleep()
     expect(field.get('.v-form-field-error').isVisible()).toBe(true)
+  })
+
+  it('render field validate error', async () => {
+    const Comp = defineComponent(() => {
+      const form = defineForm({
+        rules: {
+          i0: {
+            type: 'string',
+            max: 2,
+          },
+        },
+        fields: [
+          {
+            label: 'i0',
+            field: 'i0',
+            compoennt: 'Input',
+          },
+        ],
+      })
+
+      return () => <form.Component />
+    })
+
+    const app = mount(Comp, {
+      attachTo: document.body,
+    })
+
+    const field = app.get('.v-form-field')
+    expect(field.get('input').classes('is-error')).toBe(false)
+
+    await field.get('input').setValue('123')
+    // Ensure validate process is done and dom updated
+    await sleep()
+
+    expect(field.get('input').classes('is-error')).toBe(true)
   })
 })
