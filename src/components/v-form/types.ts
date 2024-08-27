@@ -21,8 +21,16 @@ export interface IFormOptions {
 export type IFormFieldPath = Arrayable<string | number>
 
 export interface IFormFieldConfig {
+  /**
+   * Field path, should be unique
+   */
   field: IFormFieldPath
+
+  /**
+   * Field label
+   */
   label?: string
+
   /**
    * This will not trigger validate if false
    */
@@ -33,11 +41,17 @@ export interface IFormFieldConfig {
    */
   show?: boolean | IFormEvalFunction<boolean>
 
+  /**
+   * Field validate rules
+   */
   rules?: Arrayable<IRule>
 
   slot?: string
   compoennt?: string | Component
   componentProps?: Record<string, unknown>
+
+  class?: unknown
+  style?: unknown
 }
 
 export type IFormEvalFunction<T = unknown> = (ctx: IFromActions) => T

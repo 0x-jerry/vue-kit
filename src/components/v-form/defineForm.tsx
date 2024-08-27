@@ -79,8 +79,20 @@ export function defineForm(config: Partial<IFormOptions>): IFormContext {
       },
     })
 
+    const fieldProps = mergeProps(
+      {
+        class: item.class,
+        style: item.style,
+      },
+      {
+        class: 'v-form-field',
+        key: fieldKey,
+        'data-key': fieldKey,
+      },
+    )
+
     return (
-      <div class="v-form-field" data-key={fieldKey} key={fieldKey} v-show={showField}>
+      <div {...fieldProps} v-show={showField}>
         <label class="v-form-label">{item.label}</label>
         <div class="v-form-field-error" v-show={fieldError}>
           {fieldError?.errors.at(0)}
