@@ -57,16 +57,28 @@ export function defineForm(config: Partial<IFormOptions>): IFormContext {
 
     if (!Ctor) return
 
+    const triggerValidateOn = config.triggerValidateOn || 'change'
+
     const props = {
       ...item.componentProps,
       key: calcFieldKey(item.field),
-      modelValue: exposeFormContext.getData(item.field),
-      'onUpdate:modelValue': (val: unknown) => exposeFormContext.updateField(item.field, val),
+      modelValue: formContext.getData(item.field),
+      'onUpdate:modelValue': (val: unknown) => formContext.updateField(item.field, val),
+      onBlur: () => {
+        if (triggerValidateOn === 'blur') {
+          formContext.validate(item.field)
+        }
+      },
+      onChange: () => {
+        if (triggerValidateOn === 'change') {
+          formContext.validate(item.field)
+        }
+      },
     }
 
-    const showField = item.show == null ? true : interopWithContext(item.show, exposeFormContext)
+    const showField = item.show == null ? true : interopWithContext(item.show, formContext)
 
-    const fieldError = exposeFormContext.getErrors(item.field)
+    const fieldError = formContext.getErrors(item.field)
 
     const fieldKey = calcFieldKey(item.field)
 

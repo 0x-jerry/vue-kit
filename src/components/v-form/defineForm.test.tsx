@@ -9,11 +9,11 @@ function setupFormComponents() {
     props: {
       modelValue: String,
     },
-    emits: ['update:modelValue'],
-    setup: (props) => {
+    emits: ['update:modelValue', 'change'],
+    setup: (props, ctx) => {
       const value = useVModel(props)
 
-      return () => <input v-model={value.value} />
+      return () => <input v-model={value.value} onChange={() => ctx.emit('change')} />
     },
   })
 
@@ -172,5 +172,37 @@ describe('VForm', () => {
 
     expect(allfields.at(2)?.attributes('data-key')).toBe('i2')
     expect(allfields.at(2)?.isVisible()).toBe(true)
+  })
+
+  it('validate rules', async () => {
+    const Comp = defineComponent(() => {
+      const form = defineForm({
+        rules: {
+          i0: {
+            type: 'string',
+            max: 2,
+          },
+        },
+        fields: [
+          {
+            label: 'i0',
+            field: 'i0',
+            compoennt: 'Input',
+          },
+        ],
+      })
+
+      return () => <form.Component />
+    })
+
+    const app = mount(Comp)
+
+    const field = app.get('.v-form-field')
+    const error = field.get('.v-form-field-error')
+    expect(error.isVisible()).toBe(false)
+
+    await field.get('input').setValue('123')
+
+    expect(error.isVisible()).toBe(true)
   })
 })

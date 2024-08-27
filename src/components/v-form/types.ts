@@ -11,6 +11,11 @@ export interface IFormOptions {
   layout?: VLayoutProps
   rules?: Record<string, Arrayable<IRule>>
   fields?: IToValue<IFormFieldConfig[]>
+
+  /**
+   * @default 'change'
+   */
+  triggerValidateOn?: 'blur' | 'change'
 }
 
 export type IFormFieldPath = Arrayable<string | number>

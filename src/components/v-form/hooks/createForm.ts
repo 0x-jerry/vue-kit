@@ -60,7 +60,7 @@ export function createFormContext(opt: Partial<IFormOptions> = {}): IFormInteral
   function getErrors(field?: IFormFieldPath): IFieldRuleError | undefined | IFieldRuleError[] {
     if (field != null) {
       const key = calcFieldKey(field)
-      return ctx.validateErrors.value.find((n) => calcFieldKey(field) === key)
+      return ctx.validateErrors.value.find((n) => calcFieldKey(n.field) === key)
     }
     return ctx.validateErrors.value
   }
