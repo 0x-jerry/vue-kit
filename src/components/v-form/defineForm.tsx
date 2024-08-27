@@ -29,10 +29,16 @@ export function defineForm(config: Partial<IFormOptions>): IFormContext {
     const Component: FunctionalComponent = (_props, ctx) => {
       const fields = formContext.getVisibleFields()
 
-      const formProps = mergeProps(ctx.attrs, {
-        class: 'v-form',
-        onSubmit: (e: Event) => e.preventDefault(),
-      })
+      const formProps = mergeProps(
+        {
+          class: config.class,
+        },
+        ctx.attrs,
+        {
+          class: 'v-form',
+          onSubmit: (e: Event) => e.preventDefault(),
+        },
+      )
 
       return (
         <form {...formProps}>
@@ -66,7 +72,7 @@ export function defineForm(config: Partial<IFormOptions>): IFormContext {
     const fieldComponentProps = mergeProps(item.componentProps || {}, {
       modelValue: formContext.getData(item.field),
       'onUpdate:modelValue': (val: unknown) => formContext.updateField(item.field, val),
-      hasValidateError: !!fieldError,
+      validateStatus: fieldError ? 'error' : undefined,
       onBlur: () => {
         if (triggerValidateOn === 'blur') {
           formContext.validate(item.field)
@@ -93,12 +99,14 @@ export function defineForm(config: Partial<IFormOptions>): IFormContext {
 
     return (
       <div {...fieldProps} v-show={showField}>
-        <label class="v-form-label">{item.label}</label>
-        <div class="v-form-field-error" v-show={fieldError}>
-          {fieldError?.errors.at(0)}
-        </div>
+        <label class="v-form-label">
+          <span>{item.label}</span>
+        </label>
         <div class="v-form-field-content">
           <Ctor {...fieldComponentProps} />
+          <div class="v-form-field-error" v-show={fieldError}>
+            {fieldError?.errors.at(0)}
+          </div>
         </div>
       </div>
     )

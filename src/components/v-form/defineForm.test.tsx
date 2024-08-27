@@ -9,7 +9,7 @@ function setupFormComponents() {
   const TestInputComponent = defineComponent({
     props: {
       modelValue: String,
-      hasValidateError: Boolean,
+      validateStatus: String,
     },
     emits: ['update:modelValue', 'change', 'blur'],
     setup: (props, ctx) => {
@@ -18,7 +18,7 @@ function setupFormComponents() {
       return () => (
         <input
           class={{
-            'is-error': props.hasValidateError,
+            'is-error': props.validateStatus,
           }}
           v-model={value.value}
           onInput={() => ctx.emit('change')}

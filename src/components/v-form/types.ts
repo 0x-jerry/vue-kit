@@ -16,6 +16,7 @@ export interface IFormOptions {
    * @default 'change'
    */
   triggerValidateOn?: 'blur' | 'change'
+  class?: unknown
 }
 
 export type IFormFieldPath = Arrayable<string | number>
