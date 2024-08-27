@@ -16,7 +16,7 @@ export interface IFormComponent {
   Ctor: Component
 }
 
-export function getComponent(name?: string) {
+export function resolveRegisteredComponent(name?: string) {
   return FormConfig.Components.find((n) => n.name === name)
 }
 

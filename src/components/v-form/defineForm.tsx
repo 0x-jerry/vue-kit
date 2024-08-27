@@ -1,6 +1,6 @@
 import { mergeProps, type FunctionalComponent, type Slots } from 'vue'
 import type { IFormFieldConfig, IFromActions, IFormOptions } from './types'
-import { getComponent } from './configs'
+import { resolveRegisteredComponent } from './configs'
 import { calcFieldKey, interopWithContext } from './utils'
 import { isString } from '@0x-jerry/utils'
 import { VLayout } from '../v-layout'
@@ -53,11 +53,7 @@ export function defineForm(config: Partial<IFormOptions>): IFormContext {
   }
 
   function renderField(item: IFormFieldConfig, slots: Slots) {
-    const Ctor = item.slot
-      ? slots[item.slot]
-      : isString(item.compoennt)
-        ? (getComponent(item.compoennt)?.Ctor as FunctionalComponent)
-        : (item.compoennt as FunctionalComponent | undefined)
+    const Ctor = _resolveComponent(item, slots) as FunctionalComponent | undefined
 
     if (!Ctor) return
 
@@ -110,5 +106,15 @@ export function defineForm(config: Partial<IFormOptions>): IFormContext {
         </div>
       </div>
     )
+  }
+
+  function _resolveComponent(item: IFormFieldConfig, slots: Slots) {
+    const Component = item.slot
+      ? slots[item.slot]
+      : isString(item.compoennt)
+        ? resolveRegisteredComponent(item.compoennt)?.Ctor
+        : item.compoennt
+
+    return Component
   }
 }
