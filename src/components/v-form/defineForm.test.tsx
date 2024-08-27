@@ -1,19 +1,26 @@
 import { defineComponent, nextTick, onMounted } from 'vue'
-import { defineForm } from './defineForm'
+import { defineForm, type IFormContext } from './defineForm'
 import { mount } from '@vue/test-utils'
 import { registerComponent, unregisterComponent } from './configs'
 import { useVModel } from '@vueuse/core'
+import { sleep } from '@0x-jerry/utils'
 
 function setupFormComponents() {
   const TestInputComponent = defineComponent({
     props: {
       modelValue: String,
     },
-    emits: ['update:modelValue', 'change'],
+    emits: ['update:modelValue', 'change', 'blur'],
     setup: (props, ctx) => {
       const value = useVModel(props)
 
-      return () => <input v-model={value.value} onChange={() => ctx.emit('change')} />
+      return () => (
+        <input
+          v-model={value.value}
+          onInput={() => ctx.emit('change')}
+          onBlur={() => ctx.emit('blur')}
+        />
+      )
     },
   })
 
@@ -97,6 +104,35 @@ describe('VForm', () => {
     expect(app.get('input').element.value).toBe('1234')
   })
 
+  it('update field value', async () => {
+    let form = {} as IFormContext
+
+    const Comp = defineComponent(() => {
+      form = defineForm({
+        data: {
+          i0: '',
+        },
+        fields: [
+          {
+            label: 'i0',
+            field: 'i0',
+            compoennt: 'Input',
+          },
+        ],
+      })
+
+      return () => <form.Component />
+    })
+
+    const app = mount(Comp)
+
+    const field = app.get('.v-form-field')
+    expect(form.getData('i0')).toBe('')
+
+    await field.get('input').setValue('123')
+    expect(form.getData('i0')).toBe('123')
+  })
+
   it('if condition', async () => {
     const Comp = defineComponent(() => {
       const form = defineForm({
@@ -159,7 +195,9 @@ describe('VForm', () => {
       return () => <form.Component />
     })
 
-    const app = mount(Comp)
+    const app = mount(Comp, {
+      attachTo: document.body,
+    })
 
     const allfields = app.findAll('.v-form-field')
 
@@ -174,7 +212,7 @@ describe('VForm', () => {
     expect(allfields.at(2)?.isVisible()).toBe(true)
   })
 
-  it('validate rules', async () => {
+  it('validate on change', async () => {
     const Comp = defineComponent(() => {
       const form = defineForm({
         rules: {
@@ -195,14 +233,59 @@ describe('VForm', () => {
       return () => <form.Component />
     })
 
-    const app = mount(Comp)
+    const app = mount(Comp, {
+      attachTo: document.body,
+    })
 
     const field = app.get('.v-form-field')
-    const error = field.get('.v-form-field-error')
-    expect(error.isVisible()).toBe(false)
+    expect(field.get('.v-form-field-error').isVisible()).toBe(false)
 
     await field.get('input').setValue('123')
 
-    expect(error.isVisible()).toBe(true)
+    // Ensure validate process is done and dom updated
+    await sleep()
+
+    expect(field.get('.v-form-field-error').isVisible()).toBe(true)
+  })
+
+  it('validate on blur', async () => {
+    const Comp = defineComponent(() => {
+      const form = defineForm({
+        triggerValidateOn: 'blur',
+        rules: {
+          i0: {
+            type: 'string',
+            max: 2,
+          },
+        },
+        fields: [
+          {
+            label: 'i0',
+            field: 'i0',
+            compoennt: 'Input',
+          },
+        ],
+      })
+
+      return () => <form.Component />
+    })
+
+    const app = mount(Comp, {
+      attachTo: document.body,
+    })
+
+    const field = app.get('.v-form-field')
+    expect(field.get('.v-form-field-error').isVisible()).toBe(false)
+
+    await field.get('input').setValue('123')
+
+    // Ensure validate process is done and dom updated
+    await sleep()
+    expect(field.get('.v-form-field-error').isVisible()).toBe(false)
+
+    await field.get('input').trigger('blur')
+    // Ensure validate process is done and dom updated
+    await sleep()
+    expect(field.get('.v-form-field-error').isVisible()).toBe(true)
   })
 })

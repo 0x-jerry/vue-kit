@@ -42,7 +42,7 @@ export function createFormContext(opt: Partial<IFormOptions> = {}): IFormInteral
     data: ref(opt.data || {}),
     validateErrors: shallowRef([]),
     fields: computed(() => toValue(opt.fields || [])),
-    globalRules: {},
+    globalRules: opt.rules || {},
     getVisibleFields,
     ...actions,
   }

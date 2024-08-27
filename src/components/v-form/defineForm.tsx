@@ -1,4 +1,4 @@
-import { computed, toValue, type FunctionalComponent, type Slots } from 'vue'
+import type { FunctionalComponent, Slots } from 'vue'
 import type { IFormFieldConfig, IFromActions, IFormOptions } from './types'
 import { getComponent } from './configs'
 import { calcFieldKey, interopWithContext } from './utils'
@@ -16,10 +16,7 @@ export interface IFormContext extends IFromActions {
  * @returns
  */
 export function defineForm(config: Partial<IFormOptions>): IFormContext {
-  const formContext = createFormContext()
-
-  formContext.update(config.data)
-  formContext.fields = computed(() => toValue(config.fields || []))
+  const formContext = createFormContext(config)
 
   const exposeFormContext = formContext as unknown as IFormContext
   Object.defineProperty(exposeFormContext, 'Component', {
@@ -85,7 +82,7 @@ export function defineForm(config: Partial<IFormOptions>): IFormContext {
     return (
       <div class="v-form-field" data-key={fieldKey} key={fieldKey} v-show={showField}>
         <label class="v-form-label">{item.label}</label>
-        <div v-show={fieldError} class="v-form-field-error">
+        <div class="v-form-field-error" v-show={fieldError}>
           {fieldError?.errors.at(0)}
         </div>
         <div class="v-form-field-content">
