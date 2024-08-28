@@ -65,20 +65,14 @@ export function defineForm(config: Partial<IFormOptions>): IFormContext {
 
     const fieldKey = calcFieldKey(item.field)
 
+    const validateField = () => formContext.validate(item.field)
+
     const fieldComponentProps = mergeProps(item.componentProps || {}, {
       modelValue: formContext.getData(item.field),
       'onUpdate:modelValue': (val: unknown) => formContext.updateField(item.field, val),
       validateStatus: fieldError ? 'error' : undefined,
-      onBlur: () => {
-        if (triggerValidateOn === 'blur') {
-          formContext.validate(item.field)
-        }
-      },
-      onChange: () => {
-        if (triggerValidateOn === 'change') {
-          formContext.validate(item.field)
-        }
-      },
+      onBlur: triggerValidateOn === 'blur' ? validateField : undefined,
+      onChange: triggerValidateOn === 'change' ? validateField : undefined,
     })
 
     const fieldProps = mergeProps(
