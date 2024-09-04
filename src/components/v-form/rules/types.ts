@@ -1,8 +1,8 @@
 import type { Awaitable } from '@0x-jerry/utils'
 import type { Merge } from 'type-fest'
-import type { INumberRule } from './number'
-import type { IStringRule } from './string'
-import type { IBooleanRule } from './boolean'
+import type { IStringRule } from './builtin/string'
+import type { IBooleanRule } from './builtin/boolean'
+import type { INumberRule } from './builtin/number'
 
 /**
  * Used to extends the builtin rules

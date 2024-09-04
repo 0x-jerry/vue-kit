@@ -1,4 +1,4 @@
-import type { INumberRule } from '../number'
+import type { INumberRule } from '../builtin/number'
 import type { IMessages } from './types'
 
 export const messages: IMessages = {

@@ -9,7 +9,7 @@ export const validate: IRuleFunction<IRule> = async (ctx) => {
     return _validate(rule, ctx)
   }
 
-  const validator = ruleConfig.builtinRules[rule.type]
+  const validator = ruleConfig.rules[rule.type]
 
   if (!validator) {
     throw new Error(`Can not find validator for ${rule.type}`)

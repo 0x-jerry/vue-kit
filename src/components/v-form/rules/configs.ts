@@ -1,17 +1,21 @@
-import { en } from './messages'
-import { validate as boolean } from './boolean'
-import { validate as number } from './number'
-import { validate as string } from './string'
+import { en, type IMessages } from './messages'
 import type { IRuleFunction } from './types'
-
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-const builtinRules: Record<string, IRuleFunction<any>> = {
-  boolean,
-  number,
-  string,
-}
 
 export const ruleConfig = {
   messages: en,
-  builtinRules,
+  rules: {} as Record<string, IRuleFunction>,
+}
+
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+export function registerRule(type: string, rule: IRuleFunction<any>) {
+  const rules = ruleConfig.rules
+  if (type in rules) {
+    console.warn(`Rule type ${type} has registered, ${type} rule will replaced!`)
+  }
+
+  rules[type] = rule
+}
+
+export function setRuleMessages(messages: IMessages) {
+  ruleConfig.messages = messages
 }
