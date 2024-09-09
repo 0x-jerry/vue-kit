@@ -5,6 +5,7 @@ import { calcFieldKey, interopWithContext } from './utils'
 import { isString } from '@0x-jerry/utils'
 import { VLayout } from '../v-layout'
 import { createFormContext } from './hooks/createForm'
+import { defGetter, type FunctionalSetupContext } from '../../utils'
 
 export interface IFormContext extends IFromActions {
   Component: FunctionalComponent
@@ -19,37 +20,30 @@ export function defineForm(config: Partial<IFormOptions>): IFormContext {
   const formContext = createFormContext(config)
 
   const exposeFormContext = formContext as unknown as IFormContext
-  Object.defineProperty(exposeFormContext, 'Component', {
-    value: createWrapperComponent(),
-  })
+
+  defGetter(exposeFormContext, 'Component', createWrapperComponent)
 
   return exposeFormContext
 
-  function createWrapperComponent() {
-    const Component: FunctionalComponent = (_props, ctx) => {
-      const fields = formContext.getVisibleFields()
+  function createWrapperComponent(_props: Record<string, unknown>, ctx: FunctionalSetupContext) {
+    const fields = formContext.getVisibleFields()
 
-      const formProps = mergeProps(
-        {
-          class: config.class,
-        },
-        ctx.attrs,
-        {
-          class: 'v-form',
-          onSubmit: (e: Event) => e.preventDefault(),
-        },
-      )
+    const formProps = mergeProps(
+      {
+        class: config.class,
+      },
+      ctx.attrs,
+      {
+        class: 'v-form',
+        onSubmit: (e: Event) => e.preventDefault(),
+      },
+    )
 
-      return (
-        <form {...formProps}>
-          <VLayout {...config.layout}>
-            {fields.map((field) => renderField(field, ctx.slots))}
-          </VLayout>
-        </form>
-      )
-    }
-
-    return Component
+    return (
+      <form {...formProps}>
+        <VLayout {...config.layout}>{fields.map((field) => renderField(field, ctx.slots))}</VLayout>
+      </form>
+    )
   }
 
   function renderField(item: IFormFieldConfig, slots: Slots) {

@@ -16,7 +16,8 @@ import type {
 } from '../types'
 import { ensureArray, remove, type Arrayable } from '@0x-jerry/utils'
 import { type IRule, validate as runValidate } from '../rules'
-import { calcFieldKey, getValue, interopWithContext, setValue } from '../utils'
+import { calcFieldKey, interopWithContext } from '../utils'
+import { getValue, setValue } from '../../../utils'
 
 type IFormFieldPath = IFormFieldConfig['field']
 
