@@ -50,11 +50,11 @@ export function defineTable<T>(config: ITableOptions<T>) {
 
     const { pagination, dataSource } = tableContext
 
-    const paginator = pagination.value
+    const paginationData = pagination.value
 
-    if (paginator) {
-      params.current = paginator.current
-      params.size = paginator.size
+    if (paginationData) {
+      params.current = paginationData.current
+      params.size = paginationData.size
     }
 
     if (formCtx) {
@@ -65,8 +65,8 @@ export function defineTable<T>(config: ITableOptions<T>) {
     const resp = await config.data(params)
     dataSource.value = resp.data
 
-    if (paginator) {
-      paginator.total = resp.total
+    if (paginationData) {
+      paginationData.total = resp.total
     }
   }
 
@@ -77,7 +77,7 @@ export function defineTable<T>(config: ITableOptions<T>) {
     const Pagination = createPaginationComponent()
 
     return (
-      <div class="v-table" v-bind={ctx?.attrs || {}}>
+      <div class="v-table-warpper" v-bind={ctx?.attrs || {}}>
         {Form}
         {Table}
         {Pagination}
@@ -93,7 +93,11 @@ export function defineTable<T>(config: ITableOptions<T>) {
       return <Column key={column.dataIndex} v-slots={{ default: column.render }} />
     })
 
-    return <Table v-bind={ctx?.attrs || {}}>{renderedColumns}</Table>
+    const props = mergeProps(ctx?.attrs || {}, {
+      dataSource: tableContext.dataSource.value
+    })
+
+    return <Table v-bind={props}>{renderedColumns}</Table>
   }
 
   function createPaginationComponent(
@@ -101,13 +105,32 @@ export function defineTable<T>(config: ITableOptions<T>) {
     ctx?: FunctionalSetupContext,
   ) {
     const { Pagination } = configs.Components
-    const configProps = config.pagination
+    const paginationData = tableContext.pagination.value
 
-    if (configProps === false) {
+    if (paginationData === false) {
       return
     }
 
-    const props = mergeProps(configProps || {}, ctx?.attrs || {})
+    const props = mergeProps(paginationData as unknown as Record<string, unknown>, ctx?.attrs || {}, {
+      'onUpdate:current'(value: number) {
+        paginationData.current = value
+        fetchData()
+      },
+      'onUpdate:size'(value: number) {
+        paginationData.size = value
+
+        {
+          // check pagination current value by total
+          const maxCurrent = Math.ceil(paginationData.total / paginationData.size)
+
+          if (maxCurrent > 0 && paginationData.current > maxCurrent) {
+            paginationData.current = maxCurrent
+          }
+        }
+
+        fetchData()
+      },
+    })
 
     return <Pagination v-bind={props} />
   }
