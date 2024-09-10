@@ -1,7 +1,7 @@
 import { mergeProps, type FunctionalComponent } from 'vue'
 import type { ITableActions } from './hooks/types'
 import type { IFetchDataParams, ITableOptions } from './types'
-import { createTable } from './hooks/createTable'
+import { createTableContext } from './hooks/createTableContext'
 import { configs } from './configs'
 import type { FunctionalSetupContext, IData } from '../../utils'
 import { defineForm, type IFormContext } from '../v-form'
@@ -19,7 +19,7 @@ export interface ITableContext<T> extends ITableActions<T> {
 }
 
 export function defineTable<T extends IData>(config: ITableOptions<T>) {
-  const tableContext = createTable(config)
+  const tableContext = createTableContext(config)
 
   const exposeTableContext = tableContext as unknown as ITableContext<T>
 

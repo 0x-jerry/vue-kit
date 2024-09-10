@@ -14,25 +14,14 @@ describe('VForm', () => {
       const table = defineTable({
         data: (_opt) => {
           return {
-            data: [] as TableRecord[],
-            total: 100,
+            data: [],
+            total: 0,
           }
         },
         columns: [
           {
             title: 'ID',
             dataIndex: 'id',
-            render: (props) => props.dataIndex,
-          },
-          {
-            title: 'Name',
-            dataIndex: 'name',
-            render: (props) => props.dataIndex,
-          },
-          {
-            title: 'Other',
-            key: 'other',
-            render: (props) => `${props.data.id} ${props.data.name}`,
           },
         ],
       })
@@ -42,6 +31,6 @@ describe('VForm', () => {
 
     const app = mount(App)
 
-    expect(app.get('.v-table')).toBeTruthy()
+    expect(app.get('.v-table-warpper')).toBeTruthy()
   })
 })

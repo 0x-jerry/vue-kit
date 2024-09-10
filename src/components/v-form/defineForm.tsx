@@ -4,7 +4,7 @@ import { resolveRegisteredComponent } from './configs'
 import { calcFieldKey, interopWithContext } from './utils'
 import { isString } from '@0x-jerry/utils'
 import { VLayout } from '../v-layout'
-import { createFormContext } from './hooks/createForm'
+import { createFormContext } from './hooks/createFormContext'
 import type { FunctionalSetupContext } from '../../utils'
 
 export interface IFormContext extends IFromActions {
@@ -22,7 +22,7 @@ export function defineForm(config: Partial<IFormOptions>): IFormContext {
   const exposeFormContext = formContext as unknown as IFormContext
 
   Object.assign(exposeFormContext, {
-    Component: createWrapperComponent
+    Component: createWrapperComponent,
   })
 
   return exposeFormContext

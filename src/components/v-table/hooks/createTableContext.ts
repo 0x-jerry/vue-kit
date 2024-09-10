@@ -9,7 +9,9 @@ export interface ITableInternalContext<T extends IData> extends ITableActions<T>
   columns: ComputedRef<IColumnConfig<T>[]>
 }
 
-export function createTable<T extends IData>(option: ITableOptions<T>): ITableInternalContext<T> {
+export function createTableContext<T extends IData>(
+  option: ITableOptions<T>,
+): ITableInternalContext<T> {
   const actions: ITableActions = {
     updateDataSource,
   }
