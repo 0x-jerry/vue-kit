@@ -3,7 +3,7 @@ import type { ITableActions } from './hooks/types'
 import type { ITableDataOption, ITableOptions } from './types'
 import { createTable } from './hooks/createTable'
 import { configs } from './configs'
-import { defGetter, type FunctionalSetupContext } from '../../utils'
+import { type FunctionalSetupContext } from '../../utils'
 import { defineForm, type IFormContext } from '../v-form'
 
 export interface ITableContext<T> extends ITableActions<T> {
@@ -13,6 +13,9 @@ export interface ITableContext<T> extends ITableActions<T> {
   Pagination: FunctionalComponent
 
   form?: IFormContext
+
+  // extra actions
+  reload(): void
 }
 
 export function defineTable<T>(config: ITableOptions<T>) {
@@ -22,14 +25,15 @@ export function defineTable<T>(config: ITableOptions<T>) {
 
   const formCtx = config.form ? defineForm(config.form) : null
 
-  if (formCtx) {
-    defGetter(exposeTableContext, 'form', formCtx)
-  }
+  Object.assign(exposeTableContext, {
+    form: formCtx,
+    Component: createWrapperComponent,
+    Form: createFormComponent,
+    Table: createTableComponent,
+    Pagination: createPaginationComponent,
 
-  defGetter(exposeTableContext, 'Component', createWrapperComponent)
-  defGetter(exposeTableContext, 'Table', createTableComponent)
-  defGetter(exposeTableContext, 'Form', createFormComponent)
-  defGetter(exposeTableContext, 'Pagination', createPaginationComponent)
+    reload: fetchData
+  })
 
   _initlize()
 

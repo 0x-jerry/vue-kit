@@ -1,5 +1,5 @@
 import { computed, ref, toValue, type ComputedRef, type Ref } from 'vue'
-import type { IColumnConfig, ITableOptions } from '../types'
+import type { IColumnConfig, ITableDataOption, ITableOptions } from '../types'
 import type { ITableActions, ITablePagination } from './types'
 
 export interface ITableInternalContext<T = unknown> extends ITableActions<T> {
