@@ -4,12 +4,26 @@ import { defineTable } from './defineTable'
 
 describe('VForm', () => {
   it('basic usage', () => {
+    interface TableRecord {
+      id: number
+      name: string
+      email?: string
+    }
+
     const App = defineComponent(() => {
       const table = defineTable({
-        columns: [],
+        columns: [{
+          title: 'ID',
+          dataIndex: 'id',
+          render: (props) => props.data
+        }, {
+          title: 'Name',
+          dataIndex: 'name',
+          render: (props) => props.data
+        }],
         data(opt) {
           return {
-            data: [],
+            data: [] as TableRecord[],
             total: 100
           }
         },

@@ -3,7 +3,7 @@ import type { ITableActions } from './hooks/types'
 import type { ITableDataOption, ITableOptions } from './types'
 import { createTable } from './hooks/createTable'
 import { configs } from './configs'
-import { type FunctionalSetupContext } from '../../utils'
+import { type FunctionalSetupContext, type IData } from '../../utils'
 import { defineForm, type IFormContext } from '../v-form'
 
 export interface ITableContext<T> extends ITableActions<T> {
@@ -18,7 +18,7 @@ export interface ITableContext<T> extends ITableActions<T> {
   reload(): void
 }
 
-export function defineTable<T>(config: ITableOptions<T>) {
+export function defineTable<T extends IData = IData>(config: ITableOptions<T>) {
   const tableContext = createTable(config)
 
   const exposeTableContext = tableContext as unknown as ITableContext<T>
@@ -66,7 +66,7 @@ export function defineTable<T>(config: ITableOptions<T>) {
     dataSource.value = resp.data
 
     if (paginationData) {
-      paginationData.total = resp.total
+      paginationData.total = resp.total ?? resp.data.length
     }
   }
 
@@ -90,7 +90,10 @@ export function defineTable<T>(config: ITableOptions<T>) {
     const columns = tableContext.columns.value
 
     const renderedColumns = columns.map((column) => {
-      return <Column key={column.dataIndex} v-slots={{ default: column.render }} />
+      return <Column key={column.dataIndex} v-slots={{
+        title: column.title,
+        default: column.render,
+      }} />
     })
 
     const props = mergeProps(ctx?.attrs || {}, {
