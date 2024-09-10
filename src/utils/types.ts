@@ -4,4 +4,7 @@ export type IToValue<T> = MaybeRefOrGetter<T> | ComputedRef<T> | ShallowRef<T>
 
 export type FunctionalSetupContext = Omit<SetupContext, 'expose'>
 
-export type IData = Record<string, any>
+export interface IData {
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  [key: string]: any
+}

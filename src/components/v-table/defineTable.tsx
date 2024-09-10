@@ -1,9 +1,9 @@
 import { mergeProps, type FunctionalComponent } from 'vue'
 import type { ITableActions } from './hooks/types'
-import type { ITableDataOption, ITableOptions } from './types'
+import type { IFetchDataParams, ITableOptions } from './types'
 import { createTable } from './hooks/createTable'
 import { configs } from './configs'
-import { type FunctionalSetupContext, type IData } from '../../utils'
+import type { FunctionalSetupContext, IData } from '../../utils'
 import { defineForm, type IFormContext } from '../v-form'
 
 export interface ITableContext<T> extends ITableActions<T> {
@@ -18,7 +18,7 @@ export interface ITableContext<T> extends ITableActions<T> {
   reload(): void
 }
 
-export function defineTable<T extends IData = IData>(config: ITableOptions<T>) {
+export function defineTable<T extends IData>(config: ITableOptions<T>) {
   const tableContext = createTable(config)
 
   const exposeTableContext = tableContext as unknown as ITableContext<T>
@@ -32,7 +32,7 @@ export function defineTable<T extends IData = IData>(config: ITableOptions<T>) {
     Table: createTableComponent,
     Pagination: createPaginationComponent,
 
-    reload: fetchData
+    reload: fetchData,
   })
 
   _initlize()
@@ -46,7 +46,9 @@ export function defineTable<T extends IData = IData>(config: ITableOptions<T>) {
   }
 
   async function fetchData() {
-    const params: ITableDataOption = {}
+    if (!config.data) return
+
+    const params: IFetchDataParams = {}
 
     const { pagination, dataSource } = tableContext
 
@@ -90,14 +92,19 @@ export function defineTable<T extends IData = IData>(config: ITableOptions<T>) {
     const columns = tableContext.columns.value
 
     const renderedColumns = columns.map((column) => {
-      return <Column key={column.dataIndex} v-slots={{
-        title: column.title,
-        default: column.render,
-      }} />
+      return (
+        <Column
+          key={column.dataIndex}
+          v-slots={{
+            title: column.title,
+            default: column.render,
+          }}
+        />
+      )
     })
 
     const props = mergeProps(ctx?.attrs || {}, {
-      dataSource: tableContext.dataSource.value
+      dataSource: tableContext.dataSource.value,
     })
 
     return <Table v-bind={props}>{renderedColumns}</Table>
@@ -114,26 +121,30 @@ export function defineTable<T extends IData = IData>(config: ITableOptions<T>) {
       return
     }
 
-    const props = mergeProps(paginationData as unknown as Record<string, unknown>, ctx?.attrs || {}, {
-      'onUpdate:current'(value: number) {
-        paginationData.current = value
-        fetchData()
-      },
-      'onUpdate:size'(value: number) {
-        paginationData.size = value
+    const props = mergeProps(
+      paginationData as unknown as Record<string, unknown>,
+      ctx?.attrs || {},
+      {
+        'onUpdate:current'(value: number) {
+          paginationData.current = value
+          fetchData()
+        },
+        'onUpdate:size'(value: number) {
+          paginationData.size = value
 
-        {
-          // check pagination current value by total
-          const maxCurrent = Math.ceil(paginationData.total / paginationData.size)
+          {
+            // check pagination current value by total
+            const maxCurrent = Math.ceil(paginationData.total / paginationData.size)
 
-          if (maxCurrent > 0 && paginationData.current > maxCurrent) {
-            paginationData.current = maxCurrent
+            if (maxCurrent > 0 && paginationData.current > maxCurrent) {
+              paginationData.current = maxCurrent
+            }
           }
-        }
 
-        fetchData()
+          fetchData()
+        },
       },
-    })
+    )
 
     return <Pagination v-bind={props} />
   }

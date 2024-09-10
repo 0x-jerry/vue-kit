@@ -5,7 +5,7 @@ import { calcFieldKey, interopWithContext } from './utils'
 import { isString } from '@0x-jerry/utils'
 import { VLayout } from '../v-layout'
 import { createFormContext } from './hooks/createForm'
-import { type FunctionalSetupContext } from '../../utils'
+import type { FunctionalSetupContext } from '../../utils'
 
 export interface IFormContext extends IFromActions {
   Component: FunctionalComponent

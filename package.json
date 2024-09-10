@@ -29,6 +29,7 @@
     "test:watch": "vitest",
     "build": "tsup",
     "prepublishOnly": "npm run build",
+    "lint": "biome lint src/**/* --write",
     "release": "x-release"
   },
   "tsup": {
