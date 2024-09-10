@@ -1,6 +1,7 @@
 import type { RenderFunction, VNodeChild } from 'vue'
 import type { IFormOptions } from '../v-form'
 import type { IToValue } from '../../utils'
+import type { Awaitable } from '@0x-jerry/utils'
 
 export interface IColumnConfig<T = unknown> {
   dataIndex: string
@@ -28,7 +29,7 @@ export interface ITableDataOption {
 }
 
 export interface ITableOptions<T = unknown> {
-  data: (opt: ITableDataOption) => ITableData<T>
+  data: (opt: ITableDataOption) => Awaitable<ITableData<T>>
 
   lazy?: boolean
 

@@ -1,6 +1,6 @@
 import { mergeProps, type FunctionalComponent } from 'vue'
 import type { ITableActions } from './hooks/types'
-import type { ITableOptions } from './types'
+import type { ITableDataOption, ITableOptions } from './types'
 import { createTable } from './hooks/createTable'
 import { configs } from './configs'
 import { defGetter, type FunctionalSetupContext } from '../../utils'
@@ -20,9 +20,10 @@ export function defineTable<T>(config: ITableOptions<T>) {
 
   const exposeTableContext = tableContext as unknown as ITableContext<T>
 
-  if (config.form) {
-    const form = defineForm(config.form)
-    defGetter(exposeTableContext, 'form', form)
+  const formCtx = config.form ? defineForm(config.form) : null
+
+  if (formCtx) {
+    defGetter(exposeTableContext, 'form', formCtx)
   }
 
   defGetter(exposeTableContext, 'Component', createWrapperComponent)
@@ -30,7 +31,40 @@ export function defineTable<T>(config: ITableOptions<T>) {
   defGetter(exposeTableContext, 'Form', createFormComponent)
   defGetter(exposeTableContext, 'Pagination', createPaginationComponent)
 
+  _initlize()
+
   return exposeTableContext
+
+  async function _initlize() {
+    if (!config.lazy) {
+      await fetchData()
+    }
+  }
+
+  async function fetchData() {
+    const params: ITableDataOption = {}
+
+    const { pagination, dataSource } = tableContext
+
+    const paginator = pagination.value
+
+    if (paginator) {
+      params.current = paginator.current
+      params.size = paginator.size
+    }
+
+    if (formCtx) {
+      const query = formCtx.getData()
+      params.query = query
+    }
+
+    const resp = await config.data(params)
+    dataSource.value = resp.data
+
+    if (paginator) {
+      paginator.total = resp.total
+    }
+  }
 
   function createWrapperComponent(_props?: Record<string, unknown>, ctx?: FunctionalSetupContext) {
     const Table = createTableComponent()
@@ -39,7 +73,7 @@ export function defineTable<T>(config: ITableOptions<T>) {
     const Pagination = createPaginationComponent()
 
     return (
-      <div class="v-form" v-bind={ctx?.attrs || {}}>
+      <div class="v-table" v-bind={ctx?.attrs || {}}>
         {Form}
         {Table}
         {Pagination}
@@ -75,7 +109,6 @@ export function defineTable<T>(config: ITableOptions<T>) {
   }
 
   function createFormComponent(_props?: Record<string, unknown>, ctx?: FunctionalSetupContext) {
-    const formCtx = exposeTableContext.form
     if (!formCtx) {
       return
     }
