@@ -6,21 +6,24 @@ import type { Awaitable } from '@0x-jerry/utils'
 export type IColumnConfig<
   T extends IData = IData,
   K extends keyof T = keyof T
-> = K extends K ? IColumnInnerConfig<K, T[K]> : never
+> = K extends K ? IColumnInnerConfig<T, K, T[K]> : never
 
-export interface IColumnInnerConfig<K, V> {
-  dataIndex: K
+export interface IColumnInnerConfig<D, K, V> {
   title: string | RenderFunction
-  render?: IColumnRenderFn<K, V>
+  key?: string
+  dataIndex?: K
+  render?: IColumnRenderFn<D, K, V>
 }
 
-export interface IColumnRenderFn<K, V> {
-  (props: IColumnRenderContext<K, V>): VNodeChild
+export interface IColumnRenderFn<D, K, V> {
+  (props: IColumnRenderContext<D, K, V>): VNodeChild
 }
 
-export interface IColumnRenderContext<K, V> {
-  data: V
-  dataIndex: K
+export interface IColumnRenderContext<D, K, V> {
+  data: D
+  value?: V
+  dataIndex?: K
+  key?: string
   index: number
 }
 
@@ -36,7 +39,7 @@ export interface ITableDataOption {
 }
 
 export interface ITableOptions<T extends IData = IData> {
-  data: (opt: ITableDataOption) => Awaitable<ITableData<T>>
+  data?: IFetchTableData<T>
 
   lazy?: boolean
 
@@ -46,6 +49,10 @@ export interface ITableOptions<T extends IData = IData> {
   pagination?: IPaginationProps | false
 
   [key: string]: unknown
+}
+
+export interface IFetchTableData<T extends IData> {
+  (opt: ITableDataOption): Awaitable<ITableData<T>>
 }
 
 export interface IPaginationProps {

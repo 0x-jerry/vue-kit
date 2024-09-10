@@ -12,21 +12,25 @@ describe('VForm', () => {
 
     const App = defineComponent(() => {
       const table = defineTable({
-        columns: [{
-          title: 'ID',
-          dataIndex: 'id',
-          render: (props) => props.data
-        }, {
-          title: 'Name',
-          dataIndex: 'name',
-          render: (props) => props.data
-        }],
-        data(opt) {
+        data(_opt) {
           return {
             data: [] as TableRecord[],
             total: 100
           }
         },
+        columns: [{
+          title: 'ID',
+          dataIndex: 'id',
+          render: (props) => props.dataIndex
+        }, {
+          title: 'Name',
+          dataIndex: 'name',
+          render: (props) => props.dataIndex
+        }, {
+          title: 'Other',
+          key: 'other',
+          render: props => props.data.id + ' ' + props.data.name
+        }],
       })
 
       return () => <table.Component />
