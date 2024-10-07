@@ -5,8 +5,18 @@ import {
   useRafFn,
   useScroll
 } from '@vueuse/core'
-import { ref } from 'vue'
-import type { VMarqueeProps } from './types'
+import { computed, ref } from 'vue'
+
+export interface VMarqueeProps {
+  /**
+   * @default 200
+   */
+  speed?: number
+  /**
+   * @default 8
+   */
+  gap?: number
+}
 
 const { speed = 200, gap = 8 } = defineProps<VMarqueeProps>()
 
@@ -15,13 +25,23 @@ const contentEl = ref()
 
 const contentSize = useElementSize(contentEl)
 
+const containerSize = useElementSize(containerEl)
+
 const scrollState = useScroll(containerEl)
 
 const isHovering = useElementHover(containerEl)
 
-const boundary = 200
+const boundary = 1
+
+const canScroll = computed(
+  () => contentSize.width.value >= containerSize.width.value + boundary
+)
 
 useRafFn(({ delta }) => {
+  if (!canScroll.value) {
+    return
+  }
+
   const dx = isHovering.value ? 0 : (delta / 1000) * speed
 
   const contentWidthWithGap = contentSize.width.value + gap
@@ -45,13 +65,13 @@ useRafFn(({ delta }) => {
     <div class="v-marquee-content" ref="contentEl">
       <slot></slot>
     </div>
-    <div class="v-marquee-content">
+    <div class="v-marquee-content" v-if="canScroll">
       <slot></slot>
     </div>
   </div>
 </template>
 
-<style lang="less" scoped>
+<style lang="less">
 .v-marquee {
   overflow: auto;
   display: flex;

@@ -1,5 +1,3 @@
-import VMarquee from './VMarquee.vue'
+import VMarquee, { type VMarqueeProps } from './VMarquee.vue'
 
-export type { VMarqueeProps } from './types'
-
-export { VMarquee }
+export { VMarquee, type VMarqueeProps }
