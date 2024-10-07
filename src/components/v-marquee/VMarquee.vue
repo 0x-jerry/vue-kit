@@ -1,7 +1,12 @@
 <script lang="ts" setup>
-import { useElementHover, useElementSize, useRafFn, useScroll } from '@vueuse/core'
+import {
+  useElementHover,
+  useElementSize,
+  useRafFn,
+  useScroll
+} from '@vueuse/core'
 import { ref } from 'vue'
-import type { VMarqueeProps } from './types';
+import type { VMarqueeProps } from './types'
 
 const { speed = 200, gap = 8 } = defineProps<VMarqueeProps>()
 
@@ -14,6 +19,8 @@ const scrollState = useScroll(containerEl)
 
 const isHovering = useElementHover(containerEl)
 
+const boundary = 200
+
 useRafFn(({ delta }) => {
   const dx = isHovering.value ? 0 : (delta / 1000) * speed
 
@@ -21,8 +28,12 @@ useRafFn(({ delta }) => {
 
   let x = scrollState.x.value + dx
 
-  if (x > contentWidthWithGap * 2 || x < contentWidthWithGap) {
-    x = (x % contentWidthWithGap) + contentWidthWithGap
+  if (x > boundary + contentWidthWithGap) {
+    x = x % contentWidthWithGap
+  }
+
+  if (x < boundary) {
+    x += contentWidthWithGap
   }
 
   scrollState.x.value = x
@@ -32,9 +43,6 @@ useRafFn(({ delta }) => {
 <template>
   <div class="v-marquee" ref="containerEl" :style="{ gap: `${gap}px` }">
     <div class="v-marquee-content" ref="contentEl">
-      <slot></slot>
-    </div>
-    <div class="v-marquee-content">
       <slot></slot>
     </div>
     <div class="v-marquee-content">
