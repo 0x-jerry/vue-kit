@@ -14,7 +14,7 @@ export function defineContext<F extends (...args: any[]) => unknown>(
   factory: F,
 ): DefineContext<Parameters<F>, ReturnType<F>>
 
-// implement
+// implementation
 export function defineContext<Fn extends (...args: unknown[]) => unknown>(
   key: string | symbol | InjectionKey<unknown>,
   factory?: Fn,
