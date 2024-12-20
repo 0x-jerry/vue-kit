@@ -85,6 +85,7 @@ export function defineForm(config: Partial<IFormOptions>): IFormContext {
 
     return (
       <div {...fieldProps} v-show={showField}>
+        {/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
         <label class="v-form-label">
           <span>{item.label}</span>
         </label>

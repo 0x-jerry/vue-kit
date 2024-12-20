@@ -26,6 +26,9 @@ importers:
       vue:
         specifier: ^3.5.13
         version: 3.5.13(typescript@5.7.2)
+      vue-component-type-helpers:
+        specifier: ^2.1.10
+        version: 2.1.10
     devDependencies:
       '@0x-jerry/x-release':
         specifier: ^2.2.2

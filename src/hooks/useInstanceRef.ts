@@ -1,5 +1,6 @@
 import { ref } from 'vue'
+import type { ComponentExposed } from 'vue-component-type-helpers'
 
-export function useInstanceRef<T extends new (...args: unknown[]) => unknown>(component: T) {
-  return ref<InstanceType<T>>()
+export function useInstanceRef<T>(component: T) {
+  return ref<ComponentExposed<T>>()
 }

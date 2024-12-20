@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { defineComponent, nextTick, onMounted, ref } from 'vue'
 import { useInstanceRef } from './useInstanceRef'
+import type { VueComponent } from '../types'
 
 describe('useInstanceRef', () => {
   it('should works', async () => {
@@ -8,7 +9,7 @@ describe('useInstanceRef', () => {
       add: (a: number, b: number) => number
     }
 
-    const CompA = defineComponent<{}, {}, {}, {}, M>({
+    const CompA: VueComponent<{}, {}, {}, M> = defineComponent({
       setup(_, ctx) {
         ctx.expose({
           add(a: number, b: number) {
