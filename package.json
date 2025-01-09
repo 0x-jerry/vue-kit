@@ -57,7 +57,7 @@
     "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.7.0",
     "happy-dom": "^15.11.7",
-    "jsdom": "^25.0.1",
+    "jsdom": "^26.0.0",
     "tsup": "^8.3.5",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2",
