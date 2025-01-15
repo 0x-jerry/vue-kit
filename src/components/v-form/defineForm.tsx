@@ -1,6 +1,6 @@
 import { mergeProps, type FunctionalComponent, type Slots } from 'vue'
 import type { IFormFieldConfig, IFromActions, IFormOptions } from './types'
-import { resolveRegisteredComponent } from './configs'
+import { FormConfig, resolveRegisteredComponent } from './configs'
 import { calcFieldKey, interopWithContext } from './utils'
 import { isString } from '@0x-jerry/utils'
 import { VLayout } from '../v-layout'
@@ -75,6 +75,8 @@ export function defineForm(config: Partial<IFormOptions>): IFormContext {
       {
         class: item.class,
         style: item.style,
+        item,
+        fieldError,
       },
       {
         class: 'v-form-field',
@@ -83,19 +85,12 @@ export function defineForm(config: Partial<IFormOptions>): IFormContext {
       },
     )
 
+    const FieldItem = FormConfig.FieldItem as FunctionalComponent
+
     return (
-      <div {...fieldProps} v-show={showField}>
-        {/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
-        <label class="v-form-label">
-          <span>{item.label}</span>
-        </label>
-        <div class="v-form-field-content">
-          <Ctor {...fieldComponentProps} />
-          <div class="v-form-field-error" v-show={fieldError}>
-            {fieldError?.errors.at(0)}
-          </div>
-        </div>
-      </div>
+      <FieldItem {...fieldProps} v-show={showField}>
+        <Ctor {...fieldComponentProps} />
+      </FieldItem>
     )
   }
 

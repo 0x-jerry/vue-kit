@@ -1,13 +1,16 @@
 import type { Component } from 'vue'
 import { VLayout } from '../v-layout'
+import FieldItem from './FieldItem.vue'
 
 export const FormConfig: IFormGlobalConfig = {
   FormLayout: VLayout,
   Components: [],
+  FieldItem,
 }
 
 export interface IFormGlobalConfig {
   FormLayout: Component
+  FieldItem: Component
   Components: IFormComponent[]
 }
 
