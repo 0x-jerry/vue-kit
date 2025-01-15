@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { ICommonFormFieldConfig, IFieldRuleError } from './types';
+import type { IFieldRuleError, IFormFieldConfig } from './types';
 
 export interface FieldItemProps {
-  item: ICommonFormFieldConfig
+  item: IFormFieldConfig
   fieldError?: IFieldRuleError
 }
 

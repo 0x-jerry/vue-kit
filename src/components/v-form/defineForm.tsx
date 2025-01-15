@@ -63,12 +63,14 @@ export function defineForm(config: Partial<IFormOptions>): IFormContext {
 
     const validateField = () => formContext.validate(item.field)
 
-    const fieldComponentProps = mergeProps(item.componentProps || {}, {
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    const fieldComponentProps = mergeProps({}, item.componentProps as any, {
       modelValue: formContext.getData(item.field),
       'onUpdate:modelValue': (val: unknown) => formContext.updateField(item.field, val),
       validateStatus: fieldError ? 'error' : undefined,
       onBlur: triggerValidateOn === 'blur' ? validateField : undefined,
       onChange: triggerValidateOn === 'change' ? validateField : undefined,
+      onInput: triggerValidateOn === 'change' ? validateField : undefined,
     })
 
     const fieldProps = mergeProps(
@@ -89,7 +91,10 @@ export function defineForm(config: Partial<IFormOptions>): IFormContext {
 
     return (
       <FieldItem {...fieldProps} v-show={showField}>
-        <Ctor {...fieldComponentProps} />
+        {{
+          // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+          default: (props: any) => <Ctor {...mergeProps(props, fieldComponentProps)} />,
+        }}
       </FieldItem>
     )
   }

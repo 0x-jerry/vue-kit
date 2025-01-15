@@ -29,17 +29,17 @@ const TestInputComponent = defineComponent({
 
 declare module './types' {
   interface FormComponentMapSetting {
-    Input: typeof TestInputComponent
+    TestInput: typeof TestInputComponent
   }
 }
 
 function setupFormComponents() {
   beforeAll(() => {
-    registerComponent('Input', TestInputComponent)
+    registerComponent('TestInput', TestInputComponent)
   })
 
   afterAll(() => {
-    unregisterComponent('Input')
+    unregisterComponent('TestInput')
   })
 }
 
@@ -53,7 +53,7 @@ describe('VForm', () => {
           {
             label: 'input label',
             field: 'key1',
-            component: 'Input',
+            component: 'TestInput',
           },
         ],
       })
@@ -78,7 +78,7 @@ describe('VForm', () => {
           {
             label: 'This is input',
             field: 'input',
-            component: 'Input',
+            component: 'TestInput',
           },
         ],
       })
@@ -97,7 +97,7 @@ describe('VForm', () => {
           {
             label: 'This is input',
             field: 'input',
-            component: 'Input',
+            component: 'TestInput',
           },
         ],
       })
@@ -126,7 +126,7 @@ describe('VForm', () => {
           {
             label: 'i0',
             field: 'i0',
-            component: 'Input',
+            component: 'TestInput',
           },
         ],
       })
@@ -150,18 +150,18 @@ describe('VForm', () => {
           {
             label: 'i0',
             field: 'i0',
-            component: 'Input',
+            component: 'TestInput',
           },
           {
             label: 'i1',
             field: 'i1',
-            component: 'Input',
+            component: 'TestInput',
             if: false,
           },
           {
             label: 'i2',
             field: 'i2',
-            component: 'Input',
+            component: 'TestInput',
             if: () => true,
           },
         ],
@@ -185,18 +185,18 @@ describe('VForm', () => {
           {
             label: 'i0',
             field: 'i0',
-            component: 'Input',
+            component: 'TestInput',
           },
           {
             label: 'i1',
             field: 'i1',
-            component: 'Input',
+            component: 'TestInput',
             show: false,
           },
           {
             label: 'i2',
             field: 'i2',
-            component: 'Input',
+            component: 'TestInput',
             show: () => true,
           },
         ],
@@ -235,7 +235,7 @@ describe('VForm', () => {
           {
             label: 'i0',
             field: 'i0',
-            component: 'Input',
+            component: 'TestInput',
           },
         ],
       })
@@ -272,7 +272,7 @@ describe('VForm', () => {
           {
             label: 'i0',
             field: 'i0',
-            component: 'Input',
+            component: 'TestInput',
           },
         ],
       })
@@ -312,7 +312,7 @@ describe('VForm', () => {
           {
             label: 'i0',
             field: 'i0',
-            component: 'Input',
+            component: 'TestInput',
           },
         ],
       })

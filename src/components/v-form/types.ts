@@ -93,7 +93,13 @@ export interface IGetData {
 }
 
 export interface IFromActions {
-  validate: (field?: IFormFieldPath) => Promise<IFieldRuleError[]>
+  /**
+   * This will throw errors when validate failed.
+   *
+   * @param field
+   * @returns
+   */
+  validate: <T>(field?: IFormFieldPath) => Promise<T>
   clearValidate: () => void
   update: (data?: Record<string, unknown>) => void
   updateField: (field: IFormFieldPath, value?: unknown) => void

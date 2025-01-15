@@ -21,7 +21,7 @@ import { getValue, setValue } from '../../../utils'
 
 type IFormFieldPath = IFormFieldConfig['field']
 
-export interface IFormInteralContext extends IFromActions {
+export interface IFormInternalContext extends IFromActions {
   data: Ref<Record<string, unknown>>
   validateErrors: ShallowRef<IFieldRuleError[]>
   fields: ComputedRef<IFormFieldConfig[]>
@@ -29,7 +29,7 @@ export interface IFormInteralContext extends IFromActions {
   getVisibleFields: () => IFormFieldConfig[]
 }
 
-export function createFormContext(opt: Partial<IFormOptions> = {}): IFormInteralContext {
+export function createFormContext(opt: Partial<IFormOptions> = {}): IFormInternalContext {
   const actions: IFromActions = {
     validate,
     clearValidate,
@@ -39,7 +39,7 @@ export function createFormContext(opt: Partial<IFormOptions> = {}): IFormInteral
     getErrors,
   }
 
-  const ctx: IFormInteralContext = {
+  const ctx: IFormInternalContext = {
     data: ref(opt.data || {}),
     validateErrors: shallowRef([]),
     fields: computed(() => toValue(opt.fields || [])),
@@ -179,7 +179,7 @@ export function createFormContext(opt: Partial<IFormOptions> = {}): IFormInteral
     ctx.validateErrors.value = newErrors
   }
 
-  async function validate(field?: IFormFieldPath) {
+  async function validate<T>(field?: IFormFieldPath) {
     const rules = field ? _getFieldRules(field) : _collectFieldRules()
 
     const p = rules.map((rule) => _validateField(rule.field, rule.rules))
@@ -189,7 +189,12 @@ export function createFormContext(opt: Partial<IFormOptions> = {}): IFormInteral
 
     _updateValidateErrors(errors as IFieldRuleError[], field)
 
-    return errors as IFieldRuleError[]
+    if (errors.length) {
+      throw errors
+    }
+
+    // biome-ignore lint/style/noNonNullAssertion: <explanation>
+    return getData(field!) as T
   }
 
   function updateField(field: IFormFieldPath, value?: unknown) {
