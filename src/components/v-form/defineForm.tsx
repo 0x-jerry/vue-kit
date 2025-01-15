@@ -102,9 +102,9 @@ export function defineForm(config: Partial<IFormOptions>): IFormContext {
   function _resolveComponent(item: IFormFieldConfig, slots: Slots) {
     const Component = item.slot
       ? slots[item.slot]
-      : isString(item.compoennt)
-        ? resolveRegisteredComponent(item.compoennt)?.Ctor
-        : item.compoennt
+      : isString(item.component)
+        ? resolveRegisteredComponent(item.component)?.Ctor
+        : item.component
 
     return Component
   }

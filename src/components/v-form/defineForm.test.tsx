@@ -5,29 +5,35 @@ import { registerComponent, unregisterComponent } from './configs'
 import { useVModel } from '@vueuse/core'
 import { sleep } from '@0x-jerry/utils'
 
+const TestInputComponent = defineComponent({
+  props: {
+    modelValue: String,
+    validateStatus: String,
+  },
+  emits: ['update:modelValue', 'change', 'blur'],
+  setup: (props, ctx) => {
+    const value = useVModel(props)
+
+    return () => (
+      <input
+        class={{
+          'is-error': props.validateStatus,
+        }}
+        v-model={value.value}
+        onInput={() => ctx.emit('change')}
+        onBlur={() => ctx.emit('blur')}
+      />
+    )
+  },
+})
+
+declare module './types' {
+  interface FormComponentMapSetting {
+    Input: typeof TestInputComponent
+  }
+}
+
 function setupFormComponents() {
-  const TestInputComponent = defineComponent({
-    props: {
-      modelValue: String,
-      validateStatus: String,
-    },
-    emits: ['update:modelValue', 'change', 'blur'],
-    setup: (props, ctx) => {
-      const value = useVModel(props)
-
-      return () => (
-        <input
-          class={{
-            'is-error': props.validateStatus,
-          }}
-          v-model={value.value}
-          onInput={() => ctx.emit('change')}
-          onBlur={() => ctx.emit('blur')}
-        />
-      )
-    },
-  })
-
   beforeAll(() => {
     registerComponent('Input', TestInputComponent)
   })
@@ -47,7 +53,7 @@ describe('VForm', () => {
           {
             label: 'input label',
             field: 'key1',
-            compoennt: 'Input',
+            component: 'Input',
           },
         ],
       })
@@ -72,7 +78,7 @@ describe('VForm', () => {
           {
             label: 'This is input',
             field: 'input',
-            compoennt: 'Input',
+            component: 'Input',
           },
         ],
       })
@@ -91,7 +97,7 @@ describe('VForm', () => {
           {
             label: 'This is input',
             field: 'input',
-            compoennt: 'Input',
+            component: 'Input',
           },
         ],
       })
@@ -120,7 +126,7 @@ describe('VForm', () => {
           {
             label: 'i0',
             field: 'i0',
-            compoennt: 'Input',
+            component: 'Input',
           },
         ],
       })
@@ -144,18 +150,18 @@ describe('VForm', () => {
           {
             label: 'i0',
             field: 'i0',
-            compoennt: 'Input',
+            component: 'Input',
           },
           {
             label: 'i1',
             field: 'i1',
-            compoennt: 'Input',
+            component: 'Input',
             if: false,
           },
           {
             label: 'i2',
             field: 'i2',
-            compoennt: 'Input',
+            component: 'Input',
             if: () => true,
           },
         ],
@@ -179,18 +185,18 @@ describe('VForm', () => {
           {
             label: 'i0',
             field: 'i0',
-            compoennt: 'Input',
+            component: 'Input',
           },
           {
             label: 'i1',
             field: 'i1',
-            compoennt: 'Input',
+            component: 'Input',
             show: false,
           },
           {
             label: 'i2',
             field: 'i2',
-            compoennt: 'Input',
+            component: 'Input',
             show: () => true,
           },
         ],
@@ -229,7 +235,7 @@ describe('VForm', () => {
           {
             label: 'i0',
             field: 'i0',
-            compoennt: 'Input',
+            component: 'Input',
           },
         ],
       })
@@ -266,7 +272,7 @@ describe('VForm', () => {
           {
             label: 'i0',
             field: 'i0',
-            compoennt: 'Input',
+            component: 'Input',
           },
         ],
       })
@@ -306,7 +312,7 @@ describe('VForm', () => {
           {
             label: 'i0',
             field: 'i0',
-            compoennt: 'Input',
+            component: 'Input',
           },
         ],
       })

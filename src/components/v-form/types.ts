@@ -1,8 +1,13 @@
 import type { Arrayable } from '@0x-jerry/utils'
 import type { VLayoutProps } from '../v-layout'
 import type { IRule } from './rules'
-import type { Component } from 'vue'
 import type { IToValue } from '../../utils'
+import type { ComponentProps } from 'vue-component-type-helpers'
+import type { VueComponent } from '../../types'
+
+export interface FormComponentMapSetting {
+  __internal: VueComponent
+}
 
 export interface IFormOptions {
   /**
@@ -22,7 +27,16 @@ export interface IFormOptions {
 
 export type IFormFieldPath = Arrayable<string | number>
 
-export interface IFormFieldConfig {
+export type IFormFieldConfig = ICommonFormFieldConfig & MapComponent<FormComponentMapSetting>
+
+type MapComponent<T extends {}, Key extends keyof T = keyof T> = Key extends Key
+  ? {
+      component: Key
+      componentProps?: ComponentProps<T[Key]>
+    }
+  : never
+
+export interface ICommonFormFieldConfig {
   /**
    * Field path, should be unique
    */
@@ -49,8 +63,6 @@ export interface IFormFieldConfig {
   rules?: Arrayable<IRule>
 
   slot?: string
-  compoennt?: string | Component
-  componentProps?: Record<string, unknown>
 
   class?: unknown
   style?: unknown
