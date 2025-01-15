@@ -1,16 +1,40 @@
 import { createApp } from 'vue'
-import PrimeVue, { type PrimeVueConfiguration } from 'primevue/config'
-import Material from '@primevue/themes/material'
+
+// Vuetify
+import 'vuetify/styles'
+import '@mdi/font/css/materialdesignicons.css'
+import { createVuetify } from 'vuetify'
+import * as components from 'vuetify/components'
+import * as directives from 'vuetify/directives'
+import colors from 'vuetify/lib/util/colors.mjs'
+
 import App from './App.vue'
 import { registerAllFormComponents } from './form'
 
+import 'normalize.css'
 import 'uno.css'
 
 registerAllFormComponents()
 
-const primeConfig: PrimeVueConfiguration = {
-  theme: { preset: Material },
-  ripple: true,
-}
+const vuetify = createVuetify({
+  components,
+  directives,
+  theme: {
+    defaultTheme: 'light',
+    themes: {
+      light: {
+        colors: {
+          primary: colors.teal.base,
+        },
+      },
+    },
+  },
+  icons: {
+    defaultSet: 'mdi',
+  },
+})
 
-createApp(App).use(PrimeVue, primeConfig).mount('#app')
+createApp(App)
+  //
+  .use(vuetify)
+  .mount('#app')

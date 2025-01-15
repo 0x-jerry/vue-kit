@@ -10,13 +10,25 @@ const form = defineAForm({
       component: 'Input',
       rules: [{
         type: 'string',
-        min: 1
+        min: 2
       }]
     },
     {
-      label: 'Password',
-      field: 'password',
-      component: 'Input',
+      label: 'Select',
+      field: 'select',
+      component: 'Select',
+      componentProps: {
+        items: Array(10).fill(0).map((_, idx) => ({ value: idx, label: `label-${idx + 1}` })),
+        itemTitle: 'label',
+        itemValue: 'value'
+      }
+    },
+    {
+      label: 'Check',
+      field: 'check',
+      component: 'Checkbox',
+      componentProps: {
+      }
     },
   ],
 })
@@ -29,18 +41,31 @@ async function submit(data: unknown) {
 </script>
 
 <template>
-  <div>App</div>
-  <div class="w-400px mx-auto">
-    <div class="title mb-4">
-      Login
-    </div>
+  <v-app>
+    <v-layout class="rounded rounded-md">
+      <v-app-bar title="App bar"></v-app-bar>
 
-    <form.Component />
+      <v-navigation-drawer>
+        <v-list>
+          <v-list-item title="Navigation drawer"></v-list-item>
+        </v-list>
+      </v-navigation-drawer>
 
-    <div class="flex justify-end mt-3">
-      <form.Submit :onSubmit="submit" />
-    </div>
-  </div>
+      <v-main>
+        <v-container>
+          <v-card title="Login" class="w-400px mt-4 mx-auto">
+            <v-card-text>
+              <form.Component />
+            </v-card-text>
+
+            <v-card-actions class="justify-end">
+              <form.Submit @submit="submit" text="Login" class="text-none" />
+            </v-card-actions>
+          </v-card>
+        </v-container>
+      </v-main>
+    </v-layout>
+  </v-app>
 </template>
 
 <style lang='less' scoped></style>

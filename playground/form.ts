@@ -1,14 +1,15 @@
-import InputText from 'primevue/inputtext'
-import { FormConfig, registerComponent } from '../src/components/v-form/configs'
 import FormItem from './FormItem.vue'
+import { FormConfig, registerComponent } from '../src/components/v-form/configs'
 import { defineForm, type IFormContext, type IFormOptions } from '../src/components/v-form'
 import { defineComponent, h } from 'vue'
-import Button from 'primevue/button'
 import { useLoading } from '../src/hooks'
-import type { VueComponent } from '../src/types'
+import { VBtn, VCheckbox, VSelect, VTextField } from 'vuetify/components'
 
 export function registerAllFormComponents() {
-  registerComponent('Input', InputText)
+  registerComponent('Input', VTextField)
+  registerComponent('Checkbox', VCheckbox)
+  registerComponent('Select', VSelect)
+
   FormConfig.FieldItem = FormItem
 }
 
@@ -31,12 +32,14 @@ export function defineAForm(opt: Partial<IFormOptions>) {
 
       return () =>
         h(
-          Button,
+          VBtn,
           {
             type: 'submit',
-            label: props.label || 'Submit',
+            text: props.label || 'Submit',
             onClick: handleClick,
             loading: handleClick.isLoading,
+            variant: 'elevated',
+            color: 'primary',
           },
           ctx.slots,
         )
@@ -50,6 +53,5 @@ export function defineAForm(opt: Partial<IFormOptions>) {
 }
 
 export type IAFormContext = IFormContext & {
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  Submit: VueComponent<{ onSubmit: (data: unknown) => any }>
+  Submit: typeof VBtn
 }

@@ -43,6 +43,7 @@ export function defineForm(config: Partial<IFormOptions>): IFormContext {
 
     const layoutProps = {
       type: 'flex-col' as const,
+      gap: 0,
       ...config.layout,
     }
 
