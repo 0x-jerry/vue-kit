@@ -4,9 +4,16 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import vue from '@vitejs/plugin-vue'
 import { readdir } from 'node:fs/promises'
 import dts from 'vite-plugin-dts'
+import uno from 'unocss/vite'
 
 export default defineConfig({
-  plugins: [vue(), vueJsx(), dts({ insertTypesEntry: true })],
+  plugins: [
+    vue(),
+    vueJsx(),
+    uno(),
+    //@ts-ignore
+    dts({ insertTypesEntry: true }),
+  ],
   build: {
     lib: {
       entry: await getEntries(),

@@ -41,9 +41,14 @@ export function defineForm(config: Partial<IFormOptions>): IFormContext {
       },
     )
 
+    const layoutProps = {
+      type: 'flex-col' as const,
+      ...config.layout,
+    }
+
     return (
       <form {...formProps}>
-        <VLayout {...config.layout}>{fields.map((field) => renderField(field, ctx.slots))}</VLayout>
+        <VLayout {...layoutProps}>{fields.map((field) => renderField(field, ctx.slots))}</VLayout>
       </form>
     )
   }

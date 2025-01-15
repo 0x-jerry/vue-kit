@@ -1,7 +1,8 @@
 <script lang='ts' setup>
-import { defineForm } from '../src/components/v-form'
+import { defineAForm } from './form';
+import { sleep } from '@0x-jerry/utils';
 
-const form = defineForm({
+const form = defineAForm({
   fields: [
     {
       label: 'Name',
@@ -20,8 +21,8 @@ const form = defineForm({
   ],
 })
 
-async function submit() {
-  const data = await form.validate()
+async function submit(data: unknown) {
+  await sleep(1000)
 
   console.log('data', data)
 }
@@ -29,8 +30,17 @@ async function submit() {
 
 <template>
   <div>App</div>
-  <form.Component />
-  <button @click="submit">submit</button>
+  <div class="w-400px mx-auto">
+    <div class="title mb-4">
+      Login
+    </div>
+
+    <form.Component />
+
+    <div class="flex justify-end mt-3">
+      <form.Submit :onSubmit="submit" />
+    </div>
+  </div>
 </template>
 
 <style lang='less' scoped></style>
