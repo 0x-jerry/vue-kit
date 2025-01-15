@@ -79,7 +79,7 @@ export function defineTable<T extends IData>(config: ITableOptions<T>) {
     const Pagination = createPaginationComponent()
 
     return (
-      <div class="v-table-warpper" v-bind={ctx?.attrs || {}}>
+      <div class="v-table-warpper" {...(ctx?.attrs || {})}>
         {Form}
         {Table}
         {Pagination}
@@ -107,7 +107,7 @@ export function defineTable<T extends IData>(config: ITableOptions<T>) {
       dataSource: tableContext.dataSource.value,
     })
 
-    return <Table v-bind={props}>{renderedColumns}</Table>
+    return <Table {...(props || {})}>{renderedColumns}</Table>
   }
 
   function createPaginationComponent(
@@ -146,7 +146,7 @@ export function defineTable<T extends IData>(config: ITableOptions<T>) {
       },
     )
 
-    return <Pagination v-bind={props} />
+    return <Pagination {...(props || {})} />
   }
 
   function createFormComponent(_props?: Record<string, unknown>, ctx?: FunctionalSetupContext) {
@@ -154,6 +154,6 @@ export function defineTable<T extends IData>(config: ITableOptions<T>) {
       return
     }
 
-    return <formCtx.Component v-bind={ctx?.attrs || {}} />
+    return <formCtx.Component {...(ctx?.attrs || {})} />
   }
 }
