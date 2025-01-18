@@ -100,6 +100,7 @@ export interface IFromActions {
    * @returns
    */
   validate: <T>(field?: IFormFieldPath) => Promise<T>
+  validateOnly: (field?: IFormFieldPath) => Promise<IFieldRuleError[]>
   clearValidate: () => void
   update: (data?: Record<string, unknown>) => void
   updateField: (field: IFormFieldPath, value?: unknown) => void

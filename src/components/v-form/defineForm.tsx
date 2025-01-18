@@ -67,7 +67,7 @@ export function defineForm(config: Partial<IFormOptions>): IFormContext {
 
     const fieldKey = calcFieldKey(item.field)
 
-    const validateField = () => formContext.validate(item.field)
+    const validateField = () => formContext.validateOnly(item.field)
 
     // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     const fieldComponentProps = mergeProps({}, item.componentProps as any, {

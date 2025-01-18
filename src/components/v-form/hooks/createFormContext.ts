@@ -32,6 +32,7 @@ export interface IFormInternalContext extends IFromActions {
 export function createFormContext(opt: Partial<IFormOptions> = {}): IFormInternalContext {
   const actions: IFromActions = {
     validate,
+    validateOnly,
     clearValidate,
     update,
     updateField,
@@ -179,16 +180,22 @@ export function createFormContext(opt: Partial<IFormOptions> = {}): IFormInterna
     ctx.validateErrors.value = newErrors
   }
 
-  async function validate<T>(field?: IFormFieldPath) {
+  async function validateOnly(field?: IFormFieldPath) {
     const rules = field ? _getFieldRules(field) : _collectFieldRules()
 
     const p = rules.map((rule) => _validateField(rule.field, rule.rules))
 
-    let errors = await Promise.all(p)
-    errors = errors.filter((n) => n != null && n.errors.length > 0)
+    const errors = (await Promise.all(p))
+      .filter((n) => n != null)
+      .filter((n) => n.errors.length > 0)
 
     _updateValidateErrors(errors as IFieldRuleError[], field)
 
+    return errors
+  }
+
+  async function validate<T>(field?: IFormFieldPath) {
+    const errors = await validateOnly(field)
     if (errors.length) {
       throw errors
     }
