@@ -40,14 +40,14 @@
     "vue-component-type-helpers": "^2.2.0"
   },
   "devDependencies": {
-    "@0x-jerry/utils": "^4.2.1",
+    "@0x-jerry/utils": "^4.2.2",
     "@0x-jerry/x-release": "^2.2.2",
     "@biomejs/biome": "^1.9.4",
     "@mdi/font": "^7.4.47",
-    "@types/node": "^22.10.6",
+    "@types/node": "^22.10.7",
     "@vitejs/plugin-vue": "^5.2.1",
     "@vitejs/plugin-vue-jsx": "^4.1.1",
-    "@vitest/coverage-v8": "^2.1.8",
+    "@vitest/coverage-v8": "^3.0.2",
     "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.7.0",
     "happy-dom": "^16.6.0",
@@ -56,10 +56,10 @@
     "normalize.css": "^8.0.1",
     "tsx": "^4.19.2",
     "typescript": "^5.7.3",
-    "unocss": "^65.4.0",
+    "unocss": "^65.4.2",
     "vite": "^6.0.7",
     "vite-plugin-dts": "^4.5.0",
-    "vitest": "^2.1.8",
+    "vitest": "^3.0.2",
     "vuetify": "^3.7.6"
   }
 }
