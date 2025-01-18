@@ -13,16 +13,23 @@
   "bugs": {
     "url": "https://github.com/0x-jerry/vue-kit/issues"
   },
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "homepage": "https://github.com/0x-jerry/vue-kit#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
   },
+  "exports": {
+    ".": {
+      "main": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./*": {
+      "types": "./dist/components/*.d.ts",
+      "default": "./dist/components/*.js"
+    }
+  },
   "files": [
-    "dist",
-    "*.d.ts"
+    "dist"
   ],
   "scripts": {
     "play": "vite",
