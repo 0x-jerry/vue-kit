@@ -31,6 +31,6 @@ describe('VForm', () => {
 
     const app = mount(App)
 
-    expect(app.get('.v-table-warpper')).toBeTruthy()
+    expect(app.get('.v-table-wrapper')).toBeTruthy()
   })
 })

@@ -79,7 +79,7 @@ export function defineTable<T extends IData>(config: ITableOptions<T>) {
     const Pagination = createPaginationComponent()
 
     return (
-      <div class="v-table-warpper" {...(ctx?.attrs || {})}>
+      <div class="v-table-wrapper" {...(ctx?.attrs || {})}>
         {Form}
         {Table}
         {Pagination}
