@@ -58,6 +58,11 @@ export interface ICommonFormFieldConfig {
   show?: boolean | IFormEvalFunction<boolean>
 
   /**
+   * Whether this field is required
+   */
+  required?: boolean
+
+  /**
    * Field validate rules
    */
   rules?: Arrayable<IRule>

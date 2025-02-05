@@ -1,6 +1,6 @@
 import { isString } from '@0x-jerry/utils'
 import type { IRuleFunction } from '../types'
-import { getErrorMessage } from '../validateError'
+import { getErrorMessage } from '../errorMsg'
 
 export interface IStringRule {
   min?: number

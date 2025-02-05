@@ -1,8 +1,9 @@
-import { isFn } from '@0x-jerry/utils'
+import { isEmpty, isFn } from '@0x-jerry/utils'
 import type { IValidateContext, IRule, IRuleFunction } from './types'
 import { ruleConfig } from './configs'
+import { getErrorMessage } from './errorMsg'
 
-export const validate: IRuleFunction<IRule> = async (ctx) => {
+const validate: IRuleFunction<IRule> = async (ctx) => {
   const { rule } = ctx
 
   if (isFn(rule)) {
@@ -35,4 +36,36 @@ async function _validate(validator: IRuleFunction, ctx: IValidateContext) {
   }
 
   return errorMsg
+}
+
+export const validateRules = async (ctx: IValidateContext<IRule[]>) => {
+  const { rule: rules, required, value, label } = ctx
+
+  const errors: string[] = []
+
+  const valueIsEmpty = isEmpty(value)
+
+  if (valueIsEmpty) {
+    if (required) {
+      const msg = getErrorMessage(ctx, 'required')
+
+      errors.push(msg)
+    }
+
+    return errors
+  }
+
+  for (const rule of rules) {
+    const error = await validate({
+      label,
+      value,
+      rule,
+    })
+
+    if (error) {
+      errors.push(error)
+    }
+  }
+
+  return errors
 }

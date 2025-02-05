@@ -15,7 +15,7 @@ import type {
   IFromActions,
 } from '../types'
 import { ensureArray, remove, type Arrayable } from '@0x-jerry/utils'
-import { type IRule, validate as runValidate } from '../rules'
+import { validateRules, type IRule } from '../rules'
 import { calcFieldKey, interopWithContext } from '../utils'
 import { getValue, setValue } from '../../../utils'
 
@@ -114,20 +114,14 @@ export function createFormContext(opt: Partial<IFormOptions> = {}): IFormInterna
       return
     }
 
-    const errors: string[] = []
+    const value = getValue(ctx.data.value, ensureArray(field))
 
-    for (const rule of rules) {
-      const value = getValue(ctx.data.value, ensureArray(field))
-      const error = await runValidate({
-        label: fieldConfig.label,
-        value,
-        rule,
-      })
-
-      if (error) {
-        errors.push(error)
-      }
-    }
+    const errors = await validateRules({
+      label: fieldConfig.label,
+      required: fieldConfig.required,
+      value,
+      rule: rules,
+    })
 
     const result: IFieldRuleError = {
       field,

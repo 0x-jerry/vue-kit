@@ -21,6 +21,7 @@ export type IRuleFunction<Rule = unknown> = (
 
 export interface IValidateContext<Rule = unknown> {
   label?: string
+  required?: boolean
   value: unknown
   rule: Rule
 }

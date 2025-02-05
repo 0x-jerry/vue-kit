@@ -2,6 +2,7 @@ import type { INumberRule } from '../builtin/number'
 import type { IMessages } from './types'
 
 export const messages: IMessages = {
+  required: ({ label }) => `${label} must be filled`,
   number: 'Expect number',
   'number.min': ({ rule }) => `Expect number greater than ${(rule as INumberRule).min}`,
   'number.max': ({ rule }) => `Expect number less than ${(rule as INumberRule).max}`,
