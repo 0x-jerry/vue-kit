@@ -10,7 +10,7 @@ export const messages: IMessages = {
   string: 'Expect string',
   'string.min': ({ rule }) => `Expect string length greater than ${(rule as INumberRule).min}`,
   'string.max': ({ rule }) => `Expect string length less than ${(rule as INumberRule).max}`,
-  'stirng.range': ({ rule }) =>
+  'string.range': ({ rule }) =>
     `Expect string length between ${(rule as INumberRule).min} and ${(rule as INumberRule).max}`,
   boolean: 'Expect boolean',
 }
