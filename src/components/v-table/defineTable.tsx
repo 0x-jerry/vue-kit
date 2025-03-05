@@ -35,11 +35,11 @@ export function defineTable<T extends IData>(config: ITableOptions<T>) {
     reload: fetchData,
   })
 
-  _initlize()
+  _initialize()
 
   return exposeTableContext
 
-  async function _initlize() {
+  async function _initialize() {
     if (!config.lazy) {
       await fetchData()
     }
