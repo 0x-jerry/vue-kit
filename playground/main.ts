@@ -8,8 +8,8 @@ import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import colors from 'vuetify/lib/util/colors.mjs'
 
-import App from './App.vue'
-import { registerAllFormComponents } from './form'
+import App from './src/App.vue'
+import { registerAllFormComponents } from './src/form'
 
 import 'normalize.css'
 import 'uno.css'

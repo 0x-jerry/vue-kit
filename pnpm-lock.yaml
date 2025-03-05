@@ -84,9 +84,16 @@ importers:
       normalize.css:
         specifier: ^8.0.1
         version: 8.0.1
+      vue:
+        specifier: ^3.5.13
+        version: 3.5.13(typescript@5.7.3)
       vuetify:
         specifier: ^3.7.11
         version: 3.7.11(typescript@5.7.3)(vue@3.5.13(typescript@5.7.3))
+    devDependencies:
+      '@vue/tsconfig':
+        specifier: ^0.7.0
+        version: 0.7.0(typescript@5.7.3)(vue@3.5.13(typescript@5.7.3))
 
 packages:
 

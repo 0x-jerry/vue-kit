@@ -1,5 +1,5 @@
 <script lang='ts' setup>
-import type { FieldItemProps } from '../src/components/v-form/FieldItem.vue';
+import type { FieldItemProps } from '@0x-jerry/vue-kit/components/v-form'
 import { useId } from 'vue';
 
 export interface P extends FieldItemProps {
