@@ -7,13 +7,7 @@ import dts from 'vite-plugin-dts'
 import uno from 'unocss/vite'
 
 export default defineConfig({
-  plugins: [
-    vue(),
-    vueJsx(),
-    uno(),
-    //@ts-ignore
-    dts({ insertTypesEntry: true }),
-  ],
+  plugins: [vue(), vueJsx(), uno(), dts({ insertTypesEntry: true })],
   build: {
     lib: {
       entry: await getEntries(),
@@ -23,7 +17,6 @@ export default defineConfig({
       external: ['vue', '@vueuse/core'],
     },
   },
-  // @ts-ignore
   test: {
     globals: true,
     environment: 'jsdom',

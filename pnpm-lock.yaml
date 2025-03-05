@@ -30,9 +30,6 @@ importers:
       '@biomejs/biome':
         specifier: ^1.9.4
         version: 1.9.4
-      '@mdi/font':
-        specifier: ^7.4.47
-        version: 7.4.47
       '@types/node':
         specifier: ^22.13.1
         version: 22.13.1
@@ -60,9 +57,6 @@ importers:
       less:
         specifier: ^4.2.2
         version: 4.2.2
-      normalize.css:
-        specifier: ^8.0.1
-        version: 8.0.1
       tsx:
         specifier: ^4.19.2
         version: 4.19.2
@@ -81,6 +75,15 @@ importers:
       vitest:
         specifier: ^3.0.5
         version: 3.0.5(@types/node@22.13.1)(happy-dom@16.8.1)(jiti@2.4.2)(jsdom@26.0.0)(less@4.2.2)(tsx@4.19.2)(yaml@2.5.1)
+
+  playground:
+    dependencies:
+      '@mdi/font':
+        specifier: ^7.4.47
+        version: 7.4.47
+      normalize.css:
+        specifier: ^8.0.1
+        version: 8.0.1
       vuetify:
         specifier: ^3.7.11
         version: 3.7.11(typescript@5.7.3)(vue@3.5.13(typescript@5.7.3))

@@ -1,8 +1,13 @@
 import FormItem from './FormItem.vue'
-import { FormConfig, registerComponent } from '../src/components/v-form/configs'
-import { defineForm, type IFormContext, type IFormOptions } from '../src/components/v-form'
+import {
+  registerComponent,
+  defineForm,
+  FormConfig,
+  type IFormContext,
+  type IFormOptions,
+} from '@0x-jerry/vue-kit/components/v-form'
 import { defineComponent, h } from 'vue'
-import { useLoading } from '../src/hooks'
+import { useLoading } from '@0x-jerry/vue-kit/hooks'
 import { VBtn, VCheckbox, VSelect, VTextField } from 'vuetify/components'
 
 export function registerAllFormComponents() {
