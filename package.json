@@ -47,7 +47,7 @@
     "vue-component-type-helpers": "^2.2.8"
   },
   "devDependencies": {
-    "@0x-jerry/utils": "^4.2.2",
+    "@0x-jerry/utils": "^5.0.0",
     "@0x-jerry/x-release": "^2.3.0",
     "@biomejs/biome": "^1.9.4",
     "@types/node": "^22.13.9",
