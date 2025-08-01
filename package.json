@@ -44,7 +44,7 @@
     "@vueuse/core": "^12.8.1",
     "type-fest": "^4.37.0",
     "vue": "^3.5.13",
-    "vue-component-type-helpers": "^2.2.8"
+    "vue-component-type-helpers": "^3.0.0"
   },
   "devDependencies": {
     "@0x-jerry/utils": "^4.2.2",
