@@ -96,7 +96,7 @@ export function defineTable<T extends IData>(config: ITableOptions<T>) {
         <Column
           key={column.dataIndex}
           v-slots={{
-            title: column.title,
+            title: typeof column.title === 'string' ? () => column.title : column.title,
             default: column.render,
           }}
         />
