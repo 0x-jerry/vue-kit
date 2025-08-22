@@ -24,11 +24,7 @@
         "noConfusingVoidType": "off"
       }
     },
-    "includes": [
-      "src/**/*.ts",
-      "src/**/*.tsx",
-      "src/**/*.vue"
-    ]
+    "includes": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]
   },
   "javascript": {
     "formatter": {

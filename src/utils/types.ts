@@ -1,4 +1,4 @@
-import type { MaybeRefOrGetter, ComputedRef, ShallowRef, SetupContext } from 'vue'
+import type { ComputedRef, MaybeRefOrGetter, SetupContext, ShallowRef } from 'vue'
 
 export type IToValue<T> = MaybeRefOrGetter<T> | ComputedRef<T> | ShallowRef<T>
 

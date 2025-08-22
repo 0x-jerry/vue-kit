@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, type CSSProperties } from 'vue'
+import { type CSSProperties, computed } from 'vue'
 import { normalizeCssValue } from './utils'
 
 export type IGridLayoutType = 'grid' | 'flex' | 'flex-col'
@@ -40,7 +40,7 @@ const style = computed(() => {
 })
 
 function getGapValue() {
-  const [x, y = x] = props.gap.toString().trim().split(/\s+/)
+  const [x = '', y = x] = props.gap.toString().trim().split(/\s+/)
 
   return [normalizeCssValue(x), normalizeCssValue(y)].join(' ')
 }

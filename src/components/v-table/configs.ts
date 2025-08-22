@@ -1,4 +1,4 @@
-import { h, mergeProps, type FunctionalComponent } from 'vue'
+import { type FunctionalComponent, h, mergeProps } from 'vue'
 
 export const configs: ITableConfig = {
   Components: {

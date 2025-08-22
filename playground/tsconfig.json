@@ -3,12 +3,8 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@0x-jerry/vue-kit/*": [
-        "../src/*"
-      ]
+      "@0x-jerry/vue-kit/*": ["../src/*"]
     }
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }

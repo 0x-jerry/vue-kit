@@ -1,15 +1,12 @@
 <script lang='ts' setup>
 import type { FieldItemProps } from '@0x-jerry/vue-kit/components/v-form'
-import { useId } from 'vue';
+import { useId } from 'vue'
 
-export interface P extends FieldItemProps {
-
-}
+export interface P extends FieldItemProps {}
 
 const props = defineProps<P>()
 
 const fieldId = useId()
-
 </script>
 
 <template>

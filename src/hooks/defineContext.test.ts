@@ -1,5 +1,5 @@
-import { defineComponent, h, reactive, ref, type InjectionKey, type Ref } from 'vue'
 import { mount } from '@vue/test-utils'
+import { defineComponent, h, type InjectionKey, type Ref, reactive, ref } from 'vue'
 import { defineContext } from './defineContext'
 
 describe('defineContext', () => {

@@ -1,18 +1,8 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
   "compilerOptions": {
-    "lib": [
-      "ESNext",
-      "DOM",
-      "DOM.Iterable",
-      "DOM.AsyncIterable"
-    ],
-    "types": [
-      "vitest/globals"
-    ]
+    "lib": ["ESNext", "DOM", "DOM.Iterable", "DOM.AsyncIterable"],
+    "types": ["vitest/globals"]
   },
-  "include": [
-    "src",
-    "playground"
-  ],
+  "include": ["src", "playground"]
 }

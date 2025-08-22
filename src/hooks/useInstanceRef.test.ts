@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { defineComponent, nextTick, onMounted, ref } from 'vue'
-import { useInstanceRef } from './useInstanceRef'
 import type { VueComponent } from '../types'
+import { useInstanceRef } from './useInstanceRef'
 
 describe('useInstanceRef', () => {
   it('should works', async () => {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { StandardSchemaV1 } from '@standard-schema/spec';
-import type { IFormFieldConfig } from './types';
+import type { StandardSchemaV1 } from '@standard-schema/spec'
+import type { IFormFieldConfig } from './types'
 
 export interface FieldItemProps {
   item: IFormFieldConfig

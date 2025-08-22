@@ -1,10 +1,10 @@
-import { mergeProps, type FunctionalComponent } from 'vue'
-import type { ITableActions } from './hooks/types'
-import type { IFetchDataParams, ITableOptions } from './types'
-import { createTableContext } from './hooks/createTableContext'
-import { configs } from './configs'
+import { type FunctionalComponent, mergeProps } from 'vue'
 import type { FunctionalSetupContext, IData } from '../../utils'
 import { defineForm, type IFormContext } from '../v-form'
+import { configs } from './configs'
+import { createTableContext } from './hooks/createTableContext'
+import type { ITableActions } from './hooks/types'
+import type { IFetchDataParams, ITableOptions } from './types'
 
 export interface ITableContext<T> extends ITableActions<T> {
   Component: FunctionalComponent

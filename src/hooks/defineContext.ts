@@ -1,4 +1,4 @@
-import { inject, provide, type InjectionKey } from 'vue'
+import { type InjectionKey, inject, provide } from 'vue'
 
 export interface DefineContext<Options extends unknown[], Context> {
   (): Context | null

@@ -1,5 +1,5 @@
-import { defineComponent } from 'vue'
 import { mount } from '@vue/test-utils'
+import { defineComponent } from 'vue'
 import { defineTable } from './defineTable'
 
 describe('VForm', () => {

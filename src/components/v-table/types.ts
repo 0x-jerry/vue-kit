@@ -1,7 +1,7 @@
-import type { RenderFunction, VNodeChild } from 'vue'
-import type { IFormOptions } from '../v-form'
-import type { IData, IToValue } from '../../utils'
 import type { Awaitable } from '@0x-jerry/utils'
+import type { RenderFunction, VNodeChild } from 'vue'
+import type { IData, IToValue } from '../../utils'
+import type { IFormOptions } from '../v-form'
 
 export type IColumnConfig<T extends IData = IData> = IColumnInnerConfig<T, string, unknown>
 

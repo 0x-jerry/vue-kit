@@ -1,10 +1,5 @@
 <script lang="ts" setup>
-import {
-  useElementHover,
-  useElementSize,
-  useRafFn,
-  useScroll
-} from '@vueuse/core'
+import { useElementHover, useElementSize, useRafFn, useScroll } from '@vueuse/core'
 import { computed, ref } from 'vue'
 
 export interface VMarqueeProps {
@@ -33,9 +28,7 @@ const isHovering = useElementHover(containerEl)
 
 const boundary = 1
 
-const canScroll = computed(
-  () => contentSize.width.value >= containerSize.width.value + boundary
-)
+const canScroll = computed(() => contentSize.width.value >= containerSize.width.value + boundary)
 
 useRafFn(({ delta }) => {
   if (!canScroll.value) {

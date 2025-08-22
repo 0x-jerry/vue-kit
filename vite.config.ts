@@ -1,10 +1,11 @@
 /// <reference types="vitest/config" />
-import { defineConfig } from 'vite'
-import vueJsx from '@vitejs/plugin-vue-jsx'
-import vue from '@vitejs/plugin-vue'
+
 import { readdir } from 'node:fs/promises'
-import dts from 'vite-plugin-dts'
+import vue from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx'
 import uno from 'unocss/vite'
+import { defineConfig } from 'vite'
+import dts from 'vite-plugin-dts'
 
 export default defineConfig({
   plugins: [vue(), vueJsx(), uno(), dts({ insertTypesEntry: true })],

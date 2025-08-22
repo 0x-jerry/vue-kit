@@ -12,7 +12,7 @@ describe('choose files', () => {
 
     expect(el).toBeTruthy()
 
-    // @ts-ignore
+    // @ts-expect-error
     el.files = [blob]
 
     el.dispatchEvent(new Event('change'))
