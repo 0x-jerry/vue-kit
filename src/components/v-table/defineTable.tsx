@@ -107,7 +107,7 @@ export function defineTable<T extends IData>(config: ITableOptions<T>) {
       dataSource: tableContext.dataSource.value,
     })
 
-    return <Table {...(props || {})}>{renderedColumns}</Table>
+    return <Table {...props}>{renderedColumns}</Table>
   }
 
   function createPaginationComponent(
