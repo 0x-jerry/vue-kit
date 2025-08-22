@@ -1,9 +1,9 @@
 import type { Arrayable } from '@0x-jerry/utils'
-import type { VLayoutProps } from '../v-layout'
-import type { IRule } from './rules'
-import type { IToValue } from '../../utils'
+import type { StandardSchemaV1 } from '@standard-schema/spec'
 import type { ComponentProps } from 'vue-component-type-helpers'
 import type { VueComponent } from '../../types'
+import type { IToValue } from '../../utils'
+import type { VLayoutProps } from '../v-layout'
 
 export interface FormComponentMapSetting {
   __internal: VueComponent
@@ -15,7 +15,6 @@ export interface IFormOptions {
    */
   data?: Record<string, unknown>
   layout?: VLayoutProps
-  rules?: Record<string, Arrayable<IRule>>
   fields?: IToValue<IFormFieldConfig[]>
 
   /**
@@ -25,7 +24,7 @@ export interface IFormOptions {
   class?: unknown
 }
 
-export type IFormFieldPath = Arrayable<string | number>
+export type IFormFieldPath = Arrayable<PropertyKey>
 
 export type IFormFieldConfig = ICommonFormFieldConfig & MapComponent<FormComponentMapSetting>
 
@@ -65,7 +64,7 @@ export interface ICommonFormFieldConfig {
   /**
    * Field validate rules
    */
-  rules?: Arrayable<IRule>
+  schema?: StandardSchemaV1
 
   slot?: string
 
@@ -77,20 +76,17 @@ export type IFormEvalFunction<T = unknown> = (ctx: IFromActions) => T
 
 // ---------
 
-export interface IFieldRuleError {
+export interface IFieldSchema {
   field: IFormFieldPath
-  errors: string[]
+  schema: StandardSchemaV1
 }
 
-export interface IFieldRuleCollection {
+export interface IFieldValidateResult {
   field: IFormFieldPath
-  rules: IRule[]
+  issues?: string[]
 }
 
-export interface IGetErrors {
-  (field: IFormFieldPath): IFieldRuleError | undefined
-  (): IFieldRuleError[]
-}
+export type IGetErrors = (field?: IFormFieldPath) => IFieldValidateResult[]
 
 export interface IGetData {
   (field: IFormFieldPath): unknown
@@ -105,7 +101,7 @@ export interface IFromActions {
    * @returns
    */
   validate: <T>(field?: IFormFieldPath) => Promise<T>
-  validateOnly: (field?: IFormFieldPath) => Promise<IFieldRuleError[]>
+  getValidateResult: (field?: IFormFieldPath) => Promise<IFieldValidateResult[]>
   clearValidate: () => void
   update: (data?: Record<string, unknown>) => void
   updateField: (field: IFormFieldPath, value?: unknown) => void

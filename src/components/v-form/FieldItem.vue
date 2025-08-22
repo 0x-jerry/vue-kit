@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import type { IFieldRuleError, IFormFieldConfig } from './types';
+import type { StandardSchemaV1 } from '@standard-schema/spec';
+import type { IFormFieldConfig } from './types';
 
 export interface FieldItemProps {
   item: IFormFieldConfig
-  fieldError?: IFieldRuleError
+  fieldError?: StandardSchemaV1.Issue[]
 }
 
 defineProps<FieldItemProps>()
@@ -16,8 +17,8 @@ defineProps<FieldItemProps>()
     </label>
     <div class="v-form-field-content">
       <slot></slot>
-      <div class="v-form-field-error" v-show="fieldError">
-        {{ fieldError?.errors.at(0) }}
+      <div class="v-form-field-error" v-show="fieldError?.length">
+        {{ fieldError?.at(0)?.message }}
       </div>
     </div>
   </div>

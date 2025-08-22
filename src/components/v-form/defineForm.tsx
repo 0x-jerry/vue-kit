@@ -1,11 +1,11 @@
-import { mergeProps, type FunctionalComponent, type Slots } from 'vue'
-import type { IFormFieldConfig, IFromActions, IFormOptions } from './types'
-import { FormConfig, resolveRegisteredComponent } from './configs'
-import { calcFieldKey, interopWithContext } from './utils'
 import { isString } from '@0x-jerry/utils'
-import { VLayout } from '../v-layout'
-import { createFormContext } from './hooks/createFormContext'
+import { type FunctionalComponent, mergeProps, type Slots } from 'vue'
 import type { FunctionalSetupContext } from '../../utils'
+import { VLayout } from '../v-layout'
+import { FormConfig, resolveRegisteredComponent } from './configs'
+import { createFormContext } from './hooks/createFormContext'
+import type { IFormFieldConfig, IFormOptions, IFromActions } from './types'
+import { calcFieldKey, interopWithContext } from './utils'
 
 export interface IFormContext extends IFromActions {
   Component: FunctionalComponent
@@ -67,10 +67,9 @@ export function defineForm(config: Partial<IFormOptions>): IFormContext {
 
     const fieldKey = calcFieldKey(item.field)
 
-    const validateField = () => formContext.validateOnly(item.field)
+    const validateField = () => formContext.getValidateResult(item.field)
 
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-    const fieldComponentProps = mergeProps({}, item.componentProps as any, {
+    const fieldComponentProps = mergeProps({}, item.componentProps || {}, {
       modelValue: formContext.getData(item.field),
       'onUpdate:modelValue': (val: unknown) => formContext.updateField(item.field, val),
       validateStatus: fieldError ? 'error' : undefined,
@@ -98,7 +97,6 @@ export function defineForm(config: Partial<IFormOptions>): IFormContext {
     return (
       <FieldItem {...fieldProps} v-show={showField}>
         {{
-          // biome-ignore lint/suspicious/noExplicitAny: <explanation>
           default: (props: any) => <Ctor {...mergeProps(props, fieldComponentProps)} />,
         }}
       </FieldItem>

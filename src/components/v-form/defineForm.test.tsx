@@ -1,9 +1,10 @@
-import { defineComponent, nextTick, onMounted } from 'vue'
-import { defineForm, type IFormContext } from './defineForm'
-import { mount } from '@vue/test-utils'
-import { registerComponent, unregisterComponent } from './configs'
-import { useVModel } from '@vueuse/core'
 import { sleep } from '@0x-jerry/utils'
+import { mount } from '@vue/test-utils'
+import { useVModel } from '@vueuse/core'
+import { defineComponent, nextTick, onMounted } from 'vue'
+import z from 'zod'
+import { registerComponent, unregisterComponent } from './configs'
+import { defineForm, type IFormContext } from './defineForm'
 
 const TestInputComponent = defineComponent({
   props: {
@@ -225,17 +226,12 @@ describe('VForm', () => {
   it('validate on change', async () => {
     const Comp = defineComponent(() => {
       const form = defineForm({
-        rules: {
-          i0: {
-            type: 'string',
-            max: 2,
-          },
-        },
         fields: [
           {
             label: 'i0',
             field: 'i0',
             component: 'TestInput',
+            schema: z.string().max(2),
           },
         ],
       })
@@ -262,17 +258,12 @@ describe('VForm', () => {
     const Comp = defineComponent(() => {
       const form = defineForm({
         triggerValidateOn: 'blur',
-        rules: {
-          i0: {
-            type: 'string',
-            max: 2,
-          },
-        },
         fields: [
           {
             label: 'i0',
             field: 'i0',
             component: 'TestInput',
+            schema: z.string().max(2),
           },
         ],
       })
@@ -302,17 +293,12 @@ describe('VForm', () => {
   it('render field validate error', async () => {
     const Comp = defineComponent(() => {
       const form = defineForm({
-        rules: {
-          i0: {
-            type: 'string',
-            max: 2,
-          },
-        },
         fields: [
           {
             label: 'i0',
             field: 'i0',
             component: 'TestInput',
+            schema: z.string().max(2),
           },
         ],
       })
