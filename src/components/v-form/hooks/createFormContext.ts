@@ -52,9 +52,13 @@ export function createFormContext(opt: Partial<IFormOptions> = {}): IFormInterna
     return fields.filter((f) => (f.if == null ? true : interopWithContext(f.if, ctx)))
   }
 
-  function getErrors(field?: IFormFieldPath): IFieldValidateResult[] {
+  function getErrors(): IFieldValidateResult[]
+  function getErrors(field?: IFormFieldPath): IFieldValidateResult | undefined
+  function getErrors(
+    field?: IFormFieldPath,
+  ): IFieldValidateResult[] | IFieldValidateResult | undefined {
     if (field != null) {
-      return ctx.validateErrors.value.filter((n) => isShallowEqual(n.field, field))
+      return ctx.validateErrors.value.find((n) => isShallowEqual(n.field, field))
     }
 
     return ctx.validateErrors.value

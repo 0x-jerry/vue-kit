@@ -1,10 +1,16 @@
 import { isString } from '@0x-jerry/utils'
-import { type FunctionalComponent, mergeProps, type Slots } from 'vue'
+import { defineComponent, type FunctionalComponent, mergeProps, type Slots } from 'vue'
 import type { FunctionalSetupContext } from '../../utils'
 import { VLayout } from '../v-layout'
 import { FormConfig, resolveRegisteredComponent } from './configs'
 import { createFormContext } from './hooks/createFormContext'
-import type { IFormFieldConfig, IFormOptions, IFromActions } from './types'
+import type {
+  IFormFieldConfig,
+  IFormOptions,
+  IFromActions,
+  IFromItemProps,
+  IFromItemRenderProps,
+} from './types'
 import { calcFieldKey, interopWithContext } from './utils'
 
 export interface IFormContext extends IFromActions {
@@ -22,12 +28,12 @@ export function defineForm(config: Partial<IFormOptions>): IFormContext {
   const exposeFormContext = formContext as unknown as IFormContext
 
   Object.assign(exposeFormContext, {
-    Component: createWrapperComponent,
+    Component: defineComponent((_props, ctx) => () => renderFormContent(_props, ctx)),
   })
 
   return exposeFormContext
 
-  function createWrapperComponent(_props: Record<string, unknown>, ctx: FunctionalSetupContext) {
+  function renderFormContent(_props: Record<string, unknown>, ctx: FunctionalSetupContext) {
     const fields = formContext.getVisibleFields()
 
     const formProps = mergeProps(
@@ -69,36 +75,42 @@ export function defineForm(config: Partial<IFormOptions>): IFormContext {
 
     const validateField = () => formContext.getValidateResult(item.field)
 
-    const fieldComponentProps = mergeProps({}, item.componentProps || {}, {
+    const fieldRenderProps: IFromItemRenderProps = {
       modelValue: formContext.getData(item.field),
       'onUpdate:modelValue': (val: unknown) => formContext.updateField(item.field, val),
       validateStatus: fieldError ? 'error' : undefined,
       onBlur: triggerValidateOn === 'blur' ? validateField : undefined,
       onChange: triggerValidateOn === 'change' ? validateField : undefined,
       onInput: triggerValidateOn === 'change' ? validateField : undefined,
-    })
+    }
 
-    const fieldProps = mergeProps(
+    const fieldComponentProps = mergeProps(
+      {},
+      item.componentProps || {},
+      fieldRenderProps as unknown as Record<string, unknown>,
+    )
+
+    const fieldItemProps = mergeProps(
       {
         class: item.class,
         style: item.style,
-        item,
-        fieldError,
       },
       {
         class: 'v-form-field',
         key: fieldKey,
         'data-key': fieldKey,
       },
+      {
+        fieldConfig: item,
+        fieldError: fieldError,
+      } satisfies IFromItemProps,
     )
 
     const FieldItem = FormConfig.FieldItem as FunctionalComponent
 
     return (
-      <FieldItem {...fieldProps} v-show={showField}>
-        {{
-          default: (props: any) => <Ctor {...mergeProps(props, fieldComponentProps)} />,
-        }}
+      <FieldItem {...fieldItemProps} v-show={showField}>
+        <Ctor {...fieldComponentProps} />
       </FieldItem>
     )
   }

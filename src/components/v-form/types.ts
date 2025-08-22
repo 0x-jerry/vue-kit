@@ -74,6 +74,20 @@ export interface ICommonFormFieldConfig {
 
 export type IFormEvalFunction<T = unknown> = (ctx: IFromActions) => T
 
+export interface IFromItemProps {
+  fieldError?: IFieldValidateResult
+  fieldConfig: IFormFieldConfig
+}
+
+export interface IFromItemRenderProps<T = unknown> {
+  modelValue: T
+  'onUpdate:modelValue': (val: T) => void
+  validateStatus?: string
+  onBlur?: () => Promise<IFieldValidateResult[]>
+  onChange?: () => Promise<IFieldValidateResult[]>
+  onInput?: () => Promise<IFieldValidateResult[]>
+}
+
 // ---------
 
 export interface IFieldSchema {
@@ -86,7 +100,10 @@ export interface IFieldValidateResult {
   issues?: string[]
 }
 
-export type IGetErrors = (field?: IFormFieldPath) => IFieldValidateResult[]
+export interface IGetErrors {
+  (field?: IFormFieldPath): IFieldValidateResult | undefined
+  (): IFieldValidateResult[]
+}
 
 export interface IGetData {
   (field: IFormFieldPath): unknown
