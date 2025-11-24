@@ -67,7 +67,7 @@ export function validateFiles(files: File[], option: ValidateFileOption = {}) {
       return false
     }
 
-    const suffix = file.name.split('.')[1]
+    const suffix = file.name.split('.')[1] || '_unknown_suffix_'
 
     if (option.extensions?.length && !option.extensions.includes(suffix)) {
       invalidFiles.push({

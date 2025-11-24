@@ -49,6 +49,8 @@ export function html(strings: TemplateStringsArray, ...values: unknown[]): Docum
         const eventName = item.name.slice(2)
 
         const fn = ctx.events[item.value]
+
+        // @ts-expect-error
         node.addEventListener(eventName, fn)
         node.removeAttribute(item.name)
       }
