@@ -12,7 +12,7 @@ exports[`html tagged template > should compose html 1`] = `
 {
   "elements": {},
   "events": {
-    "e0": [MockFunction spy],
+    "e0": [MockFunction],
   },
   "html": "<div onclick="e0"> hello 2 </div>",
 }
@@ -22,8 +22,8 @@ exports[`html tagged template > should compose html 2`] = `
 {
   "elements": {},
   "events": {
-    "e0": [MockFunction spy],
-    "e1": [MockFunction spy],
+    "e0": [MockFunction],
+    "e1": [MockFunction],
   },
   "html": "<div onclick="e0" dbclick="e1" > hello 2 </div>",
 }
