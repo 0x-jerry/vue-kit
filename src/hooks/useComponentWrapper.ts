@@ -9,7 +9,6 @@ import {
 } from 'vue'
 import type { ComponentExposed, ComponentProps } from 'vue-component-type-helpers'
 
-
 export interface UseComponentWrapperOptions<T> {
   /**
    * Default props
@@ -30,7 +29,7 @@ export function useComponentWrapper<T extends Component>(
     render() {
       const { $attrs, $slots } = this
 
-      const props = mergeProps($attrs, toValue(opt?.props || {}))
+      const props = mergeProps($attrs, toValue(opt?.props || {}), { ref: instanceRef })
 
       return h(Component, props, $slots)
     },

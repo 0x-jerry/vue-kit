@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import { defineComponent, nextTick, onMounted } from 'vue'
+import { defineComponent, onMounted } from 'vue'
 import type { VueComponent } from '../types'
 import { useComponentWrapper } from './useComponentWrapper'
 
@@ -11,7 +11,7 @@ describe('useComponentWrapper', () => {
 
     const CompA: VueComponent<{ content?: string }, {}, {}, Methods> = defineComponent({
       props: {
-        content: String
+        content: String,
       },
       setup(_, ctx) {
         ctx.expose({
@@ -30,27 +30,25 @@ describe('useComponentWrapper', () => {
       setup() {
         const A = useComponentWrapper(CompA, {
           props: {
-            content: 'content'
-          }
+            content: 'content',
+          },
         })
 
         onMounted(() => {
-          result = A.ins?.add(1,2)
+          result = A.ins?.add(1, 2)
         })
 
         return {
-          A,
+          A: A.Component,
         }
       },
-      template: `<A> <p>123</p> </A>`,
+      template: `<component :is="A"> <p>123</p> </component>`,
     })
 
     const wrapper = mount(App)
-    expect(result).toBeUndefined()
-    await nextTick()
 
-    expect(result).toBe(3)
-    expect(wrapper.find('span').text().trim()).toBe('conetnt')
+    expect(wrapper.find('span').text().trim()).toBe('content')
     expect(wrapper.find('p').text().trim()).toBe('123')
+    expect(result).toBe(3)
   })
 })
