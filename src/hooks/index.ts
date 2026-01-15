@@ -1,4 +1,5 @@
 export * from './defineContext'
+export * from './defineStrictContext'
 export * from './useAsyncData'
 export * from './useComponentWrapper'
 export * from './useInstanceRef'
