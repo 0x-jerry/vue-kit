@@ -4,19 +4,16 @@ import { defineStrictContext } from './defineStrictContext'
 
 describe('defineContext', () => {
   it('test with parameters', async () => {
-    const useCount = defineStrictContext(
-      'key',
-      (opt: { count: Ref<number> }) => {
-        const state = reactive({
-          count: opt.count,
-          add() {
-            opt.count.value++
-          },
-        })
+    const useCount = defineStrictContext('key', (opt: { count: Ref<number> }) => {
+      const state = reactive({
+        count: opt.count,
+        add() {
+          opt.count.value++
+        },
+      })
 
-        return state
-      },
-    )
+      return state
+    })
 
     const Child = defineComponent({
       setup() {

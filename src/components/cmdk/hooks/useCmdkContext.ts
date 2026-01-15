@@ -1,16 +1,16 @@
 import { defineContext } from '@0x-jerry/vue-kit'
 import { useEventListener } from '@vueuse/core'
 import {
-  ExecuteMode,
   type CmdkPluginFactory,
   type ExecuteContext,
+  ExecuteMode,
   type PluginApi,
   type RuntimeContext,
 } from '../plugins/types'
-import { OutputMode, useUIState, type ICmdkUIState } from './useUIState'
-import { usePluginManager, type ICmdkPluginManager } from './usePluginManager'
-import { useConfigurationManager, type ICmdkConfigurationManager } from './useConfigurationManager'
+import { type ICmdkConfigurationManager, useConfigurationManager } from './useConfigurationManager'
 import { usePluginApi } from './usePluginApi'
+import { type ICmdkPluginManager, usePluginManager } from './usePluginManager'
+import { type ICmdkUIState, OutputMode, useUIState } from './useUIState'
 
 export enum CmdkStatus {
   Initialized,
@@ -292,7 +292,7 @@ function _handleEscapeEvent(cmdk: CmdkContext) {
 
   let idx = 0
   while (idx < escapeStack.length) {
-    if (escapeStack[idx]()) {
+    if (escapeStack.at(idx)?.()) {
       return true
     }
 

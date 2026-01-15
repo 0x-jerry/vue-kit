@@ -29,7 +29,9 @@ export function useComponentWrapper<T extends Component>(
     render() {
       const { $attrs, $slots } = this
 
-      const props = mergeProps($attrs, toValue(opt?.props || {}), { ref: instanceRef })
+      const props = mergeProps($attrs, toValue(opt?.props || {}), {
+        ref: instanceRef,
+      })
 
       return h(Component, props, $slots)
     },

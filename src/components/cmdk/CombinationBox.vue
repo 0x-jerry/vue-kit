@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { useTemplateRef, watch } from 'vue'
-import { useCmdkContext } from './hooks/useCmdkContext'
-import { useCmdInput } from './hooks/useCmdInput'
 import { watchImmediate } from '@vueuse/core'
+import { useTemplateRef, watch } from 'vue'
+import { useCmdInput } from './hooks/useCmdInput'
+import { useCmdkContext } from './hooks/useCmdkContext'
 
 export interface CombinationBoxProps {
   commandMode?: boolean

@@ -1,11 +1,11 @@
 import { defineContext } from '@0x-jerry/vue-kit'
-import { computed, reactive, shallowRef, type Component } from 'vue'
-import { nextId } from './utils'
-import type { ICmdkConfigurationManager } from './useConfigurationManager'
-import { CoreConfigurationKey } from '../plugins/CorePlugin'
 import { watchImmediate } from '@vueuse/core'
-import { useCmdInput, type ICommandInputContext } from './useCmdInput'
+import { type Component, computed, reactive, shallowRef } from 'vue'
 import type { CommandGroupProps } from '../components/CommandGroup.vue'
+import { CoreConfigurationKey } from '../plugins/CorePlugin'
+import { type ICommandInputContext, useCmdInput } from './useCmdInput'
+import type { ICmdkConfigurationManager } from './useConfigurationManager'
+import { nextId } from './utils'
 
 export enum CmdkUIStatus {
   None,
@@ -94,9 +94,9 @@ class CmdkUIState {
   }
 
   updateActivePanelItem() {
-    const allItems = this.filteredGroup.value.map((n) => n.items).flat()
+    const allItems = this.filteredGroup.value.flatMap((n) => n.items)
 
-    let idx = allItems.findIndex((n) => n.id === this.state.activePanelItemId)
+    const idx = allItems.findIndex((n) => n.id === this.state.activePanelItemId)
 
     if (idx === -1) {
       this.state.activePanelItemId = allItems.at(0)?.id ?? -1

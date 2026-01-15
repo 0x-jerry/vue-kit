@@ -18,10 +18,7 @@ export function defineStrictContext<F extends (...args: any[]) => unknown>(
 ): DefineStricutContext<Parameters<F>, ReturnType<F>>
 
 // implementation
-export function defineStrictContext(
-  key: string | symbol | InjectionKey<unknown>,
-  factory?: Fn,
-) {
+export function defineStrictContext(key: string | symbol | InjectionKey<unknown>, factory?: Fn) {
   const useContext = (defaultContext: unknown) => {
     const ctx = inject(key, defaultContext)
 

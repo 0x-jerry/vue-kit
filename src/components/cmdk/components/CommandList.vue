@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { useEventListener, watchImmediate } from '@vueuse/core'
-import type { CommandItemProps } from './CommandItem.vue'
+import { useTemplateRef } from 'vue'
 import type { CommandGroupProps } from './CommandGroup.vue'
 import CommandGroup from './CommandGroup.vue'
-import { useTemplateRef } from 'vue'
+import type { CommandItemProps } from './CommandItem.vue'
 
 export interface CommandListProps {
   groups: CommandGroupProps[]
@@ -48,7 +48,7 @@ useEventListener('keydown', (evt) => {
 })
 
 function navigate(offset: number) {
-  const items = props.groups.map((n) => n.items).flat()
+  const items = props.groups.flatMap((n) => n.items)
 
   let idx = items.findIndex((i) => i.id === vModel.value)
 
@@ -66,7 +66,7 @@ function navigate(offset: number) {
 }
 
 function emitClickCmd() {
-  const items = props.groups.map((n) => n.items).flat()
+  const items = props.groups.flatMap((n) => n.items)
 
   const cmd = items.find((i) => i.id === vModel.value)
 

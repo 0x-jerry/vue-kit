@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-import CombinationBox from './CombinationBox.vue'
-import HelloWorldPlugin from './plugins/HelloWorld'
-import { useCmdkContext } from './hooks/useCmdkContext'
-import { useTemplateRef } from 'vue'
 import { watchImmediate } from '@vueuse/core'
-import CorePlugin from './plugins/CorePlugin'
+import { useTemplateRef } from 'vue'
+import CombinationBox from './CombinationBox.vue'
+import CommandList from './components/CommandList.vue'
+import { useCmdkContext } from './hooks/useCmdkContext'
 import { OutputMode } from './hooks/useUIState'
 import PanelFooter from './PanelFooter.vue'
-import CommandList from './components/CommandList.vue'
+import CorePlugin from './plugins/CorePlugin'
+import HelloWorldPlugin from './plugins/HelloWorld'
 
 const ctx = useCmdkContext.provide()
 

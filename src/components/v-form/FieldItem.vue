@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import type { IFromItemProps } from './types'
 
-export interface FieldItemProps extends IFromItemProps {
-}
+export interface FieldItemProps extends IFromItemProps {}
 
 defineProps<FieldItemProps>()
 </script>

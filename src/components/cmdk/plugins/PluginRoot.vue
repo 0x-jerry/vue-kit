@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
-import { useCmdInput } from '../hooks/useCmdInput'
-import CommandList from '../components/CommandList.vue'
 import { watchImmediate } from '@vueuse/core'
+import { computed, ref } from 'vue'
 import type { CommandItemProps } from '../components/CommandItem.vue'
+import CommandList from '../components/CommandList.vue'
+import { useCmdInput } from '../hooks/useCmdInput'
 import { usePluginApi } from '../hooks/usePluginApi'
 
 const inputCtx = useCmdInput()!

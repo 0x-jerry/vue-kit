@@ -36,7 +36,7 @@
     "test": "vitest",
     "build": "vite build",
     "prepublishOnly": "npm run build",
-    "lint": "biome lint src/**/* --write",
+    "lint": "biome check --write",
     "release": "x-release",
     "ci:test": "vitest run"
   },
